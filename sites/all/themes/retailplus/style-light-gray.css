@@ -1,0 +1,144 @@
+#header-top { background-color: #ececec; }
+
+.header-top-area, .header-top-area a,.header-top-area .contact-info i,.header-top-area ul.social-bookmarks li a, .header-top-area ul.brands li a { color: #555555; }
+
+#header-top .block-commerce-cart .view-footer .line-item-quantity-raw,
+#header-top .view-footer .line-item-total-raw {
+  color: inherit;
+}
+
+#header-top .block-commerce-cart .view-footer .links li.line-item-summary-view-cart a:hover {
+  color: inherit;
+}
+
+#header ul.menu li.sfHover > a,
+#header ul.menu li > a:hover,
+#header ul.menu li a:hover,
+#main-navigation .sf-menu ul li a,
+#main-navigation .sf-menu ul li a.active,
+.mean-container .mean-nav ul li a { color: #555555; }
+
+#header ul.menu li.sfHover ul li a:hover,
+.mean-container .mean-nav ul li a:hover { color: #ffffff; }
+
+.view-watchlist a:hover,.view-watchlist a:active, .view-watchlist a:focus {
+  color: #555555;
+}
+
+#header-top .block-commerce-cart .view-footer .links li.line-item-summary-view-cart a { border-color: #555555; }
+
+.header-top-area .item-list ul.quicktabs-tabs > li > a:hover:after, .header-top-area .nav-tabs > li > a:hover:after { color: #ececec; }
+
+a, #header ul.menu li a.active, ul.menu li a, .footer-area ul.menu li.collapsed > a:before, .footer-area ul.menu li.expanded > a:before,
+.comment-counter, .comment .username, .summary .field-item a, .subfooter-area ul.menu li a { color: #357cce; }
+.subfooter-area ul.menu li a { border-color: #357cce; }
+#site-name a, .mean-container a.meanmenu-reveal { color: #555555; }
+
+.more-link a, .views-field-view-node a, a.button, #toTop, .subfooter-area { color: #555555; }
+
+#header ul.menu li a:hover, #header ul.menu li.sfHover>a, #main-navigation .sf-menu ul, #header-top .sf-menu ul, .post-progressbar,
+.view-filters .ui-slider .ui-widget-header, .header-top-area .contact-info li, .header-top-area ul.social-bookmarks li a,
+.header-top-area ul.brands li a,
+.mean-container .mean-nav, .mean-container .mean-nav ul li a.mean-expand, .mean-container a.meanmenu-reveal span,
+.poll .bar .foreground { background-color: #cecece; }
+
+.mean-container .mean-nav ul li li a { border-top: 1px solid #cecece; }
+
+.views-exposed-widgets input[type="submit"], input[type="submit"], input[type="reset"], input[type="button"], .panel-title a { background-color: #555555; }
+
+.view-filters .ui-slider.ui-widget-content, .more-link a, .views-field-view-node a, a.button,
+.view-filters .ui-slider.ui-widget-content .ui-state-default, #toTop { border-color: #acacac; }
+
+a:hover, a:focus, ul.menu li a.active:hover, ul.menu li a:hover, ul.menu li > a:hover:before, .footer-area ul.menu li a:hover,
+.footer-area ul.menu li > a:hover:before, .footer-area ul.menu li.expanded > a:hover:before, .summary .field-item a:hover,
+.view-agents .views-field-title a:hover, .subfooter-area ul.menu li a:hover, .subfooter-area ul.menu li a.active:hover { color: #3f8edb; }
+
+#main-navigation .sf-menu ul li a:hover, #main-navigation .sf-menu ul li.sfHover>a, #header-top .sf-menu ul li a:hover,
+#header-top .sf-menu ul li.sfHover>a, .header-top-area .contact-info li:hover, .header-top-area ul.social-bookmarks li a:hover,
+.header-top-area ul.brands li a:hover, .mean-container .mean-nav ul li a:hover, .mean-container .mean-nav ul li a.mean-expand:hover { background-color: #636363; }
+
+.mean-container .mean-nav ul li li a:hover { border-top: 1px solid #636363; }
+
+ul.pager li > a:hover, .field-type-taxonomy-term-reference .field-item a:hover, .view-popular-tags .views-row a:hover,
+.footer-area .view-popular-tags .views-row a:hover, .subfooter-area .view-popular-tags .views-row a:hover,
+ul.social-bookmarks li a:hover, ul.brands li a:hover, .more-link a:hover, .views-field-view-node a:hover, a.button:hover,
+input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, #main .webform-client-form .form-actions input:hover,
+ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li > a:hover, .item-list ul.quicktabs-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:hover, .panel-heading a:hover { background-color: #3f8edb; }
+
+#footer-top {
+  background-color: #555555;
+}
+.footer-top-area {
+  color: #ffffff;
+}
+.footer-top-area .more-link a {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.footer-area .view-popular-tags .views-row a, .subfooter-area .view-popular-tags .views-row a {
+  color: #3f8edb;
+  background-color: transparent;
+  border-color: #3f8edb;
+}
+
+.footer-area .more-link a,
+.footer-area a.button,
+.footer-area .views-field-view-node a,
+.subfooter-area .more-link a,
+.subfooter-area a.button,
+.subfooter-area .views-field-view-node a {
+  border-color: #357CCE;
+  color: #357CCE;
+}
+.footer-area .more-link a:hover,
+.footer-area a.button:hover,
+.footer-area .views-field-view-node a:hover,
+.subfooter-area .more-link a:hover,
+.subfooter-area a.button:hover,
+.subfooter-area .views-field-view-node a:hover {
+  color: #ffffff;
+}
+
+.view-listings .category-item a:hover { background-color: rgba(63,142,219,0.95); }
+
+.overlay, .overlayed-teaser a:before, #image-slider-carousel ul.slides>li:after { background-color: rgba(63,142,219,0.8); }
+
+ul.social-bookmarks li a:hover, ul.brands li a:hover, ul.links li a:hover, .view-popular-tags .views-row a:hover { border-color: #3f8edb; }
+.more-link a:hover, .views-field-view-node a:hover, a.button:hover,
+input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover,
+#main .webform-client-form .form-actions input:hover { border-color: #3f8edb!important; }
+
+#footer {
+  background-color: #ffffff;
+  color: #555555;
+}
+#subfooter{
+  background-color: #ececec;
+}
+
+
+.footer-area { color: #555555; }
+
+#footer-site-name, #footer-site-slogan, .footer-area .contact-info i,
+.footer-area h2.title, .footer-area ul.menu li a { color: inherit; }
+
+.footer-area .item-list ul.quicktabs-tabs > li > a:hover:after, .footer-area .nav-tabs > li > a:hover:after { color: #ebebeb; }
+
+/*resets
+--------------------------------*/
+.summary .field-item a:hover { background-color: transparent; }
+
+.node-type-mt-product .commerce-add-to-cart input[type="submit"], .node-type-mt-product .flag-outer-mt-watchlist a, .field-name-field-mt-call-to-action a.button {
+  background: transparent;
+  color: #464646;
+  border: 1px solid #464646;
+}
+
+.node-type-mt-product .commerce-add-to-cart input[type="submit"]:hover, .node-type-mt-product .flag-outer-mt-watchlist a:hover, .field-name-field-mt-call-to-action a.button:hover {
+  background: #3F8EDB;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-color: #3F8EDB;
+}
