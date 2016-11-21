@@ -1,0 +1,73 @@
+image: smmccabe/drupal:latest
+services:
+  - mysql:latest
+
+variables:
+  MYSQL_DATABASE: drupal
+  MYSQL_ROOT_PASSWORD: mysql_strong_password
+
+stages:
+  - test
+  - build
+  - deploy
+
+code_standards:
+  stage: test
+  script:
+    - phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md wwwroot/sites/all/modules/custom/
+
+unit_tests:
+  stage: test
+  script:
+    #copy our site over to the root
+    - cp -a wwwroot/. /var/www/html -rf
+
+    #navigate to the root to run out tests
+    - cd /var/www/html
+
+    #for some reason apache doesn't start by default when docker images are run through GitLabCI, so we start it manually
+    - apache2-foreground > /dev/null 2>&1 &
+
+    #setup a generic site install, needed for testing
+    - drush site-install standard --db-url=mysql://root:mysql_strong_password@mysql/drupal -y
+
+    #because drupal 7 simpletest are old and stupid, we need to enable the module
+    - drush en simpletest -y
+
+    #run the tests, change BTWW to your group(s)
+    #NOTE, with Drupal versions < 7.50 the test scripts won't flag as failed even when tests fail
+    # https://www.drupal.org/node/2189345
+    #Add any other test groups you want to this list as well
+    #- php ./scripts/run-tests.sh --url http://localhost --color --concurrency 4 barcodestalk --verbose
+
+deploy-uat:
+  stage: deploy
+
+  #add any other tags or branches you want here
+  only:
+    - /^AWS.*$/
+
+  environment: uat
+
+  script:
+    # Install ssh-agent if not already installed, it is required by Docker.
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+
+    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    - ssh-add <(echo "$DEPLOY_KEY")
+
+    # For Docker builds disable host key checking. Be aware that by adding that
+    # you are suspectible to man-in-the-middle attacks.
+    # WARNING: Use this only with the Docker executor, if you use it with shell
+    # you will overwrite your user's SSH config.
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+    #move updated files up to deployment server, exclude .git since it's not needed
+    - rsync -av --exclude '.git' ./ idplates@aws1.acrobuild.com:/home/idplates/www/idplates/
+
+    #since this site is composer based, we don't include add one modules be default, run composer install to finish deploying
+    #- ssh barcodestalk@aws1.acrobuild.com 'cd www/barcodestalk'
