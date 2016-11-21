@@ -15,6 +15,7 @@ code_standards:
   stage: test
   script:
     - phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md sites/all/modules/custom/
+  allow_failure: true
 
 unit_tests:
   stage: test
@@ -39,6 +40,8 @@ unit_tests:
     # https://www.drupal.org/node/2189345
     #Add any other test groups you want to this list as well
     #- php ./scripts/run-tests.sh --url http://localhost --color --concurrency 4 barcodestalk --verbose
+
+    allow_failure: true
 
 deploy-uat:
   stage: deploy
