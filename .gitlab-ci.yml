@@ -14,7 +14,7 @@ stages:
 code_standards:
   stage: test
   script:
-    - phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md wwwroot/sites/all/modules/custom/
+    - phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md sites/all/modules/custom/
 
 unit_tests:
   stage: test
