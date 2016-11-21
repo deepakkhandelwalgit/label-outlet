@@ -8,6 +8,11 @@
 /sites/default/**/files
 /sites/default/**/private
 
+# Settings #
+############
+/sites/default/settings.php
+/sites/default/settings.local.php
+
 # Packages #
 ############
 *.7z
@@ -41,3 +46,7 @@ Thumbs.db
 # SASS #
 ##########
 .sass-cache
+
+# IDE #
+##########
+.idea
