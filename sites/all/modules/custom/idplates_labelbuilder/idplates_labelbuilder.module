@@ -1,1 +1,51 @@
 <?php
+
+define('IDPLATES_LABELBUILDER_SIZES_VOCAB', 'idplates_labelbuilder_sizes');
+define('IDPLATES_LABELBUILDER_LAYOUTS_VOCAB', 'idplates_labelbuilder_layouts');
+
+/**
+ * Implements hook_menu().
+ */
+function idplates_labelbuilder_menu() {
+  $items = array();
+
+  $items['labelbuilder/size'] = array(
+    'title' => 'Label Builder',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idplates_labelbuilder_size_form'),
+    'access arguments' => array('access content'),
+    'file' => 'includes/idplates_labelbuilder.sizes.inc',
+  );
+
+  $items['labelbuilder/layout'] = array(
+    'title' => 'Label Builder',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idplates_labelbuilder_layout_form'),
+    'access arguments' => array('access content'),
+    'file' => 'includes/idplates_labelbuilder.layouts.inc',
+  );
+
+  $items['labelbuilder/numbering_barcode'] = array(
+    'title' => 'Label Builder',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idplates_labelbuilder_numbering_barcode_form'),
+    'access arguments' => array('access content'),
+    'file' => 'includes/idplates_labelbuilder.numbering_barcode.inc',
+  );
+
+  return $items;
+}
+
+function idplates_labelbuilder_get_labels($size, $layout) {
+  $query = db_select('commerce_product', 'c');
+  $query->join('field_data_field_size', 's', 'c.product_id = s.entity_id');
+  $query->join('field_data_field_layout', 'l', 'c.product_id = l.entity_id');
+  $query
+    ->fields('c', array('product_id'))
+    ->fields('l', array('field_layout_tid'))
+    ->fields('s', array('field_size_tid'));
+
+  $results = $query->execute()->fetchAllAssoc('product_id');
+
+  return $results;
+}

@@ -1,5 +1,5 @@
 name = ID Plates Label Builder
-description =
+description = ID Plates Label Builder
 core = 7.x
 
 dependencies[] = commerce

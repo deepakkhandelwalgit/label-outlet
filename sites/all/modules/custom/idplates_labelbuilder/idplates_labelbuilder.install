@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function idplates_labelbuilder_install() {
+  $label_size = (object) array(
+    'name' => 'Label Builder Sizes',
+    'description' => 'Label Builder Sizes',
+    'machine_name' => IDPLATES_LABELBUILDER_SIZES_VOCAB,
+    'parent' => 0,
+  );
+
+  taxonomy_vocabulary_save($label_size);
+
+  $vocab = taxonomy_vocabulary_machine_name_load(IDPLATES_LABELBUILDER_SIZES_VOCAB);
+
+  $sizes = array(
+    '1 X 2',
+    '1 X 2.75',
+    '1.5 X 2',
+    '1.5 X 2.5',
+    '1.75 X 2',
+    '1.75 X 2.75',
+  );
+
+  foreach ($sizes as $size) {
+    $term = (object) array(
+      'name' => $size,
+      'description' => $size,
+      'vid' => $vocab->vid,
+    );
+    taxonomy_term_save($term);
+  }
+
+  $layouts = (object) array(
+    'name' => 'Layouts',
+    'description' => 'Label Builder Layouts',
+    'machine_name' => IDPLATES_LABELBUILDER_LAYOUTS_VOCAB,
+    'parent' => 0,
+  );
+
+  taxonomy_vocabulary_save($layouts);
+
+  $vocab = taxonomy_vocabulary_machine_name_load(IDPLATES_LABELBUILDER_LAYOUTS_VOCAB);
+
+  $terms[] = (object) array(
+    'name' => 'Barcodes',
+    'description' => 'Barcodes',
+    'vid' => $vocab->vid,
+  );
+
+  $terms[] = (object) array(
+    'name' => 'Just Numbers',
+    'description' => 'Just Numbering',
+    'vid' => $vocab->vid,
+  );
+
+  $terms[] = (object) array(
+    'name' => 'Text Only',
+    'description' => 'Text Only',
+    'vid' => $vocab->vid,
+  );
+
+  foreach ($terms as $term) {
+    taxonomy_term_save($term);
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function idplates_labelbuilder_uninstall() {
+  $vocabs[] = taxonomy_vocabulary_machine_name_load(IDPLATES_LABELBUILDER_SIZES_VOCAB);
+  $vocabs[] = taxonomy_vocabulary_machine_name_load(IDPLATES_LABELBUILDER_LAYOUTS_VOCAB);
+
+  foreach ($vocabs as $vocab) {
+    taxonomy_vocabulary_delete($vocab->vid);
+  }
+}
