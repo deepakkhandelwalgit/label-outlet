@@ -17,32 +17,6 @@ code_standards:
     - phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md sites/all/modules/custom/
   allow_failure: true
 
-unit_tests:
-  stage: test
-  script:
-    #copy our site over to the root
-    - cp -a wwwroot/. /var/www/html -rf
-
-    #navigate to the root to run out tests
-    - cd /var/www/html
-
-    #for some reason apache doesn't start by default when docker images are run through GitLabCI, so we start it manually
-    - apache2-foreground > /dev/null 2>&1 &
-
-    #setup a generic site install, needed for testing
-    - drush site-install standard --db-url=mysql://root:mysql_strong_password@mysql/drupal -y
-
-    #because drupal 7 simpletest are old and stupid, we need to enable the module
-    - drush en simpletest -y
-
-    #run the tests, change BTWW to your group(s)
-    #NOTE, with Drupal versions < 7.50 the test scripts won't flag as failed even when tests fail
-    # https://www.drupal.org/node/2189345
-    #Add any other test groups you want to this list as well
-    #- php ./scripts/run-tests.sh --url http://localhost --color --concurrency 4 barcodestalk --verbose
-
-    allow_failure: true
-
 deploy-uat:
   stage: deploy
 
