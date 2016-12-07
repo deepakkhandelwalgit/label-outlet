@@ -1,0 +1,11 @@
+.page-node span.file img{
+    margin-right: 5px;
+    width: 5%;
+	float:left;
+}
+
+.page-node span.file a{
+    width: 90%;
+	float:right;
+	margin-bottom:10px;
+}
