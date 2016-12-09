@@ -77,7 +77,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
   );
 
   $label = array();
-  $label['product_id'] = $_SESSION['idplates']['size'];
   $label['layout'] = $term;
   $label['idplates_preview']['title'] = !empty($form_state['values']['title']) ? $form_state['values']['title'] : $form['column_left']['text']['title']['#default_value'];
   $label['idplates_preview']['organization'] = !empty($form_state['values']['organization']) ? $form_state['values']['organization'] : $form['column_left']['text']['organization']['#default_value'];
