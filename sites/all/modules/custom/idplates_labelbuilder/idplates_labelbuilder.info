@@ -3,3 +3,5 @@ description = ID Plates Label Builder
 core = 7.x
 
 dependencies[] = commerce
+
+stylesheets[all][] = css/idplates_labelbuilder.css

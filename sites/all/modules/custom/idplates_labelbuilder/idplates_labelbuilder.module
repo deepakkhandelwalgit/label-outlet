@@ -1,7 +1,7 @@
 <?php
 
-define('IDPLATES_LABELBUILDER_SIZES_VOCAB', 'idplates_labelbuilder_sizes');
-define('IDPLATES_LABELBUILDER_LAYOUTS_VOCAB', 'idplates_labelbuilder_layouts');
+define('IDPLATES_LABELBUILDER_SIZES_VOCAB', 'label_size');
+define('IDPLATES_LABELBUILDER_LAYOUTS_VOCAB', 'layouts');
 
 /**
  * Implements hook_menu().
@@ -25,27 +25,42 @@ function idplates_labelbuilder_menu() {
     'file' => 'includes/idplates_labelbuilder.layouts.inc',
   );
 
-  $items['labelbuilder/numbering_barcode'] = array(
+  $items['labelbuilder/customize'] = array(
     'title' => 'Label Builder',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_numbering_barcode_form'),
+    'page arguments' => array('idplates_labelbuilder_customize_form'),
     'access arguments' => array('access content'),
-    'file' => 'includes/idplates_labelbuilder.numbering_barcode.inc',
+    'file' => 'includes/idplates_labelbuilder.customize.inc',
   );
 
   return $items;
 }
 
-function idplates_labelbuilder_get_labels($size, $layout) {
-  $query = db_select('commerce_product', 'c');
-  $query->join('field_data_field_size', 's', 'c.product_id = s.entity_id');
-  $query->join('field_data_field_layout', 'l', 'c.product_id = l.entity_id');
-  $query
-    ->fields('c', array('product_id'))
-    ->fields('l', array('field_layout_tid'))
-    ->fields('s', array('field_size_tid'));
+/**
+ * Implements hook_theme().
+ */
+function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
+  return array(
+    'idplates_labelbuilder_preview' => array(
+      'template' => 'idplates-labelbuilder-preview',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'label' => NULL,
+      ),
+    ),
+  );
+}
 
-  $results = $query->execute()->fetchAllAssoc('product_id');
+
+function idplates_labelbuilder_get_label($size, $layout) {
+  $query = db_select('field_data_field_label_size', 'b');
+  $query->join('field_data_field_layout_options', 'y', 'b.entity_id = y.entity_id');
+  $query
+    ->condition('b.field_label_size_tid', $size)
+    ->condition('y.field_layout_options_target_id', $layout)
+    ->fields('b', array('entity_id'));
+
+  $results = $query->execute()->fetchAssoc();
 
   return $results;
 }

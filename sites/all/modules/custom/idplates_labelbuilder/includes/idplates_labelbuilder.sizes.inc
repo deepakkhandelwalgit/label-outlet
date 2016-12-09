@@ -13,7 +13,7 @@ function idplates_labelbuilder_size_form($form, &$form_state) {
   $sizes = taxonomy_get_tree($vocab->vid);
 
   foreach ($sizes as $size) {
-    $options[$size->name] = t($size->description);
+    $options[$size->tid] = t($size->name);
   }
 
   $form['sizes'] = array(
