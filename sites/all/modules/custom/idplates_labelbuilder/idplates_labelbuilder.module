@@ -1,7 +1,8 @@
 <?php
 
-define('IDPLATES_LABELBUILDER_SIZES_VOCAB', 'label_size');
-define('IDPLATES_LABELBUILDER_LAYOUTS_VOCAB', 'layouts');
+/**
+ * @file
+ */
 
 /**
  * Implements hook_menu().
@@ -9,28 +10,36 @@ define('IDPLATES_LABELBUILDER_LAYOUTS_VOCAB', 'layouts');
 function idplates_labelbuilder_menu() {
   $items = array();
 
-  $items['labelbuilder/size'] = array(
+  $items['labelbuilder/size/%node'] = array(
     'title' => 'Label Builder',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_size_form'),
+    'page arguments' => array('idplates_labelbuilder_size_form', 2),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.sizes.inc',
   );
 
-  $items['labelbuilder/layout'] = array(
+  $items['labelbuilder/layout/%commerce_product'] = array(
     'title' => 'Label Builder',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_layout_form'),
+    'page arguments' => array('idplates_labelbuilder_layout_form', 2),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.layouts.inc',
   );
 
-  $items['labelbuilder/customize'] = array(
+  $items['labelbuilder/customize/%taxonomy_term'] = array(
     'title' => 'Label Builder',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_customize_form'),
+    'page arguments' => array('idplates_labelbuilder_customize_form', 2),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.customize.inc',
+  );
+
+  $items['labelbuilder/options'] = array(
+    'title' => 'Label Builder',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idplates_labelbuilder_options_form'),
+    'access arguments' => array('access content'),
+    'file' => 'includes/idplates_labelbuilder.options.inc',
   );
 
   return $items;
@@ -51,7 +60,9 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
   );
 }
 
-
+/**
+ *
+ */
 function idplates_labelbuilder_get_label($size, $layout) {
   $query = db_select('field_data_field_label_size', 'b');
   $query->join('field_data_field_layout_options', 'y', 'b.entity_id = y.entity_id');
@@ -63,4 +74,48 @@ function idplates_labelbuilder_get_label($size, $layout) {
   $results = $query->execute()->fetchAssoc();
 
   return $results;
+}
+
+function idplates_labelbuilder_add_to_cart($label, $uid = 0) {
+  $line_item = commerce_product_line_item_new($label['product']);
+  $line_item = commerce_cart_product_add($uid, $line_item);
+  return $line_item;
+}
+
+function idplates_label_builder_get_label_preview(&$form, &$form_state) {
+  $form['column_right']['label_proof'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Label Proof'),
+  );
+  $form['column_right']['label_proof']['preview'] = array(
+    '#type' => 'item',
+    '#prefix' => '<div id="idplates-labelbuilder-preview-ajax-wrapper">',
+    '#suffix' => '</div>',
+    '#markup' => theme('idplates_labelbuilder_preview', array(
+      'label' => $form_state['label'],
+    )),
+  );
+  $form['column_right']['label_proof']['qty'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Quantity'),
+    '#ajax' => array(
+      'callback' => 'idplates_label_builder_live_price_ajax_callback',
+      'wrapper' => 'idplates-labelbuilder-live-price-ajax-wrapper',
+      'method' => 'replace',
+      'effect' => 'fade',
+    ),
+  );
+  $form['column_right']['label_proof']['live_price'] = array(
+    '#type' => 'item',
+    '#markup' => 'live price',
+  );
+
+}
+
+function idplates_label_builder_live_price_ajax_callback($form, $form_state) {
+  return $form['column_right']['label_proof']['live_price'];
+}
+
+function idplates_label_builder_preview_ajax_callback($form, $form_state) {
+  return $form['column_right']['label_proof']['preview'];
 }

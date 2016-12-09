@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Custom form callback for Label Builder Size section.
  *
  * @param $form
@@ -8,19 +12,29 @@
  *
  * @return mixed
  */
-function idplates_labelbuilder_size_form($form, &$form_state) {
-  $vocab = taxonomy_vocabulary_machine_name_load(IDPLATES_LABELBUILDER_SIZES_VOCAB);
-  $sizes = taxonomy_get_tree($vocab->vid);
 
-  foreach ($sizes as $size) {
-    $options[$size->tid] = t($size->name);
+/**
+ *
+ */
+function idplates_labelbuilder_size_form($form, &$form_state, $node) {
+  $display_wrapper = entity_metadata_wrapper('node', $node);
+  $variations_wrapper = $display_wrapper->field_mt_product;
+  $options = array();
+
+  foreach ($variations_wrapper as $variation_wrapper) {
+    $image = $variation_wrapper->field_label_size->field_ls_image->value();
+    $variation = $variation_wrapper->value();
+    $options[$variation->product_id] = theme('image', array(
+        'path' => $image['uri'],
+        'attributes' => array(),
+      )
+    );
   }
 
   $form['sizes'] = array(
     '#type' => 'radios',
     '#title' => t('Select a Size'),
     '#options' => $options,
-    '#description' => t('Desc'),
   );
 
   $form['submit'] = array('#type' => 'submit', '#value' => t('Next Step'));
@@ -45,7 +59,8 @@ function idplates_labelbuilder_size_form_validate($form, &$form_state) {
  * @param $form_state
  */
 function idplates_labelbuilder_size_form_submit($form, &$form_state) {
-  $_SESSION['idplates']['size'] = $form_state['values']['sizes'];
+  $product_id = $form_state['values']['sizes'];
+  $_SESSION['idplates']['product_id'] = $product_id;
 
-  $form_state['redirect'] = 'labelbuilder/layout';
+  $form_state['redirect'] = 'labelbuilder/layout/' . $product_id;
 }
