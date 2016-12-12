@@ -57,6 +57,24 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'label' => NULL,
       ),
     ),
+    'idplates_labelbuilder_size' => array(
+      'template' => 'idplates-labelbuilder-size',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'path' => NULL,
+        'size' => NULL,
+        'attributes' => NULL,
+      ),
+    ),
+    'idplates_labelbuilder_layout' => array(
+      'template' => 'idplates-labelbuilder-layout',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'path' => NULL,
+        'sku' => NULL,
+        'attributes' => NULL,
+      ),
+    ),
   );
 }
 

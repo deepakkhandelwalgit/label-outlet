@@ -24,8 +24,10 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   foreach ($variations_wrapper as $variation_wrapper) {
     $image = $variation_wrapper->field_label_size->field_ls_image->value();
     $variation = $variation_wrapper->value();
-    $options[$variation->product_id] = theme('image', array(
+    $size = $variation_wrapper->field_label_size->name->value();
+    $options[$variation->product_id] = theme('idplates_labelbuilder_size', array(
         'path' => $image['uri'],
+        'size' => $size,
         'attributes' => array(),
       )
     );
@@ -33,8 +35,8 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
 
   $form['sizes'] = array(
     '#type' => 'radios',
-    '#title' => t('Select a Size'),
     '#options' => $options,
+    '#required' => TRUE,
   );
 
   $form['submit'] = array('#type' => 'submit', '#value' => t('Next Step'));
