@@ -18,7 +18,7 @@
 
 #idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-wrapper,
 #idplates-labelbuilder-layout-form input[type='radio']:checked + label .idplates-labelbuilder-layout-wrapper {
-  border: solid 2px #c0273c;
+  border: solid 1px #c0273c;
 }
 
 #idplates-labelbuilder-size-form .idplates-labelbuilder-size-wrapper:hover,
@@ -27,8 +27,9 @@
   cursor: pointer;
 }
 
-#idplates-labelbuilder-size-form .form-type-radios:after,
-#idplates-labelbuilder-layout-form .form-type-radios:after {
+#idplates-labelbuilder-size-form #edit-sizes.form-radios:after,
+#idplates-labelbuilder-layout-form .form-type-radios:after,
+#idplates-labelbuilder-layout-ajax-wrapper:after {
   clear: both;
   content: '';
   display: block;
@@ -39,19 +40,25 @@
   float: left;
 }
 
+.idplates-labelbuilder-size-wrapper {
+  height: 190px;
+}
+
 .idplates-labelbuilder-size-wrapper,
 .idplates-labelbuilder-layout-wrapper {
   border: solid 1px #ccc;
-  width: 175px;
-  height: 150px;
+  width: 195px;
   text-align: center;
   position: relative;
   padding-top: 20px;
 }
 
-.idplates-labelbuilder-size-img-wrapper,
-.idplates-labelbuilder-layout-img-wrapper {
+.idplates-labelbuilder-size-img-wrapper {
 
+}
+
+.idplates-labelbuilder-layout-img-wrapper {
+  margin-bottom: 65px;
 }
 
 .idplates-labelbuilder-size-img-wrapper img,
@@ -64,8 +71,12 @@
   position: absolute;
   width: 100%;
   bottom: 0;
-  background: #bbb;
-  line-height: 40px;
+  color: #666;
+  font-weight: bold;
+  background: #f5f5f5;
+  line-height: 48px;
+  height: 48px;
+  border-top: solid 1px #ccc;
 }
 
 /**
@@ -75,22 +86,25 @@
   width: 100%;
   background-color: #c0273c;
   color: #fff;
-  padding: 0 25px;
+  padding: 5px 25px 0;
   font-size: 20px;
 }
 
 #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
   float: left;
+  font-size: 24px;
+  margin: 0 10px 0 0;
+  font-weight: normal;
 }
 
 #idplates-labelbuilder-layout-form .form-type-radio.form-item-styles {
   float: left;
   padding: 0 12px;
+  margin: 0;
 }
 
 #idplates-labelbuilder-layout-form .form-item-styles input[type='radio']:checked + label {
-  margin: 0 15px;
-  padding: 0 15px;
+  padding: 0 15px 5px;
   background: #fff;
   font-weight: bold;
   color: #c0273c;
