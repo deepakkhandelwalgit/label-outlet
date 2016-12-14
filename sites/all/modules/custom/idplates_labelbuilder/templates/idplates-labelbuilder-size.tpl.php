@@ -17,8 +17,10 @@ foreach (array('width', 'height', 'alt', 'title') as $key) {
 
 ?>
 <div class="idplates-labelbuilder-size-wrapper">
-  <div class="idplates-labelbuilder-size-img-wrapper">
-    <img <?php print drupal_attributes($attributes); ?>/>
+  <div class="idplates-labelbuilder-size-table">
+    <div class="idplates-labelbuilder-size-img-wrapper">
+      <img <?php print drupal_attributes($attributes); ?>/>
+    </div>
   </div>
   <div class="idplates-labelbuilder-size-info-wrapper">
     <?php print $size; ?>

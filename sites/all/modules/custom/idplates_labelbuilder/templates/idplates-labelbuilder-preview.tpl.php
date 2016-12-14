@@ -7,18 +7,42 @@
  * - $label: the label to preview.
  */
 
-$layout_wrapper = entity_metadata_wrapper('taxonomy_term', $label['layout']);
-$image = $layout_wrapper->field_ll_image->value();
+
+$product = commerce_product_load($label->getSizeTid());
+$layout = taxonomy_term_load($label->getLayoutTid());
+
+if (!empty($product)) {
+  $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
+  $image = $product_wrapper->field_label_size->field_ls_image->value();
+  $label->size = $product_wrapper->field_label_size->name->value();
+  if (!empty($layout)) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $label->layout = $layout->name;
+    $image = $layout_wrapper->field_ll_image->value();
+  }
+}
+
 ?>
 <div class="idplates-labelbuilder-preview">
-  <?php print render(theme('image', array(
-    'path' => $image['uri'],
-    'attributes' => array(),
-  ))); ?>
-  <?php print $label['idplates_preview']['color']; ?>
-  <?php print $label['idplates_preview']['title']; ?>
-  <?php print $label['idplates_preview']['organization']; ?>
-  <?php print $label['idplates_preview']['extra']; ?>
-  <?php print $label['idplates_preview']['numbering_options']; ?>
-  <?php print $label['idplates_preview']['specs']; ?>
+  <?php
+  if (!empty($image)) {
+    print render(theme('image', array(
+      'path' => $image['uri'],
+      'attributes' => array(),
+    )));
+  }
+  else {
+    print t('Please select a size.');
+  }
+  ?>
+
+  <table class="idplates-labelbuilder-preview-table">
+
+    <?php foreach ($label as $key => $value): ?>
+    <tr>
+      <th><?php print str_replace('_', ' ', $key); ?></th>
+      <td><?php print !empty($value) ? $value : '--'; ?></td>
+      <?php endforeach; ?>
+    </tr>
+  </table>
 </div>

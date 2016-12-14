@@ -4,4 +4,8 @@ core = 7.x
 
 dependencies[] = commerce
 
+scripts[] = js/idplates_labelbuilder.js
+
 stylesheets[all][] = css/idplates_labelbuilder.css
+
+files[] = src/Label.php

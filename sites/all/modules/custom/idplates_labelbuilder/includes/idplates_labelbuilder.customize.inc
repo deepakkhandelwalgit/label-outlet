@@ -5,10 +5,12 @@
  *
  * @param $form
  * @param $form_state
+ * @param $term
  *
  * @return mixed
  */
 function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
+  $label = $_SESSION['idplates']['label'];
   $ajax = array(
     'callback' => 'idplates_label_builder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
@@ -71,18 +73,22 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#ajax' => $ajax,
     '#default_value' => 'no',
   );
-  $form['column_left']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Next Step'),
+  $form['column_left']['back'] = array(
+    '#type' => 'button',
+    '#value' => t('PREV: LAYOUT'),
   );
 
-  $label = array();
-  $label['layout'] = $term;
-  $label['idplates_preview']['title'] = !empty($form_state['values']['title']) ? $form_state['values']['title'] : $form['column_left']['text']['title']['#default_value'];
-  $label['idplates_preview']['organization'] = !empty($form_state['values']['organization']) ? $form_state['values']['organization'] : $form['column_left']['text']['organization']['#default_value'];
-  $label['idplates_preview']['color'] = !empty($form_state['values']['color_options']) ? $form_state['values']['color_options'] : $form['column_left']['color']['color_options']['#default_value'];
-  $label['idplates_preview']['numbering_options'] = !empty($form_state['values']['options']) ? $form_state['values']['options'] : $form['column_left']['numbering']['options']['#default_value'];
+  $form['column_left']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('NEXT: OPTIONS'),
+  );
 
+  $label->text = $form_state['values']['title'];
+  $label->text_color = $form_state['values']['color_options'];
+  $label->tag_color = $form_state['values']['color_options'];
+  $label->numbering = $form_state['values']['options'];
+  $label->barcode = $form_state['values']['title'];
+  $label->cost = $form_state['values']['title'];
   $form_state['label'] = $label;
 
   idplates_label_builder_get_label_preview($form, $form_state);
@@ -97,7 +103,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
  * @param $form_state
  */
 function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
-
+  if (strpos($form_state['values']['op'], 'PREV') !== FALSE) {
+    drupal_goto('labelbuilder/layout/' . $form_state['label']->getSizeTid());
+  }
 }
 
 /**
