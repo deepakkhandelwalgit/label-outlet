@@ -11,11 +11,12 @@
  */
 function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
   $label = $_SESSION['idplates']['label'];
+  $label->setSection('customize');
+
   $ajax = array(
     'callback' => 'idplates_label_builder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
-    'effect' => 'fade',
   );
 
   $form['column_left'] = array(
@@ -34,27 +35,71 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#type' => 'fieldset',
     '#title' => t('Color'),
   );
-  $form['column_left']['color']['color_options'] = array(
-    '#type' => 'radios',
-    '#options' => array('red' => 'red', 'blue' => 'blue'),
-    '#default_value' => 'red',
-    '#title' => t('Pick one'),
+
+  $form['column_left']['color']['tag_color'] = array(
+    '#type' => 'jquery_colorpicker',
+    '#title' => t('Tag Color'),
+    '#default_value' => 'FF0000',
     '#ajax' => $ajax,
   );
 
-  $form['column_left']['text'] = array(
+  $form['column_left']['color']['text_color'] = array(
+    '#type' => 'jquery_colorpicker',
+    '#title' => t('Text Color'),
+    '#default_value' => 'FFFFFF',
+    '#ajax' => $ajax,
+  );
+
+  $form['column_left']['text_container'] = array(
     '#type' => 'fieldset',
     '#title' => t('Text'),
+    '#attributes' => array('class' => array('container-inline')),
   );
-  $form['column_left']['text']['title'] = array(
+  $form['column_left']['text_container']['text'] = array(
     '#type' => 'textfield',
-    '#default_value' => t('Property of'),
+    '#ajax' => $ajax,
+    '#attributes' => array('placeholder' => 'Company Name'),
+  );
+  $form['column_left']['text_container']['text_size'] = array(
+    '#type' => 'numberfield',
+    '#default_value' => 12,
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#ajax' => $ajax += array('event' => 'change'),
+  );
+  $form['column_left']['phone_container'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Phone'),
+    '#attributes' => array('class' => array('container-inline')),
+  );
+  $form['column_left']['phone_container']['phone'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array('placeholder' => '1-888-555-5555'),
     '#ajax' => $ajax,
   );
-  $form['column_left']['text']['organization'] = array(
+  $form['column_left']['phone_container']['phone_size'] = array(
+    '#type' => 'numberfield',
+    '#default_value' => 8,
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#ajax' => $ajax += array('event' => 'change'),
+  );
+  $form['column_left']['additional_container'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Additional Text'),
+    '#attributes' => array('class' => array('container-inline')),
+  );
+  $form['column_left']['additional_container']['additional'] = array(
     '#type' => 'textfield',
-    '#default_value' => t('Company Name'),
+    '#attributes' => array('placeholder' => 'Additional Text'),
     '#ajax' => $ajax,
+  );
+  $form['column_left']['additional_container']['additional_size'] = array(
+    '#type' => 'numberfield',
+    '#default_value' => 10,
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#ajax' => $ajax += array('event' => 'change'),
   );
 
   $form['column_left']['numbering'] = array(
@@ -83,9 +128,23 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#value' => t('NEXT: OPTIONS'),
   );
 
-  $label->text = $form_state['values']['title'];
-  $label->text_color = $form_state['values']['color_options'];
-  $label->tag_color = $form_state['values']['color_options'];
+  $label->text = array(
+    'color' => $form_state['values']['text_color'],
+    'text' => array(
+      'text' => $form_state['values']['text'],
+      'size' => $form_state['values']['text_size'],
+    ),
+    'phone' => array(
+      'text' => $form_state['values']['phone'],
+      'size' => $form_state['values']['phone_size'],
+    ),
+    'additional' => array(
+      'text' => $form_state['values']['additional'],
+      'size' => $form_state['values']['additional_size'],
+    ),
+  );
+
+  $label->tag_color = $form_state['values']['tag_color'];
   $label->numbering = $form_state['values']['options'];
   $label->barcode = $form_state['values']['title'];
   $label->cost = $form_state['values']['title'];

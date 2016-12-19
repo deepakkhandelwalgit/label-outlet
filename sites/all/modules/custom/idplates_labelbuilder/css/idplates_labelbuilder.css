@@ -1,3 +1,8 @@
+@font-face {
+  font-family: barcode;
+  src: url('../fonts/Code39Azalea.otf')
+}
+
 .column-left {
   float: left;
   width: 68.5%;
@@ -25,10 +30,14 @@
   border: solid 1px #c0273c;
 }
 
-#idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-info-wrapper,
-#idplates-labelbuilder-layout-form input[type='radio']:checked + label .idplates-labelbuilder-layout-info-wrapper {
+#idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-info:before {
   color: #c0273c;
-  background: url('../gfx/checkmark.png') #f5f5f5 no-repeat 30px 15px;
+  content: '';
+  background-image: url('../gfx/checkmark.png');
+  display: inline-block;
+  width: 22px;
+  height: 17px;
+  margin-right: 3px;
 }
 
 #idplates-labelbuilder-size-form .idplates-labelbuilder-size-wrapper:hover,
@@ -161,7 +170,7 @@
   font-size: 1.1em;
   margin: 0;
   border-radius: 8px 8px 0 0;
-  border-bottom: solid 1px #ccc;
+  border-bottom: 1px solid #ccc;
   background-color: #f5f5f5;
   text-align: center;
 }
@@ -169,6 +178,24 @@
 #edit-label-proof .idplates-labelbuilder-preview {
   width: 80%;
   margin: 0 auto;
+}
+
+.idplates-labelbuilder-preview-wrapper {
+  margin: 0 auto;
+  border-radius: 15px;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.idplates-labelbuilder-preview-wrapper div:first-child {
+  border-radius: 15px 15px 0 0;
+}
+
+.idplates-labelbuilder-preview-wrapper div:last-child {
+  border-radius: 0 0 15px 15px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .idplates-labelbuilder-preview-table tbody,

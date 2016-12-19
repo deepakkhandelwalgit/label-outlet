@@ -19,6 +19,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
   if (!empty($_SESSION['idplates']['label'])) {
     $label = $_SESSION['idplates']['label'];
   }
+  $label->setSection('layouts');
 
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
   $layouts_wrapper = $product_wrapper->field_layout_options;
@@ -29,7 +30,6 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     'callback' => 'idplates_label_builder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
-    'effect' => 'fade',
     'progress' => array(),
   );
 

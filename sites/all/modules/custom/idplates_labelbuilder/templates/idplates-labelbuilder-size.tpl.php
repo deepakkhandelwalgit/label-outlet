@@ -23,6 +23,8 @@ foreach (array('width', 'height', 'alt', 'title') as $key) {
     </div>
   </div>
   <div class="idplates-labelbuilder-size-info-wrapper">
-    <?php print $size; ?>
+    <div class="idplates-labelbuilder-size-info">
+      <?php print $size; ?>
+    </div>
   </div>
 </div>

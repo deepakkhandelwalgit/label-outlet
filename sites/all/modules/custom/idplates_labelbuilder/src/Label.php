@@ -4,7 +4,6 @@ class Label {
   public $size;
   public $layout;
   public $text;
-  public $text_color;
   public $tag_color;
   public $numbering;
   public $barcode;
@@ -12,6 +11,7 @@ class Label {
   private $nid;
   private $size_tid;
   private $layout_tid;
+  private $section;
 
   /**
    * @return mixed
@@ -53,6 +53,20 @@ class Label {
    */
   public function setLayoutTid($layout_tid) {
     $this->layout_tid = $layout_tid;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getSection() {
+    return $this->section;
+  }
+
+  /**
+   * @param mixed $section
+   */
+  public function setSection($section) {
+    $this->section = $section;
   }
 
 }
