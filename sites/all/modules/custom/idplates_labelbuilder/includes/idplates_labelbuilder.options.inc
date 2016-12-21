@@ -94,4 +94,8 @@ function idplates_labelbuilder_options_form_submit($form, &$form_state) {
   $result = idplates_labelbuilder_add_to_cart($product, $label, $user->uid);
 
   $form_state['redirect'] = 'cart';
+
+  if ($result) {
+    unset($_SESSION['idplates']);
+  }
 }

@@ -22,12 +22,14 @@
  * the view is modified.
  */
 
-dpm($row);
-dpm($field);
 $line_item_id = $row->{$field->field_alias};
 $line_item = commerce_line_item_load($line_item_id);
 
-$label = !empty($line_item->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
+$line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
+$product = $line_item_wrapper->commerce_product->value();
+
+$label = !empty($product->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
+//$label = !empty($line_item->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
 
 $output = theme('idplates_labelbuilder_preview', array(
   'label' => $label,

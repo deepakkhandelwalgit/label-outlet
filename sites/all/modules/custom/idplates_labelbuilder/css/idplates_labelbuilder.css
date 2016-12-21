@@ -1,22 +1,22 @@
-.colorpicker {
+[id*=idplates-labelbuilder] .colorpicker {
   z-index: 999999;
 }
 
-input {
+[id*=idplates-labelbuilder] input {
   max-width: 100%;
 }
 
-.column-left {
+[id*=idplates-labelbuilder] .column-left {
   float: left;
   width: 68.5%;
 }
 
-.column-right {
+[id*=idplates-labelbuilder] .column-right {
   float: right;
   width: 30%;
 }
 
-#edit-submit {
+[id*=idplates-labelbuilder] #edit-submit {
   float: right;
 }
 
