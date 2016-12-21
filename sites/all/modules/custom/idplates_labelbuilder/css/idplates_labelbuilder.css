@@ -1,6 +1,9 @@
-@font-face {
-  font-family: barcode;
-  src: url('../fonts/Code39Azalea.otf')
+.colorpicker {
+  z-index: 999999;
+}
+
+input {
+  max-width: 100%;
 }
 
 .column-left {
@@ -18,8 +21,8 @@
 }
 
 /**
-  Size & Layout
- */
+ * Steps
+ **/
 #idplates-labelbuilder-size-form input[type='radio'],
 #idplates-labelbuilder-layout-form input[type='radio'] {
   display: none;
@@ -47,6 +50,7 @@
 }
 
 #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles,
+[id*=idplates-labelbuilder] .column-left legend,
 #idplates-labelbuilder-size-form .form-item-sizes > label:first-child {
   width: 100%;
   background-color: #c0273c;
@@ -54,6 +58,26 @@
   padding: 5px 25px;
   font-size: 20px;
   font-weight: normal;
+}
+[id*=idplates-labelbuilder] .column-left fieldset {
+  border: none;
+  margin: 0 0 25px 0;
+  padding: 0;
+}
+
+[id*=idplates-labelbuilder] .column-left legend {
+  margin: 0;
+  text-transform: none;
+}
+
+#idplates-labelbuilder-customize-form [type="text"],
+#idplates-labelbuilder-customize-form [type="number"] {
+  height: 32px;
+}
+
+#idplates-labelbuilder-customize-form [type="number"] {
+  width: 7%;
+  padding: 10px 5px 10px 10px;
 }
 
 #idplates-labelbuilder-size-form .form-item-sizes > label:first-child .form-required {
@@ -115,10 +139,6 @@
   height: 48px;
   border-top: solid 1px #ccc;
 }
-
-/**
-  Layouts
- */
 
 #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles {
   padding: 5px 25px 0;
@@ -185,17 +205,40 @@
   border-radius: 15px;
   border: 1px solid #000;
   position: relative;
+  overflow: hidden;
+  box-shadow: 4px 4px 8px #bbb;
 }
 
-.idplates-labelbuilder-preview-wrapper div:first-child {
-  border-radius: 15px 15px 0 0;
+.idplates-labelbuilder-preview-wrapper p {
+  margin: 0;
+  padding: 0;
 }
 
-.idplates-labelbuilder-preview-wrapper div:last-child {
-  border-radius: 0 0 15px 15px;
-  position: absolute;
+.idplates-labelbuilder-preview-section {
+  overflow: hidden;
+  padding-top: 5px;
+}
+
+.idplates-labelbuilder-preview-section:last-child {
+  padding: 0;
+}
+
+.idplates-labelbuilder-preview-wrapper > div:last-child {
   width: 100%;
+  position: absolute;
   bottom: 0;
+  margin: 0;
+}
+
+.idplates-labelbuilder-preview-wrapper > div:first-child {
+  position: relative;
+}
+
+p.idplates-labelbuilder-preview-wrapper-barcode {
+  background: url('../gfx/barcode.png') repeat #fff;
+  margin: 0 auto;
+  width: 85%;
+  margin-bottom: 2px;
 }
 
 .idplates-labelbuilder-preview-table tbody,

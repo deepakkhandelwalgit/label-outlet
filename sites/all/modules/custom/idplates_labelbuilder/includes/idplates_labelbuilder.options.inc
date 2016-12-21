@@ -17,7 +17,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     'callback' => 'idplates_label_builder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
-    'effect' => 'fade',
+    'event' => 'change',
   );
 
   $options = array(
@@ -53,12 +53,17 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#ajax' => $ajax,
   );
 
-  $label['idplates_preview']['specs'] = !empty($form_state['values']['specs']) ? $form_state['values']['specs'] : $form['column_left']['material']['specs']['#default_value'];
+  $label->specs = !empty($form_state['values']['specs']) ? $form_state['values']['specs'] : $form['column_left']['material']['specs']['#default_value'];
   $form_state['label'] = $label;
 
   idplates_label_builder_get_label_preview($form, $form_state);
 
-  $form['column_right']['label_proof']['submit'] = array(
+  $form['column_left']['back'] = array(
+    '#type' => 'button',
+    '#value' => t('PREV: LAYOUT'),
+  );
+
+  $form['column_left']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Add to Cart'),
   );
@@ -84,7 +89,9 @@ function idplates_labelbuilder_options_form_validate($form, &$form_state) {
  */
 function idplates_labelbuilder_options_form_submit($form, &$form_state) {
   global $user;
-  $result = idplates_labelbuilder_add_to_cart(commerce_product_load($_SESSION['idplates']['product_id']), $user->uid);
+  $label = $_SESSION['idplates']['label'];
+  $product = commerce_product_load($label->getSizeTid());
+  $result = idplates_labelbuilder_add_to_cart($product, $label, $user->uid);
 
   $form_state['redirect'] = 'cart';
 }

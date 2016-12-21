@@ -12,11 +12,27 @@
 function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
   $label = $_SESSION['idplates']['label'];
   $label->setSection('customize');
+  $text_fields = array(
+    'a' => array(
+      'title' => t('Company Name'),
+      'size' => 12,
+    ),
+    'b' => array(
+      'title' => t('1-888-555-5555'),
+      'size' => 8,
+    ),
+    'c' => array(
+      'title' => t('Additional Text'),
+      'size' => 10,
+    ),
+  );
 
   $ajax = array(
     'callback' => 'idplates_label_builder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
+    'event' => 'change',
+    'progress' => array(),
   );
 
   $form['column_left'] = array(
@@ -34,6 +50,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
   $form['column_left']['color'] = array(
     '#type' => 'fieldset',
     '#title' => t('Color'),
+    '#attributes' => array('class' => array('container-inline')),
   );
 
   $form['column_left']['color']['tag_color'] = array(
@@ -53,54 +70,33 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
   $form['column_left']['text_container'] = array(
     '#type' => 'fieldset',
     '#title' => t('Text'),
-    '#attributes' => array('class' => array('container-inline')),
   );
-  $form['column_left']['text_container']['text'] = array(
-    '#type' => 'textfield',
-    '#ajax' => $ajax,
-    '#attributes' => array('placeholder' => 'Company Name'),
-  );
-  $form['column_left']['text_container']['text_size'] = array(
-    '#type' => 'numberfield',
-    '#default_value' => 12,
-    '#size' => 2,
-    '#maxlength' => 2,
-    '#ajax' => $ajax += array('event' => 'change'),
-  );
-  $form['column_left']['phone_container'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Phone'),
-    '#attributes' => array('class' => array('container-inline')),
-  );
-  $form['column_left']['phone_container']['phone'] = array(
-    '#type' => 'textfield',
-    '#attributes' => array('placeholder' => '1-888-555-5555'),
-    '#ajax' => $ajax,
-  );
-  $form['column_left']['phone_container']['phone_size'] = array(
-    '#type' => 'numberfield',
-    '#default_value' => 8,
-    '#size' => 2,
-    '#maxlength' => 2,
-    '#ajax' => $ajax += array('event' => 'change'),
-  );
-  $form['column_left']['additional_container'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Additional Text'),
-    '#attributes' => array('class' => array('container-inline')),
-  );
-  $form['column_left']['additional_container']['additional'] = array(
-    '#type' => 'textfield',
-    '#attributes' => array('placeholder' => 'Additional Text'),
-    '#ajax' => $ajax,
-  );
-  $form['column_left']['additional_container']['additional_size'] = array(
-    '#type' => 'numberfield',
-    '#default_value' => 10,
-    '#size' => 2,
-    '#maxlength' => 2,
-    '#ajax' => $ajax += array('event' => 'change'),
-  );
+
+  foreach ($text_fields as $key => $text_field) {
+    $form['column_left']['text_container']['text_container_' . $key] = array(
+      '#type' => 'container',
+      '#title' => t('Text'),
+      '#attributes' => array('class' => array('container-inline')),
+    );
+    $form['column_left']['text_container']['text_container_' . $key]['text_' . $key] = array(
+      '#type' => 'textfield',
+      '#ajax' => $ajax,
+      '#title' => t('Text ' . strtoupper($key)),
+      '#attributes' => array('placeholder' => $text_field['title']),
+      '#size' => 32,
+    );
+    $form['column_left']['text_container']['text_container_' . $key]['size_' . $key] = array(
+      '#type' => 'numberfield',
+      '#default_value' => $text_field['size'],
+      '#ajax' => $ajax,
+      '#maxlength' => 2,
+      '#description' => t('pt'),
+    );
+    $text_input['text_' . $key] = array(
+      'text' => $form_state['values']['text_' . $key],
+      'size' => $form_state['values']['size_' . $key],
+    );
+  }
 
   $form['column_left']['numbering'] = array(
     '#type' => 'fieldset',
@@ -128,21 +124,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#value' => t('NEXT: OPTIONS'),
   );
 
-  $label->text = array(
-    'color' => $form_state['values']['text_color'],
-    'text' => array(
-      'text' => $form_state['values']['text'],
-      'size' => $form_state['values']['text_size'],
-    ),
-    'phone' => array(
-      'text' => $form_state['values']['phone'],
-      'size' => $form_state['values']['phone_size'],
-    ),
-    'additional' => array(
-      'text' => $form_state['values']['additional'],
-      'size' => $form_state['values']['additional_size'],
-    ),
-  );
+  $label->text = $text_input + array(
+      'color' => $form_state['values']['text_color'],
+    );
 
   $label->tag_color = $form_state['values']['tag_color'];
   $label->numbering = $form_state['values']['options'];

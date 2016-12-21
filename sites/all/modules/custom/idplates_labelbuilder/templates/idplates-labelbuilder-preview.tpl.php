@@ -7,6 +7,7 @@
  * - $label: the label to preview.
  */
 
+$label = !empty($label) ? $label : new Label();
 
 $product = commerce_product_load($label->getSizeTid());
 $layout = taxonomy_term_load($label->getLayoutTid());
@@ -26,89 +27,116 @@ if (!empty($product)) {
 ?>
 <div class="idplates-labelbuilder-preview">
   <?php
-  if ($section == 'customize') {
+  if ($section == 'customize' || $section == 'options') :
 
-    $code = 'T-P-b-s-A';
+    $code = 'AB/xs/C';
+    $sections = explode('/', $code);
+    $section0_height = '';
+    $section1_height = '';
+    $section2_height = '';
     $size = explode('x', $label->size);
     $realW = (double) $size[0];
     $realH = (double) $size[1];
     $width = 260;
     $height = $width * $realH / $realW;
-    $tag_color = $label->tag_color ?: 'f00';
-    $text_color = $label->text['color'] ?? 'fff';
-    $font_size_t = $label->text['text']['size'] ?: '12';
-    $font_size_p = $label->text['phone']['size'] ?: '8';
-    $font_size_a = $label->text['additional']['size'] ?: '10';
-    $font_size_s = $label->text['serial_number']['size'] ?: '14';
+    $tag_color = !empty($label->tag_color) ? $label->tag_color : 'f00';
+    $text_color = !empty($label->text['color']) ? $label->text['color'] : 'fff';
+    $font_size_a = !empty($label->text['text_a']['size']) ? $label->text['text_a']['size'] : '12';
+    $font_size_b = !empty($label->text['text_b']['size']) ? $label->text['text_b']['size'] : '8';
+    $font_size_c = !empty($label->text['text_c']['size']) ? $label->text['text_c']['size'] : '10';
+    $font_size_s = !empty($label->text['serial_number']['size']) ? $label->text['serial_number']['size'] : '12';
 
     $barcode = array();
     $qr_code = array();
     $logo = array();
-    $serial_number = '1000101';
+    $serial_number = '000001';
     $serial_number_height = .5;
 
-    $classes = 'idplates-labelbuilder-preview-section ';
+    $line_height_a = $font_size_a;
+    $line_height_b = $font_size_b;
+    $line_height_c = $font_size_c;
+    $line_height_s = $font_size_s;
+
+    switch (count($sections)) {
+      case 1:
+        $section0_height = '100%';
+        $line_height_a = $height;
+        break;
+      case 2:
+        $section0_height = '40%';
+        $section1_height = '60%';
+        break;
+      case 3:
+        $section0_height = '40%';
+        $section1_height = '45%';
+        $section2_height = '15%';
+        break;
+    }
     ?>
 
     <div class="idplates-labelbuilder-preview-wrapper"
          style="width: <?php print $width; ?>px; height: <?php print $height; ?>px;">
-      <?php foreach (explode('-', $code) as $char) {
-        $styles = '';
-        $markup = '';
-        if (ctype_upper($char)) {
-          $styles .= 'background-color:#' . $tag_color . ';';
+      <?php foreach ($sections as $index => $preview_section):
+        $bg_color = 'fff';
+        $current_section_height = 'section' . $index . '_height';
+        if (ctype_upper($preview_section)) {
+          $bg_color = $tag_color;
         }
         ?>
-        <?php
-        switch (strtolower($char)) {
-          case 't' :
-            $styles .= 'font-size:' . $font_size_t . 'pt;padding-top:8px;line-height:' . $font_size_t / 2 . 'pt;text-align: center; color:#' . $text_color . ';height:' . $height * .30 . 'px';
-            $markup = $label->text['text']['text'] ?: t('Company Name');
-            break;
-          case 'b' :
-            $styles .= 'font-family: barcode, Arial;font-size: 30px';
-            $markup = '*' . $serial_number . '*';
-            break;
-          case 's' :
-            //          $styles .= 'font-size:' . $font_size_s . 'pt;text-align: center; color:#000;height:' . $height * $serial_number_height . 'px';
-            //          $markup = $serial_number;
-            break;
-          case 'p' :
-            $styles .= 'font-size:' . $font_size_p . 'pt;line-height:' . $font_size_p / 2 . 'pt;text-align: center; color:#' . $text_color . ';height:' . $height * .10 . 'px';
-            $markup = $label->text['phone']['text'] ?: '1-888-555-5555';
-            break;
-          case 'a' :
-            $styles .= 'font-size:' . $font_size_a . 'pt;text-align: center; color:#' . $text_color . ';height:' . $height * .2 . 'px';
-            $markup = $label->text['additional']['text'] ?: t('Additional Text');
-            break;
-          case 'q' :
-            break;
-          case 'l' :
-            break;
-        }
+        <div class="idplates-labelbuilder-preview-section"
+             style="text-align: center;font-weight: bold;height: <?php print ${$current_section_height}; ?>;color: <?php print '#' . $text_color; ?>; background-color: <?php print '#' . $bg_color; ?>">
+          <?php
+          $markup = '';
+          foreach (str_split($preview_section) as $char) :
+            $char = strtolower($char);
+            $styles = '';
+            $classes = '';
+            switch ($char) :
+              case 'a' :
+              case 'b' :
+              case 'c' :
+                $font_size = 'font_size_' . $char;
+                $line_height = 'line_height_' . $char;
+                $styles .= 'font-size:' . ${$font_size} . 'pt;line-height:' . ${$line_height} . 'pt;';
+                $content = !empty($label->text['text_' . $char]['text']) ? $label->text['text_' . $char]['text'] : t('Text ') . strtoupper($char);
+                break;
+              case 'x' :
+                $classes = 'idplates-labelbuilder-preview-wrapper-barcode';
+                $content = '*' . $serial_number . '*';
+                $styles .= 'color: transparent;font-size:14pt;';
+                break;
+              case 's' :
+                $styles .= 'font-size:' . $font_size_s . 'pt;line-height:' . $font_size_s . 'pt;font-weight:bold;color:#000;';
+                $content = $serial_number;
+                break;
+              case 'm' :
+                $content = theme('image', array(
+                  'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/gfx/qr_code.png',
+                  'attributes' => array(),
+                ));
+                break;
+              case 'l' :
+                break;
+            endswitch;
+            $markup .= '<p class="' . $classes . '" style="' . $styles . '">' . $content . '</p>';
 
-        ?>
-
-        <div style="<?php print $styles; ?>">
-          <?php print $markup; ?>
+          endforeach;
+          print $markup; ?>
         </div>
-      <?php }; ?>
+      <?php endforeach; ?>
     </div>
 
     <?php
-  }
-  else {
-
-    if (!empty($image)) {
+  else:
+    if (!empty($image)) :
       print render(theme('image', array(
         'path' => $image['uri'],
         'attributes' => array(),
       )));
-    }
-    else {
+    else:
       print t('Please select a size.');
-    }
-  } ?>
+    endif;
+  endif; ?>
 
 
   <table class="idplates-labelbuilder-preview-table">
