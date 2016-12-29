@@ -733,6 +733,7 @@ function entityreference_field_widget_info() {
     'field types' => array('entityreference'),
     'settings' => array(
       'match_operator' => 'CONTAINS',
+	  'max_results' => 10,
       'size' => 60,
       // We don't have a default here, because it's not the same between
       // the two widgets, and the Field API doesn't update default
@@ -747,6 +748,7 @@ function entityreference_field_widget_info() {
     'field types' => array('entityreference'),
     'settings' => array(
       'match_operator' => 'CONTAINS',
+	  'max_results' => 10,
       'size' => 60,
       // We don't have a default here, because it's not the same between
       // the two widgets, and the Field API doesn't update default
@@ -790,6 +792,13 @@ function entityreference_field_widget_settings_form($field, $instance) {
         'CONTAINS' => t('Contains'),
       ),
       '#description' => t('Select the method used to collect autocomplete suggestions. Note that <em>Contains</em> can cause performance issues on sites with thousands of nodes.'),
+    );
+	$form['max_results'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Maximum number of results'),
+      '#default_value' => $settings['max_results'],
+      '#element_validate' => array('_element_validate_integer_positive'),
+      '#required' => TRUE,
     );
     $form['size'] = array(
       '#type' => 'textfield',
@@ -1105,7 +1114,7 @@ function entityreference_autocomplete_callback_get_matches($type, $field, $insta
 
   if (isset($tag_last)) {
     // Get an array of matching entities.
-    $entity_labels = $handler->getReferencableEntities($tag_last, $instance['widget']['settings']['match_operator'], 30);
+    $entity_labels = $handler->getReferencableEntities($tag_last, $instance['widget']['settings']['match_operator'], $instance['widget']['settings']['max_results']);
 
     // Loop through the products and convert them into autocomplete output.
     foreach ($entity_labels as $values) {
