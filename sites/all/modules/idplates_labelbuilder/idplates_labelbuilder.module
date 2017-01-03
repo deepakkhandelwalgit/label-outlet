@@ -141,7 +141,8 @@ function idplates_labelbuilder_copy_label_to_product($label, &$product) {
   $product_wrapper->field_label_text_line_1->set($label->text['text_a']['text']);
   $product_wrapper->field_label_text_line_2->set($label->text['text_b']['text']);
   $product_wrapper->field_label_text_line_3->set($label->text['text_c']['text']);
-  return commerce_product_save($product);
+  commerce_product_save($product);
+  return $product;
 }
 
 function idplates_label_builder_get_label_preview(&$form, &$form_state) {
