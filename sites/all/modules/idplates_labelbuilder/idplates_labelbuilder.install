@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_install().
+ */
+
+/**
+ *
+ */
+function idplates_labelbuilder_install() {
+
+}
