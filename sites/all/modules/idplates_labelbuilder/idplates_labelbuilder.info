@@ -1,0 +1,11 @@
+name = ID Plates Label Builder
+description = ID Plates Label Builder
+core = 7.x
+
+dependencies[] = commerce
+
+scripts[] = js/idplates_labelbuilder.js
+
+stylesheets[all][] = css/idplates_labelbuilder.css
+
+files[] = src/Label.php

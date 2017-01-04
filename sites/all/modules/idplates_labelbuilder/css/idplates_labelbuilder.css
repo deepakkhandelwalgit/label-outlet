@@ -1,0 +1,276 @@
+[id*=idplates-labelbuilder] .colorpicker {
+  z-index: 999999;
+}
+
+[id*=idplates-labelbuilder] input {
+  max-width: 100%;
+}
+
+[id*=idplates-labelbuilder] .column-left {
+  float: left;
+  width: 68.5%;
+}
+
+[id*=idplates-labelbuilder] .column-right {
+  float: right;
+  width: 30%;
+}
+
+[id*=idplates-labelbuilder] #edit-submit {
+  float: right;
+}
+
+/**
+ * Steps
+ **/
+#idplates-labelbuilder-size-form input[type='radio'],
+#idplates-labelbuilder-layout-form input[type='radio'] {
+  display: none;
+}
+
+#idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-wrapper,
+#idplates-labelbuilder-layout-form input[type='radio']:checked + label .idplates-labelbuilder-layout-wrapper {
+  border: solid 1px #c0273c;
+}
+
+#idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-info:before {
+  color: #c0273c;
+  content: '';
+  background-image: url('../gfx/checkmark.png');
+  display: inline-block;
+  width: 22px;
+  height: 17px;
+  margin-right: 3px;
+}
+
+#idplates-labelbuilder-size-form .idplates-labelbuilder-size-wrapper:hover,
+#idplates-labelbuilder-layout-form .idplates-labelbuilder-layout-wrapper:hover,
+#idplates-labelbuilder-layout-form .form-item-styles label:hover {
+  cursor: pointer;
+}
+
+#idplates-labelbuilder-layout-form .form-type-radios.form-item-styles,
+[id*=idplates-labelbuilder] .column-left legend,
+#idplates-labelbuilder-size-form .form-item-sizes > label:first-child {
+  width: 100%;
+  background-color: #c0273c;
+  color: #fff;
+  padding: 5px 25px;
+  font-size: 20px;
+  font-weight: normal;
+}
+[id*=idplates-labelbuilder] .column-left fieldset {
+  border: none;
+  margin: 0 0 25px 0;
+  padding: 0;
+}
+
+[id*=idplates-labelbuilder] .column-left legend {
+  margin: 0;
+  text-transform: none;
+}
+
+#idplates-labelbuilder-customize-form [type="text"],
+#idplates-labelbuilder-customize-form [type="number"] {
+  height: 32px;
+}
+
+#idplates-labelbuilder-customize-form [type="number"] {
+  width: 7%;
+  padding: 10px 5px 10px 10px;
+}
+
+#idplates-labelbuilder-size-form .form-item-sizes > label:first-child .form-required {
+  display: none;
+}
+
+#idplates-labelbuilder-size-form #edit-sizes.form-radios:after,
+#idplates-labelbuilder-layout-form .form-type-radios:after,
+#idplates-labelbuilder-layout-ajax-wrapper:after {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+#idplates-labelbuilder-size-form .form-type-radio.form-item-sizes,
+#idplates-labelbuilder-layout-form .form-type-radio.form-item-layouts {
+  float: left;
+}
+
+.idplates-labelbuilder-size-wrapper,
+.idplates-labelbuilder-layout-wrapper {
+  border: solid 1px #ccc;
+  width: 195px;
+  height: 190px;
+  text-align: center;
+  position: relative;
+}
+
+.idplates-labelbuilder-layout-wrapper {
+  height: 150px;
+}
+
+.idplates-labelbuilder-size-table,
+.idplates-labelbuilder-layout-table {
+  display: table;
+}
+
+.idplates-labelbuilder-size-img-wrapper,
+.idplates-labelbuilder-layout-img-wrapper {
+  display: table-cell;
+  width: 193px;
+  height: 140px;
+  vertical-align: middle;
+}
+
+.idplates-labelbuilder-size-img-wrapper img,
+.idplates-labelbuilder-layout-img-wrapper img {
+  margin: 0 auto;
+  max-width: 95%;
+}
+
+.idplates-labelbuilder-size-info-wrapper,
+.idplates-labelbuilder-layout-info-wrapper {
+  width: 100%;
+  color: #666;
+  font-weight: bold;
+  background: #f5f5f5;
+  line-height: 48px;
+  height: 48px;
+  border-top: solid 1px #ccc;
+}
+
+#idplates-labelbuilder-layout-form .form-type-radios.form-item-styles {
+  padding: 5px 25px 0;
+}
+
+#idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+  float: left;
+  font-size: 24px;
+  margin: 0 10px 0 0;
+  font-weight: normal;
+}
+
+#idplates-labelbuilder-layout-ajax-wrapper .form-item-layouts > label:first-child {
+  display: none;
+}
+
+#idplates-labelbuilder-layout-form .form-type-radio.form-item-styles {
+  float: left;
+  padding: 0 12px;
+  margin: 0;
+}
+
+#idplates-labelbuilder-layout-form .form-item-styles input[type='radio']:checked + label {
+  padding: 0 15px 5px;
+  background: #fff;
+  font-weight: bold;
+  color: #c0273c;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/**
+  Label Preview
+ */
+
+#edit-label-proof {
+  margin: 1em 0;
+  padding: 0;
+  border-radius: 8px;
+  border-color: #333;
+}
+
+#edit-label-proof legend {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  text-transform: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 0;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #ccc;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+#edit-label-proof .idplates-labelbuilder-preview {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.idplates-labelbuilder-preview-wrapper {
+  margin: 0 auto;
+  border-radius: 15px;
+  border: 1px solid #000;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 4px 4px 8px #bbb;
+}
+
+.idplates-labelbuilder-preview-wrapper p {
+  margin: 0;
+  padding: 0;
+}
+
+.idplates-labelbuilder-preview-section {
+  overflow: hidden;
+  padding-top: 5px;
+}
+
+.idplates-labelbuilder-preview-section:last-child {
+  padding: 0;
+}
+
+.idplates-labelbuilder-preview-wrapper > div:last-child {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+}
+
+.idplates-labelbuilder-preview-wrapper > div:first-child {
+  position: relative;
+}
+
+p.idplates-labelbuilder-preview-wrapper-barcode {
+  background: url('../gfx/barcode.png') repeat #fff;
+  margin: 0 auto;
+  width: 85%;
+  margin-bottom: 2px;
+}
+
+.idplates-labelbuilder-preview-table tbody,
+.idplates-labelbuilder-preview-table tr,
+.idplates-labelbuilder-preview-table td,
+.idplates-labelbuilder-preview-table th {
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-transform: none;
+}
+
+.idplates-labelbuilder-preview-table th {
+  text-transform: capitalize;
+}
+
+.idplates-labelbuilder-preview-table td {
+  text-align: right;
+}
+
+.idplates-labelbuilder-preview {
+  text-align: center;
+}
+
+.idplates-labelbuilder-preview img {
+  margin: 0 auto;
+}
+
+/**
+  Details and Cusomizations
+ */
+.idplates-labelbuilder-customize-form fieldset {
+  padding-top: 0;
+}
+
