@@ -44,7 +44,7 @@ deploy-uat:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
     #move updated files up to deployment server, exclude .git since it's not needed
-    - rsync -av --exclude '.git' ./ idplates@aws1.acrobuild.com:/home/idplates/www/idplates/wwwroot
+    - rsync -av --exclude '.git' ./ idplates@aws1.acrobuild.com:/home/idplates/www/idplates/wwwroot/
 
     #since this site is composer based, we don't include add one modules be default, run composer install to finish deploying
     #- ssh barcodestalk@aws1.acrobuild.com 'cd www/barcodestalk'
