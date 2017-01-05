@@ -266,7 +266,7 @@ padding-bottom: 5px; }
 
 .header-top-area .block { padding: 10px 0; }
 
-.header-area .block { padding: 0 0 20px 0; }
+.header-area .block { padding: 0 0 10px 0; }
 
 .sidebar .block { padding: 0 0 45px 0; }
 
@@ -286,7 +286,7 @@ padding-bottom: 5px; }
 
 #header-top { background-color: #2869c2; }
 
-#header-bottom { padding: 35px 0 0 0; }
+#header-bottom { padding: 10px 0 0 0; }
 
 #header-inside { position: relative; }
 
@@ -637,7 +637,7 @@ width: 100%; color: #636363; }
 }
 
 /* Logo - Site name*/
-#logo-and-site-name-wrapper { padding-bottom: 20px; }
+#logo-and-site-name-wrapper { padding-bottom: 10px; }
 
 #logo { float: left; margin-right: 15px; display: inline-block; padding-top: 7px; }
 
