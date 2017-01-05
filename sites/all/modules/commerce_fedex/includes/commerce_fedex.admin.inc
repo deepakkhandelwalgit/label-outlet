@@ -339,7 +339,7 @@ function commerce_fedex_settings_form_validate($form, $form_state) {
     }
   }
 
-  if ($form_state['values']['commerce_fedex_services']['SMART_POST'] == 'SMART_POST') {
+  if ($form_state['values']['commerce_fedex_services']['SMART_POST'] === 'SMART_POST') {
     foreach (array('commerce_fedex_smartpost_hub_id', 'commerce_fedex_smartpost_indicia_type') as $element) {
       if ($form_state['values'][$element] == '') {
         form_set_error($element, t('Please enter a value to use FedEx SmartPost.'));
@@ -420,5 +420,5 @@ function commerce_fedex_settings_form_submit($form, $form_state) {
     menu_rebuild();
   }
 
-  drupal_set_message(t('The FedEx configuration options have been saved.'));
+  drupal_set_message(t('The FedEx configuration options have been saved. Yippee'));
 }
