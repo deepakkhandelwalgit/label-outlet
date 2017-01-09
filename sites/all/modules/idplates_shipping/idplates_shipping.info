@@ -1,0 +1,8 @@
+name = ID Plates Shipping
+description = ID Plates Shipping Customizations
+core = 7.x
+
+dependencies[] = commerce
+dependencies[] = commerce_fedex
+dependencies[] = commerce_ups
+dependencies[] = commerce_flat_rate
