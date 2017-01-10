@@ -28,13 +28,15 @@ $line_item = commerce_line_item_load($line_item_id);
 $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
 $product = $line_item_wrapper->commerce_product->value();
 
-$label = !empty($product->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
-//$label = !empty($line_item->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
+$label = !empty($product->data['idplates_labelbuilder']['label']) ? $product->data['idplates_labelbuilder']['label'] : NULL;
 
-$output = theme('idplates_labelbuilder_preview', array(
-  'label' => $label,
-));
+if (!empty($label)) {
 
-?>
+  $label->backend_view = TRUE;
 
-<?php print $output; ?>
+  $output = theme('idplates_labelbuilder_preview', array(
+    'label' => $label,
+  ));
+
+  print $output;
+}

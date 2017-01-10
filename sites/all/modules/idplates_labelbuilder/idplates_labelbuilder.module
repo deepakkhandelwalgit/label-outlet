@@ -96,6 +96,14 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'attributes' => NULL,
       ),
     ),
+    'idplates_labelbuilder_live_price' => array(
+      'template' => 'idplates-labelbuilder-live-price',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'label' => NULL,
+        'quantity' => NULL,
+      ),
+    ),
   );
 }
 
@@ -126,21 +134,34 @@ function idplates_labelbuilder_get_label($size, $layout) {
   return $results;
 }
 
-function idplates_labelbuilder_add_to_cart($product, $label, $uid = 0) {
-  $updated_product = idplates_labelbuilder_copy_label_to_product($label, $product);
-  $line_item = commerce_product_line_item_new($updated_product);
-  $line_item = commerce_cart_product_add($uid, $line_item, FALSE);
-  return $line_item;
+function idplates_labelbuilder_add_to_cart($product, $label, $uid = 0, $qty = 1) {
+  try {
+    foreach ($label->extras as $extra) {
+      $extra_qty = 1;
+      //todo: jace fix this
+      $extra_item = commerce_product_line_item_new((commerce_product_load($extra)));
+      commerce_cart_product_add($uid, $extra_item, FALSE);
+    }
+
+    $updated_product = idplates_labelbuilder_copy_label_to_product($label, $product);
+    $line_item = commerce_product_line_item_new($updated_product, $qty);
+    $line_item = commerce_cart_product_add($uid, $line_item, FALSE);
+    return $line_item;
+  }
+  catch (Exception $e) {
+    return FALSE;
+  }
+
 }
 
 function idplates_labelbuilder_copy_label_to_product($label, &$product) {
   $product->data['idplates_labelbuilder']['label'] = $label;
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
-  $product_wrapper->field_numbering_barcode_options->set($label->numbering);
-  $product_wrapper->field_label_color->set($label->tag_color);
-  $product_wrapper->field_label_text_line_1->set($label->text['text_a']['text']);
-  $product_wrapper->field_label_text_line_2->set($label->text['text_b']['text']);
-  $product_wrapper->field_label_text_line_3->set($label->text['text_c']['text']);
+  //todo: jace fix this
+  //  $product_wrapper->field_numbering_barcode_options->set($label->numbering);
+  $product_wrapper->field_label_text_line_1->set($label->getText()['text_a']['text']);
+  $product_wrapper->field_label_text_line_2->set($label->getText()['text_b']['text']);
+  $product_wrapper->field_label_text_line_3->set($label->getText()['text_c']['text']);
   commerce_product_save($product);
   return $product;
 }
@@ -158,25 +179,76 @@ function idplates_label_builder_get_label_preview(&$form, &$form_state) {
       'label' => $form_state['label'],
     )),
   );
+
+  $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : 100;
+
   $form['column_right']['label_proof']['qty'] = array(
     '#type' => 'textfield',
     '#title' => t('Quantity'),
+    '#prefix' => '<div class="idplates-labelbuilder-qty-price-wrapper">',
+    '#suffix' => '</div>',
+    '#default_value' => $qty,
     '#ajax' => array(
       'callback' => 'idplates_label_builder_live_price_ajax_callback',
-      'wrapper' => 'idplates-labelbuilder-live-price-ajax-wrapper',
       'method' => 'replace',
-      'effect' => 'fade',
+      //      'event' => 'keyup',
+      'progress' => array(),
+      'keypress' => TRUE,
     ),
+    '#description' => t('Hit "Enter" to update the price.'),
+    '#weight' => 50,
   );
+
+
   $form['column_right']['label_proof']['live_price'] = array(
     '#type' => 'item',
-    '#markup' => 'live price',
+    '#markup' => theme('idplates_labelbuilder_live_price', array(
+      'label' => $form_state['label'],
+      'quantity' => $qty,
+    )),
   );
+
+  $can_add_to_cart = $form_state['build_info']['form_id'] === 'idplates_labelbuilder_options_form';
+  $form['column_right']['add_to_cart'] = array(
+    '#type' => 'submit',
+    '#value' => t('Add to Cart'),
+    '#disabled' => !$can_add_to_cart,
+    '#submit' => array('idplates_labelbuilder_add_to_cart_submit'),
+    '#validate' => array('idplates_labelbuilder_add_to_cart_validate'),
+  );
+
 
 }
 
+function idplates_labelbuilder_add_to_cart_submit($form, &$form_state) {
+  global $user;
+  $label = $_SESSION['idplates']['label'];
+  $result = idplates_labelbuilder_add_to_cart($form_state['product'], $label, $user->uid, $form_state['values']['qty']);
+
+  if ($result) {
+    $form_state['redirect'] = 'cart';
+    unset($_SESSION['idplates']);
+  }
+
+}
+
+function idplates_labelbuilder_add_to_cart_validate($form, &$form_state) {
+  $qty = $form_state['values']['qty'];
+  if ($qty < 100) {
+    form_set_error('qty', t('Minimum purchase of 100 labels.'));
+  }
+}
+
 function idplates_label_builder_live_price_ajax_callback($form, $form_state) {
-  return $form['column_right']['label_proof']['live_price'];
+  $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : $form['column_right']['label_proof']['qty']['#default_value'];
+
+  $markup = theme('idplates_labelbuilder_live_price', array(
+    'label' => $form_state['label'],
+    'quantity' => $qty,
+  ));
+  $commands[] = ajax_command_replace('#idplates-labelbuilder-live-price-ajax-wrapper', $markup);
+  $commands[] = ajax_command_invoke('#edit-qty', 'focus');
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
 
 function idplates_label_builder_preview_ajax_callback($form, $form_state) {

@@ -2,16 +2,15 @@
 
 class Label {
   public $size;
-  public $layout;
-  public $text;
-  public $tag_color;
   public $numbering;
-  public $barcode;
-  public $cost;
+  private $tag_color;
+  private $text;
+  private $layout;
   private $nid;
   private $size_tid;
   private $layout_tid;
   private $section;
+  private $adhesive;
 
   /**
    * @return mixed
@@ -67,6 +66,62 @@ class Label {
    */
   public function setSection($section) {
     $this->section = $section;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getLayout() {
+    return $this->layout;
+  }
+
+  /**
+   * @param mixed $layout
+   */
+  public function setLayout($layout) {
+    $this->layout = $layout;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getText() {
+    return $this->text;
+  }
+
+  /**
+   * @param mixed $text
+   */
+  public function setText($text) {
+    $this->text = $text;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getTagColor() {
+    return $this->tag_color;
+  }
+
+  /**
+   * @param mixed $tag_color
+   */
+  public function setTagColor($tag_color) {
+    $this->tag_color = $tag_color;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getAdhesive() {
+    return $this->adhesive;
+  }
+
+  /**
+   * @param mixed $adhesive
+   */
+  public function setAdhesive($adhesive) {
+    $this->adhesive = $adhesive;
   }
 
 }

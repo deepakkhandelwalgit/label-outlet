@@ -20,6 +20,15 @@
   float: right;
 }
 
+input[type="submit"].form-button-disabled {
+  background-color: #666;
+  color: #ccc;
+}
+input[type="submit"].form-button-disabled:hover {
+  background-color: #666;
+  color: #ccc;
+}
+
 /**
  * Steps
  **/
@@ -59,6 +68,7 @@
   font-size: 20px;
   font-weight: normal;
 }
+
 [id*=idplates-labelbuilder] .column-left fieldset {
   border: none;
   margin: 0 0 25px 0;
@@ -141,6 +151,7 @@
 }
 
 #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles {
+  margin: 0;
   padding: 5px 25px 0;
 }
 
@@ -175,7 +186,7 @@
  */
 
 #edit-label-proof {
-  margin: 1em 0;
+  margin: 0;
   padding: 0;
   border-radius: 8px;
   border-color: #333;
@@ -212,15 +223,20 @@
 .idplates-labelbuilder-preview-wrapper p {
   margin: 0;
   padding: 0;
+  line-height: 1;
+}
+
+.idplates-labelbuilder-preview-section-wrapper {
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+  display: table;
+  overflow: hidden;
 }
 
 .idplates-labelbuilder-preview-section {
-  overflow: hidden;
-  padding-top: 5px;
-}
-
-.idplates-labelbuilder-preview-section:last-child {
-  padding: 0;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .idplates-labelbuilder-preview-wrapper > div:last-child {
@@ -238,7 +254,6 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   background: url('../gfx/barcode.png') repeat #fff;
   margin: 0 auto;
   width: 85%;
-  margin-bottom: 2px;
 }
 
 .idplates-labelbuilder-preview-table tbody,
@@ -265,6 +280,24 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 
 .idplates-labelbuilder-preview img {
   margin: 0 auto;
+}
+
+/**
+ * Live Price
+ */
+
+#edit-label-proof .idplates-labelbuilder-live-price-wrapper,
+#edit-label-proof .idplates-labelbuilder-qty-price-wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#edit-label-proof .idplates-labelbuilder-live-price-wrapper table {
+  margin: -40px 0 0 0;
+}
+
+#edit-label-proof .idplates-labelbuilder-qty-price-wrapper {
+  border-top: 2px solid #ccc;
 }
 
 /**

@@ -102,8 +102,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#type' => 'fieldset',
     '#title' => t('Numbering'),
   );
-  $form['column_left']['numbering']['options'] = array(
-    '#type' => 'radios',
+  $form['column_left']['numbering']['numbering_options'] = array(
+    '#type' => 'checkboxes',
     '#options' => array(
       'no' => 'no',
       'custom' => 'custom',
@@ -114,6 +114,23 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#ajax' => $ajax,
     '#default_value' => 'no',
   );
+
+  $form['column_left']['numbering']['consecutive'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Starting Barcode Number'),
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="numbering_options[no]"]' => array('checked' => TRUE),
+        ':input[name="numbering_options[custom]"]' => array('checked' => TRUE),
+        ':input[name="numbering_options[identical]"]' => array('checked' => TRUE),
+//        ':input[name="numbering_options[consecutive]"]' => array('checked' => false),
+//        '#edit-numbering-options-custom' => array('checked' => TRUE),
+//        '#edit-numbering-options-identical' => array('checked' => TRUE),
+//        '#edit-numbering-options-consecutive' => array('checked' => FALSE),
+      ),
+    ),
+  );
+
   $form['column_left']['back'] = array(
     '#type' => 'button',
     '#value' => t('PREV: LAYOUT'),
@@ -124,14 +141,12 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     '#value' => t('NEXT: OPTIONS'),
   );
 
-  $label->text = $text_input + array(
+  $label->setText($text_input + array(
       'color' => $form_state['values']['text_color'],
-    );
+    ));
 
-  $label->tag_color = $form_state['values']['tag_color'];
-  $label->numbering = $form_state['values']['options'];
-  $label->barcode = $form_state['values']['title'];
-  $label->cost = $form_state['values']['title'];
+  $label->setTagColor($form_state['values']['tag_color']);
+  $label->numbering = $form_state['values']['numbering_options'];
   $form_state['label'] = $label;
 
   idplates_label_builder_get_label_preview($form, $form_state);
