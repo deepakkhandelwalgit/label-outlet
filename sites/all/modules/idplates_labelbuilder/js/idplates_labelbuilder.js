@@ -1,17 +1,19 @@
 (function ($) {
   Drupal.behaviors.idplatesLabelBuilder = {
     attach: function (context, settings) {
-      $("#edit-qty").on('pause:typing', setTimeout(function () {
-            var e = jQuery.Event('keydown', {which: 13});// # Enter Key
-            $(this).trigger(e);
-          }, 1000)
-      );
 
-      $("#edit-qty").on('keyup', function (e) {
-        $(this).trigger('pause:typing');
+      var timer;
+
+      $(".idplates-labelbuilder-qty-price-wrapper #edit-qty").on('keyup', function (e) {
+        var $this = $(this);
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          $this.blur();
+          $this.focus();
+        }, 600);
       });
 
     }
-  };
+  }
 })
 (jQuery);

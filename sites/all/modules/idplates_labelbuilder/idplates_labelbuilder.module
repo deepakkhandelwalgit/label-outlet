@@ -44,26 +44,39 @@ function idplates_labelbuilder_menu() {
 
   $items['test'] = array(
     'title' => 'Label Builder',
-    'page callback' => 'testy',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('testy'),
     'access arguments' => array('access content'),
   );
 
   return $items;
 }
 
-function testy() {
-  $cart = commerce_order_load(1);
-  $wrapper = entity_metadata_wrapper('commerce_order', $cart);
-  foreach ($wrapper->commerce_line_items as $commerce_line_item) {
-    $product = $commerce_line_item->commerce_product->field_numbering_barcode_options->set();
-    $product = $commerce_line_item->commerce_product->field_label_color->set();
-    $product = $commerce_line_item->commerce_product->field_label_text_line_1->set();
-    $product = $commerce_line_item->commerce_product->field_label_text_line_2->set();
-    $product = $commerce_line_item->commerce_product->field_label_text_line_3->set();
-    $item = $commerce_line_item->value();
+function testy($form, &$form_state) {
+  $form['numbering_options'] = array(
+    '#type' => 'radios',
+    '#options' => array(
+      'no' => 'no',
+      'custom' => 'custom',
+      'consecutive' => 'consecutive',
+    ),
+    '#title' => t('Select the options for numbering.'),
+    '#default_value' => 'no',
+  );
 
-  }
-  return '';
+  $form['consecutive_options'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Starting Barcode Number'),
+    '#states' => array(
+      'invisible' => array(
+        '#edit-numbering-options-no' => array('checked' => TRUE),
+        '#edit-numbering-options-custom' => array('checked' => TRUE),
+        '#edit-numbering-options-consecutive' => array('checked' => FALSE),
+      ),
+    ),
+  );
+
+  return $form;
 }
 
 /**
@@ -191,11 +204,9 @@ function idplates_label_builder_get_label_preview(&$form, &$form_state) {
     '#ajax' => array(
       'callback' => 'idplates_label_builder_live_price_ajax_callback',
       'method' => 'replace',
-      //      'event' => 'keyup',
+      'event' => 'blur',
       'progress' => array(),
-      'keypress' => TRUE,
     ),
-    '#description' => t('Hit "Enter" to update the price.'),
     '#weight' => 50,
   );
 
