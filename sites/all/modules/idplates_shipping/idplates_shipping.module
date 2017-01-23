@@ -4,3 +4,104 @@
  * @file
  */
 
+/**
+ * Implements hook_commerce_fedex_rate_request_alter()
+ *
+ * @param $request
+ * @param $order
+ *
+ * @see _commerce_fedex_get_package_items()
+ */
+function idplates_shipping_commerce_fedex_rate_request_alter(&$request, $order) {
+  $package_line_items = array();
+  $shippable_items = idplates_shipping_get_shippable_items($order);
+
+  $request['RequestedShipment']['PackageCount'] = 0;
+  foreach ($shippable_items as $key => $line_item) {
+    $package_line_items[$key]['SequenceNumber'] = $key + 1;
+    $package_line_items[$key]['GroupPackageCount'] = 1;
+    $weight = physical_weight_convert(commerce_physical_product_line_item_weight($line_item), 'lb');
+    $dimensions = idplates_shipping_box_options($line_item->quantity);
+    $package_line_items[$key]['Dimensions'] = $dimensions;
+    $package_line_items[$key]['Weight'] = array(
+      'Value' => $weight['weight'],
+      'Units' => strtoupper($weight['unit']),
+    );
+    $request['RequestedShipment']['PackageCount']++;
+  }
+
+  $request['RequestedShipment']['RequestedPackageLineItems'] = $package_line_items;
+
+  dpm($request);
+}
+
+/**
+ * Implements hook_commerce_ups_build_rate_request_alter()
+ *
+ * @param $rating_request
+ * @param $order
+ *
+ * @see commerce_ups_build_rate_request()
+ */
+function idplates_shipping_commerce_ups_build_rate_request_alter(&$rating_request, $order) {
+  $shippable_items = idplates_shipping_get_shippable_items($order);
+  unset($rating_request->Shipment->Package);
+
+  foreach ($shippable_items as $key => $line_item) {
+    $package = $rating_request->Shipment->addChild('Package');
+    $package->PackagingType->Code = variable_get('commerce_ups_packaging', '02');
+    $custom_box_dimensions = idplates_shipping_box_options($line_item->quantity);
+    $dimensions = $package->addChild('Dimensions');
+    $dimensions->UnitOfMeasurement->Code = $custom_box_dimensions['Units'];
+    $dimensions->Length = $custom_box_dimensions['Length'];
+    $dimensions->Width = $custom_box_dimensions['Width'];
+    $dimensions->Height = $custom_box_dimensions['Height'];
+    $weight = physical_weight_convert(commerce_physical_product_line_item_weight($line_item), 'lb');
+    $package_weight = $package->addChild('PackageWeight');
+    $package_weight->UnitOfMeasurement->Code = 'LBS';
+    /* If the weight is less than 0.1, set it to 0.1. I tried to find some "official" documentation
+     *   for this on the UPS site, but could not. I did find that other ecommerce platforms are
+     *   using this same logic though, I think it is safe for now. mta
+     */
+    $package_weight->Weight = max(array(0.1, $weight['weight']));
+  }
+}
+
+function idplates_shipping_box_options($qty) {
+  $box = array(
+    'Length' => '18',
+    'Width' => '12',
+    'Height' => '10',
+    'Units' => 'IN',
+  );
+  if ($qty < 15000) {
+    $box['Length'] = '18';
+    $box['Width'] = '10';
+    $box['Height'] = '8';
+  }
+  if ($qty < 10000) {
+    $box['Length'] = '14';
+    $box['Width'] = '10';
+    $box['Height'] = '8';
+  }
+  if ($qty < 5000) {
+    $box['Length'] = '6';
+    $box['Width'] = '6';
+    $box['Height'] = '9';
+  }
+  return $box;
+}
+
+function idplates_shipping_get_shippable_items($order) {
+  $shippable_items = array();
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+  foreach ($order_wrapper->commerce_line_items as $commerce_line_item_wrapper) {
+    $product = $commerce_line_item_wrapper->commerce_product->value();
+    if (!empty($product->field_label_size)) {
+      $shippable_items[] = $commerce_line_item_wrapper->value();
+    }
+  }
+
+  return $shippable_items;
+}
