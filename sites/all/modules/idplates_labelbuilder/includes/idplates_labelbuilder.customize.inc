@@ -39,7 +39,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
       'current_step' => 'customize',
       'label' => $label,
-    ))
+    )),
   );
   $form['column_left'] = array(
     '#type' => 'container',
@@ -91,6 +91,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#attributes' => array('placeholder' => $text_field['title']),
       '#size' => 32,
     );
+    $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#ajax']['event'] = 'blur';
+
     $form['column_left']['text_container']['text_container_' . $key]['size_' . $key] = array(
       '#type' => 'numberfield',
       '#default_value' => $text_field['size'],
@@ -99,8 +101,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#description' => t('pt'),
     );
     $text_input['text_' . $key] = array(
-      'text' => $form_state['values']['text_' . $key],
-      'size' => $form_state['values']['size_' . $key],
+      'text' => !empty($form_state['values']['text_' . $key]) ? $form_state['values']['text_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#default_value'],
+      'size' => !empty($form_state['values']['size_' . $key]) ? $form_state['values']['size_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['size_' . $key]['#default_value'],
     );
   }
 
@@ -119,15 +121,23 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     ),
     '#title' => t('Select the options for numbering.'),
     '#ajax' => $ajax,
-    '#default_value' => 'no',
+    '#default_value' => 'consecutive',
+  );
+
+  $form['column_left']['numbering']['consecutive'] = array(
+    '#type' => 'fieldset',
+    '#title' => 'Consecutive Options',
+    '#attributes' => array('class' => array('consecutive-options indent')),
+  );
+
+
+  $hide_consecutive = array(
+    'visible' => array(
+      ':input[name="numbering_options"]' => array('value' => 'consecutive'),
+    ),
   );
 
   $form['column_left']['numbering']['consecutive']['digits'] = array(
-    '#type' => 'container',
-    '#attributes' => array('class' => array('container-inline')),
-  );
-
-  $form['column_left']['numbering']['consecutive']['fixes'] = array(
     '#type' => 'container',
     '#attributes' => array('class' => array('container-inline')),
   );
@@ -141,14 +151,23 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   //    ),
   //  );
 
+  $form['column_left']['numbering']['consecutive']['advanced'] = array(
+    '#type' => 'fieldset',
+    '#title' => 'Advanced',
+    '#attributes' => array('class' => array('advanced-numbering indent')),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#states' => $hide_consecutive,
+  );
+  $form['column_left']['numbering']['consecutive']['advanced']['fixes'] = array(
+    '#type' => 'container',
+    '#attributes' => array('class' => array('container-inline')),
+  );
+
   $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
     '#type' => 'textfield',
     '#title' => t('Starting #'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-      ),
-    ),
+    '#states' => $hide_consecutive,
     '#maxlength' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
     '#size' => 3,
     '#default_value' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : '001',
@@ -157,11 +176,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
     '#type' => 'textfield',
     '#title' => t('Digits'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-      ),
-    ),
+    '#states' => $hide_consecutive,
     '#default_value' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
     '#maxlength' => 3,
     '#size' => 3,
@@ -176,39 +191,37 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     ),
   );
 
-  $form['column_left']['numbering']['consecutive']['fixes']['prefix'] = array(
+  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['prefix'] = array(
     '#type' => 'textfield',
     '#title' => t('Prefix'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-      ),
-    ),
+    '#states' => $hide_consecutive,
     '#maxlength' => 3,
     '#size' => 3,
   );
 
-  $form['column_left']['numbering']['consecutive']['fixes']['suffix'] = array(
+
+  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['consecutive'] = array(
+    '#type' => 'item',
+    '#markup' => '<div class="consecutive-placeholder">' . t('Consecutive Number') . '</div>',
+    '#states' => $hide_consecutive,
+  );
+  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['suffix'] = array(
     '#type' => 'textfield',
     '#title' => t('Suffix'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-      ),
-    ),
-    '#description' => t('Prefix and Suffix text does not change. Only the Consecutive number will change for each tag.'),
+    '#states' => $hide_consecutive,
     '#maxlength' => 3,
     '#size' => 3,
   );
+  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['description'] = array(
+    '#type' => 'item',
+    '#markup' => t('Prefix and Suffix text does not change. Only the Consecutive number will change for each tag.'),
+    '#states' => $hide_consecutive,
+  );
 
-  $form['column_left']['numbering']['consecutive']['padding'] = array(
+  $form['column_left']['numbering']['consecutive']['advanced']['padding'] = array(
     '#type' => 'radios',
     '#title' => t('Padding'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-      ),
-    ),
+    '#states' => $hide_consecutive,
     '#options' => array(t('Zeros'), t('None')),
     '#default_value' => '0',
     '#ajax' => $ajax,
@@ -224,12 +237,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#value' => t('NEXT: OPTIONS'),
   );
 
-  $label->setText($text_input + array(
-      'color' => $form_state['values']['text_color'],
-    ));
 
-  $label->setTagColor($form_state['values']['tag_color']);
-  $label->numbering = $form_state['values']['numbering_options'];
+  $tag_color = !empty($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
+  $label->setTagColor($tag_color);
+  $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : $form['column_left']['color']['text_color']['#default_value'];
+  $label->setText($text_input + array(
+      'color' => $text_color,
+    ));
+  $label->numbering = !empty($form_state['values']['numbering_options']) ? $form_state['values']['numbering_options'] : $form['column_left']['numbering']['numbering_options']['#default_value'];
   $form_state['label'] = $label;
 
   idplates_label_builder_get_label_preview($form, $form_state);

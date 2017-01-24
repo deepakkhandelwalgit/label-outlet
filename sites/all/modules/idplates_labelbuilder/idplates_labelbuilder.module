@@ -269,7 +269,6 @@ function idplates_label_builder_live_price_ajax_callback($form, $form_state) {
     'quantity' => $qty,
   ));
   $commands[] = ajax_command_replace('#idplates-labelbuilder-live-price-ajax-wrapper', $markup);
-  $commands[] = ajax_command_invoke('#edit-qty', 'focus');
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
