@@ -74,17 +74,17 @@ function idplates_shipping_box_options($qty) {
     'Height' => '10',
     'Units' => 'IN',
   );
-  if ($qty < 15000) {
+  if ($qty < 12000) {
     $box['Length'] = '18';
     $box['Width'] = '10';
     $box['Height'] = '8';
   }
-  if ($qty < 10000) {
+  if ($qty < 5000) {
     $box['Length'] = '14';
     $box['Width'] = '10';
     $box['Height'] = '8';
   }
-  if ($qty < 5000) {
+  if ($qty < 1000) {
     $box['Length'] = '6';
     $box['Width'] = '6';
     $box['Height'] = '9';
