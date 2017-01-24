@@ -11,7 +11,7 @@ function idplates_labelbuilder_menu() {
   $items = array();
 
   $items['labelbuilder/size/%node'] = array(
-    'title' => 'Label Builder',
+    'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('idplates_labelbuilder_size_form', 2),
     'access arguments' => array('access content'),
@@ -19,15 +19,15 @@ function idplates_labelbuilder_menu() {
   );
 
   $items['labelbuilder/layout/%commerce_product'] = array(
-    'title' => 'Label Builder',
+    'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('idplates_labelbuilder_layout_form', 2),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.layouts.inc',
   );
 
-  $items['labelbuilder/customize/%taxonomy_term'] = array(
-    'title' => 'Label Builder',
+  $items['labelbuilder/customize'] = array(
+    'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('idplates_labelbuilder_customize_form', 2),
     'access arguments' => array('access content'),
@@ -35,7 +35,7 @@ function idplates_labelbuilder_menu() {
   );
 
   $items['labelbuilder/options'] = array(
-    'title' => 'Label Builder',
+    'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('idplates_labelbuilder_options_form'),
     'access arguments' => array('access content'),
@@ -43,7 +43,7 @@ function idplates_labelbuilder_menu() {
   );
 
   $items['test'] = array(
-    'title' => 'Label Builder',
+    'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('testy'),
     'access arguments' => array('access content'),
@@ -68,10 +68,8 @@ function testy($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Starting Barcode Number'),
     '#states' => array(
-      'invisible' => array(
-        '#edit-numbering-options-no' => array('checked' => TRUE),
-        '#edit-numbering-options-custom' => array('checked' => TRUE),
-        '#edit-numbering-options-consecutive' => array('checked' => FALSE),
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
       ),
     ),
   );
@@ -117,6 +115,14 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'quantity' => NULL,
       ),
     ),
+    'idplates_labelbuilder_breadcrumb' => array(
+      'template' => 'idplates-labelbuilder-breadcrumb',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'current_step' => NULL,
+        'label' => NULL,
+      ),
+    ),
   );
 }
 
@@ -152,8 +158,8 @@ function idplates_labelbuilder_add_to_cart($product, $label, $uid = 0, $qty = 1)
     foreach ($label->extras as $extra) {
       $extra_qty = 1;
       //todo: jace fix this
-      $extra_item = commerce_product_line_item_new((commerce_product_load($extra)));
-      commerce_cart_product_add($uid, $extra_item, FALSE);
+      $extra_item = commerce_product_line_item_new((commerce_product_load($extra)), $extra_qty);
+      commerce_cart_product_add($uid, $extra_item);
     }
 
     $updated_product = idplates_labelbuilder_copy_label_to_product($label, $product);
@@ -164,7 +170,6 @@ function idplates_labelbuilder_add_to_cart($product, $label, $uid = 0, $qty = 1)
   catch (Exception $e) {
     return FALSE;
   }
-
 }
 
 function idplates_labelbuilder_copy_label_to_product($label, &$product) {
@@ -195,11 +200,17 @@ function idplates_label_builder_get_label_preview(&$form, &$form_state) {
 
   $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : 100;
 
-  $form['column_right']['label_proof']['qty'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Quantity'),
+  $form['column_right']['label_proof']['bottom'] = array(
+    '#type' => 'container',
+    '#weight' => 49,
     '#prefix' => '<div class="idplates-labelbuilder-qty-price-wrapper">',
     '#suffix' => '</div>',
+  );
+
+  $form['column_right']['label_proof']['bottom']['qty'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array('class' => array('container-inline')),
+    '#description' => t('Quantity'),
     '#default_value' => $qty,
     '#ajax' => array(
       'callback' => 'idplates_label_builder_live_price_ajax_callback',
@@ -207,9 +218,9 @@ function idplates_label_builder_get_label_preview(&$form, &$form_state) {
       'event' => 'blur',
       'progress' => array(),
     ),
-    '#weight' => 50,
+    '#maxlength' => 6,
+    '#size' => 6,
   );
-
 
   $form['column_right']['label_proof']['live_price'] = array(
     '#type' => 'item',
@@ -220,7 +231,7 @@ function idplates_label_builder_get_label_preview(&$form, &$form_state) {
   );
 
   $can_add_to_cart = $form_state['build_info']['form_id'] === 'idplates_labelbuilder_options_form';
-  $form['column_right']['add_to_cart'] = array(
+  $form['column_right']['label_proof']['bottom']['add_to_cart'] = array(
     '#type' => 'submit',
     '#value' => t('Add to Cart'),
     '#disabled' => !$can_add_to_cart,

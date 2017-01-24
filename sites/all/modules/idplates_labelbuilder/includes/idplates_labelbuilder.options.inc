@@ -35,6 +35,14 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     'event' => 'change',
   );
 
+  $form['breadcrumb'] = array(
+    '#type' => 'item',
+    '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
+      'current_step' => 'options',
+      'label' => $label,
+    ))
+  );
+
   $form['column_left'] = array(
     '#type' => 'container',
     '#attributes' => array(
@@ -48,7 +56,9 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     ),
   );
 
-  $options = array();
+  $options = array(
+    'default' => t('Standard Adhesive'),
+  );
 
   foreach ($adhesives as $adhesive) {
     //    $image = $adhesive->field_label_size->field_ls_image->value();
@@ -74,7 +84,48 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#options' => $options,
     '#required' => TRUE,
     '#ajax' => $ajax,
+  );
 
+  $form['column_left']['cleaner'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Cleaner'),
+  );
+  $form['column_left']['cleaner']['cleaner_options'] = array(
+    '#type' => 'checkboxes',
+    '#options' => array(
+      'cleaner' => t('Surface Cleaner - 8oz Spray Bottle'),
+    ),
+  );
+
+  $form['column_left']['application_aid'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Application Aid'),
+  );
+  $form['column_left']['application_aid']['roller'] = array(
+    '#type' => 'checkboxes',
+    '#options' => array(
+      'cleaner' => t('Application Roller'),
+    ),
+  );
+
+  $form['column_left']['instructions'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Instructions to the printer'),
+  );
+
+  $form['column_left']['instructions']['review'] = array(
+    '#type' => 'radios',
+    '#title' => t('Design Review'),
+    '#options' => array(
+      'pro' => t('I\'d like a professional to tweak my design at no extra charge. Use my text and graphics, but make layout adjustments for the best appearance.'),
+      'exact' => t('Use my design exactly.'),
+    ),
+    '#default_value' => 'pro',
+  );
+
+  $form['column_left']['instructions']['special_info'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Anything else? Let us know.'),
   );
 
   $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : $form['column_left']['adhesives']['adhesive_option']['#default_value'];

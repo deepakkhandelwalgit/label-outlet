@@ -48,11 +48,18 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     }
   }
 
-  //todo jace - get style option in a better manner and line 22
+  //todo jace - get style option in a better manner and line 26
   $style_options = array(
     'BAR' => 'Barcodes',
     'NUM' => 'Numbering Only',
     'TXT' => 'Text Only',
+  );
+  $form['breadcrumb'] = array(
+    '#type' => 'item',
+    '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
+      'current_step' => 'layout',
+      'label' => $label,
+    ))
   );
 
   $form['column_left'] = array(

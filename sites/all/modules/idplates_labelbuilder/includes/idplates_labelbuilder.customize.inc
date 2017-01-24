@@ -5,11 +5,10 @@
  *
  * @param $form
  * @param $form_state
- * @param $term
  *
  * @return mixed
  */
-function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
+function idplates_labelbuilder_customize_form($form, &$form_state) {
   $label = $_SESSION['idplates']['label'];
   $label->setSection('customize');
   $text_fields = array(
@@ -35,6 +34,13 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
     'progress' => array(),
   );
 
+  $form['breadcrumb'] = array(
+    '#type' => 'item',
+    '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
+      'current_step' => 'customize',
+      'label' => $label,
+    ))
+  );
   $form['column_left'] = array(
     '#type' => 'container',
     '#attributes' => array(
@@ -101,34 +107,111 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $term) {
   $form['column_left']['numbering'] = array(
     '#type' => 'fieldset',
     '#title' => t('Numbering'),
+    '#prefix' => '<div id="idplates-labelbuilder-numbering-ajax-wrapper">',
+    '#suffix' => '</div>',
   );
   $form['column_left']['numbering']['numbering_options'] = array(
-    '#type' => 'checkboxes',
+    '#type' => 'radios',
     '#options' => array(
-      'no' => 'no',
-      'custom' => 'custom',
-      'identical' => 'identical',
-      'consecutive' => 'consecutive',
+      'no' => t('No Numbering (Blank Pad only)'),
+      'custom' => t('I will supply custom numbering'),
+      'consecutive' => t('Use Consecutive Number/Barcode below'),
     ),
     '#title' => t('Select the options for numbering.'),
     '#ajax' => $ajax,
     '#default_value' => 'no',
   );
 
-  $form['column_left']['numbering']['consecutive'] = array(
+  $form['column_left']['numbering']['consecutive']['digits'] = array(
+    '#type' => 'container',
+    '#attributes' => array('class' => array('container-inline')),
+  );
+
+  $form['column_left']['numbering']['consecutive']['fixes'] = array(
+    '#type' => 'container',
+    '#attributes' => array('class' => array('container-inline')),
+  );
+
+  //  $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
+  //    '#type' => 'select',
+  //    '#title' => t('Starting #'),
+  //    '#options' => array(
+  //      'test',
+  //      'test2',
+  //    ),
+  //  );
+
+  $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
     '#type' => 'textfield',
-    '#title' => t('Starting Barcode Number'),
+    '#title' => t('Starting #'),
     '#states' => array(
-      'invisible' => array(
-        ':input[name="numbering_options[no]"]' => array('checked' => TRUE),
-        ':input[name="numbering_options[custom]"]' => array('checked' => TRUE),
-        ':input[name="numbering_options[identical]"]' => array('checked' => TRUE),
-//        ':input[name="numbering_options[consecutive]"]' => array('checked' => false),
-//        '#edit-numbering-options-custom' => array('checked' => TRUE),
-//        '#edit-numbering-options-identical' => array('checked' => TRUE),
-//        '#edit-numbering-options-consecutive' => array('checked' => FALSE),
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
       ),
     ),
+    '#maxlength' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
+    '#size' => 3,
+    '#default_value' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : '001',
+  );
+
+  $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Digits'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
+      ),
+    ),
+    '#default_value' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
+    '#maxlength' => 3,
+    '#size' => 3,
+    '#ajax' => array(
+      'callback' => 'idplates_label_builder_numbering_ajax_callback',
+      'wrapper' => 'idplates-labelbuilder-numbering-ajax-wrapper',
+      'method' => 'replace',
+      'progress' => array(
+        'type' => '',
+        'message' => '',
+      ),
+    ),
+  );
+
+  $form['column_left']['numbering']['consecutive']['fixes']['prefix'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Prefix'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
+      ),
+    ),
+    '#maxlength' => 3,
+    '#size' => 3,
+  );
+
+  $form['column_left']['numbering']['consecutive']['fixes']['suffix'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Suffix'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
+      ),
+    ),
+    '#description' => t('Prefix and Suffix text does not change. Only the Consecutive number will change for each tag.'),
+    '#maxlength' => 3,
+    '#size' => 3,
+  );
+
+  $form['column_left']['numbering']['consecutive']['padding'] = array(
+    '#type' => 'radios',
+    '#title' => t('Padding'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
+      ),
+    ),
+    '#options' => array(t('Zeros'), t('None')),
+    '#default_value' => '0',
+    '#ajax' => $ajax,
   );
 
   $form['column_left']['back'] = array(
@@ -177,4 +260,8 @@ function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
   $_SESSION['idplates']['label'] = $form_state['label'];
 
   $form_state['redirect'] = 'labelbuilder/options';
+}
+
+function idplates_label_builder_numbering_ajax_callback($form, &$form_state) {
+  return $form['column_left']['numbering'];
 }

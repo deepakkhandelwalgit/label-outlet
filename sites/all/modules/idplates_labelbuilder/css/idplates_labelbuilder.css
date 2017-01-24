@@ -24,6 +24,7 @@ input[type="submit"].form-button-disabled {
   background-color: #666;
   color: #ccc;
 }
+
 input[type="submit"].form-button-disabled:hover {
   background-color: #666;
   color: #ccc;
@@ -32,6 +33,39 @@ input[type="submit"].form-button-disabled:hover {
 /**
  * Steps
  **/
+[id^=idplates-labelbuilder] #edit-breadcrumb {
+  margin-top: 0;
+}
+
+.idplates-labelbuilder-breadcrumb-wrapper {
+  font-size: 1.4em;
+}
+
+.idplates-labelbuilder-breadcrumb-wrapper a {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.idplates-labelbuilder-breadcrumb-wrapper a:hover {
+  text-decoration: underline;
+}
+
+.idplates-labelbuilder-breadcrumb-wrapper a.disabled {
+  color: #999;
+  pointer-events: none;
+  cursor: default;
+}
+
+.idplates-labelbuilder-breadcrumb-wrapper a.current-step {
+  color: #c0273c;
+}
+
+.idplates-labelbuilder-breadcrumb-wrapper .step-arrow {
+  color: #999 !important;
+  margin: 0 5px;
+}
+
 #idplates-labelbuilder-size-form input[type='radio'],
 #idplates-labelbuilder-layout-form input[type='radio'] {
   display: none;
@@ -148,6 +182,10 @@ input[type="submit"].form-button-disabled:hover {
   line-height: 48px;
   height: 48px;
   border-top: solid 1px #ccc;
+}
+
+#idplates-labelbuilder-size-form .form-type-radios.form-item-sizes {
+  margin-top: 0;
 }
 
 #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles {
@@ -298,6 +336,30 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 
 #edit-label-proof .idplates-labelbuilder-qty-price-wrapper {
   border-top: 2px solid #ccc;
+}
+
+#edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-item-qty {
+  width: 33%;
+  display: inline-block;
+  text-align: center;
+
+}
+
+#edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-item-qty input {
+  margin: 0;
+  padding: 0;
+  height: 2em;
+  text-align: center;
+}
+
+#edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-submit {
+  margin: 16px;
+  float: right;
+}
+
+#edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-item-qty .description {
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 /**

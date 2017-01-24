@@ -25,7 +25,6 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
 
   $label->setSection('size');
 
-
   $ajax = array(
     'callback' => 'idplates_label_builder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
@@ -48,6 +47,13 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
     );
   }
 
+  $form['breadcrumb'] = array(
+    '#type' => 'item',
+    '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
+      'current_step' => 'size',
+      'label' => $label,
+    )),
+  );
   $form['column_left'] = array(
     '#type' => 'container',
     '#attributes' => array(
