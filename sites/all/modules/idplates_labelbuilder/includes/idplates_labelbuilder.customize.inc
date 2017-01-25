@@ -62,14 +62,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form['column_left']['color']['tag_color'] = array(
     '#type' => 'jquery_colorpicker',
     '#title' => t('Tag Color'),
-    '#default_value' => 'FF0000',
+    '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
     '#ajax' => $ajax,
   );
 
   $form['column_left']['color']['text_color'] = array(
     '#type' => 'jquery_colorpicker',
     '#title' => t('Text Color'),
-    '#default_value' => 'FFFFFF',
+    '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : 'FF0000',
     '#ajax' => $ajax,
   );
 
@@ -90,7 +90,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#title' => t('Text ' . strtoupper($key)),
       '#attributes' => array('placeholder' => $text_field['title']),
       '#size' => 32,
+      '#default_value' => !empty($label->getText()['text_' . $key]) ? $label->getText()['text_' . $key] : 'Text ' . strtoupper($key),
     );
+
     $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#ajax']['event'] = 'blur';
 
     $form['column_left']['text_container']['text_container_' . $key]['size_' . $key] = array(
@@ -99,10 +101,12 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#ajax' => $ajax,
       '#maxlength' => 2,
       '#description' => t('pt'),
+      '#default_value' => !empty($label->getText()['size_' . $key]) ? $label->getText()['size_' . $key] : 12,
     );
+
     $text_input['text_' . $key] = array(
-      'text' => !empty($form_state['values']['text_' . $key]) ? $form_state['values']['text_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#default_value'],
-      'size' => !empty($form_state['values']['size_' . $key]) ? $form_state['values']['size_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['size_' . $key]['#default_value'],
+      'text' => !empty($label->getText()['text_' . $key]) ? $label->getText()['text_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#default_value'],
+      'size' => !empty($label->getText()['size_' . $key]) ? $label->getText()['size_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['size_' . $key]['#default_value'],
     );
   }
 
@@ -170,14 +174,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#states' => $hide_consecutive,
     '#maxlength' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
     '#size' => 3,
-    '#default_value' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : '001',
+    '#default_value' => !empty($label->numbering['starting_digit']) ? $label->numbering['starting_digit'] : '001',
   );
 
   $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
     '#type' => 'textfield',
     '#title' => t('Digits'),
     '#states' => $hide_consecutive,
-    '#default_value' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
+    '#default_value' => !empty($label->numbering['number_of_digits']) ? $label->numbering['number_of_digits'] : 3,
     '#maxlength' => 3,
     '#size' => 3,
     '#ajax' => array(
@@ -194,24 +198,27 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form['column_left']['numbering']['consecutive']['advanced']['fixes']['prefix'] = array(
     '#type' => 'textfield',
     '#title' => t('Prefix'),
+    '#default_value' => !empty($label->numbering['prefix']) ? $label->numbering['prefix'] : '',
     '#states' => $hide_consecutive,
     '#maxlength' => 3,
     '#size' => 3,
   );
-
 
   $form['column_left']['numbering']['consecutive']['advanced']['fixes']['consecutive'] = array(
     '#type' => 'item',
     '#markup' => '<div class="consecutive-placeholder">' . t('Consecutive Number') . '</div>',
     '#states' => $hide_consecutive,
   );
+
   $form['column_left']['numbering']['consecutive']['advanced']['fixes']['suffix'] = array(
     '#type' => 'textfield',
     '#title' => t('Suffix'),
     '#states' => $hide_consecutive,
     '#maxlength' => 3,
     '#size' => 3,
+    '#default_value' => !empty($label->numbering['suffix']) ? $label->numbering['suffix'] : '',
   );
+
   $form['column_left']['numbering']['consecutive']['advanced']['fixes']['description'] = array(
     '#type' => 'item',
     '#markup' => t('Prefix and Suffix text does not change. Only the Consecutive number will change for each tag.'),
@@ -223,7 +230,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#title' => t('Padding'),
     '#states' => $hide_consecutive,
     '#options' => array(t('Zeros'), t('None')),
-    '#default_value' => '0',
+    '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 0,
     '#ajax' => $ajax,
   );
 
@@ -239,12 +246,15 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
 
 
   $tag_color = !empty($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
+
   $label->setTagColor($tag_color);
+
   $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : $form['column_left']['color']['text_color']['#default_value'];
+
   $label->setText($text_input + array(
       'color' => $text_color,
     ));
-  $label->numbering = !empty($form_state['values']['numbering_options']) ? $form_state['values']['numbering_options'] : $form['column_left']['numbering']['numbering_options']['#default_value'];
+
   $form_state['label'] = $label;
 
   idplates_label_builder_get_label_preview($form, $form_state);
@@ -272,6 +282,7 @@ function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
  */
 function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
   $_SESSION['idplates']['customize'] = $form_state['values'];
+  $form_state['label']->numbering = idplates_labelbuilder_build_numbering_options($form, $form_state);
   $_SESSION['idplates']['label'] = $form_state['label'];
 
   $form_state['redirect'] = 'labelbuilder/options';
@@ -279,4 +290,15 @@ function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
 
 function idplates_label_builder_numbering_ajax_callback($form, &$form_state) {
   return $form['column_left']['numbering'];
+}
+
+function idplates_labelbuilder_build_numbering_options($form, $form_state) {
+  return array(
+    'numbering_option' => $form_state['values']['numbering_options'],
+    'starting_digit' => $form_state['values']['starting_digit'],
+    'number_of_digits' => $form_state['values']['number_of_digits'],
+    'prefix' => $form_state['values']['prefix'],
+    'suffix' => $form_state['values']['suffix'],
+    'padding' => $form_state['values']['padding'],
+  );
 }

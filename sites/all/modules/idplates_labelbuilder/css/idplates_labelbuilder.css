@@ -310,6 +310,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 
 .idplates-labelbuilder-preview-table td {
   text-align: right;
+  text-transform: uppercase;
 }
 
 .idplates-labelbuilder-preview {
@@ -400,23 +401,23 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-bottom: 0;
 }
 
-#idplates-labelbuilder-customize-form #edit-digits,
-#idplates-labelbuilder-customize-form #edit-fixes {
+#idplates-labelbuilder-customize-form [id^=edit-digits],
+#idplates-labelbuilder-customize-form [id^=edit-fixes] {
   margin: 0;
 }
 
-#idplates-labelbuilder-customize-form #edit-digits .form-item,
-#idplates-labelbuilder-customize-form #edit-fixes .form-item {
+#idplates-labelbuilder-customize-form [id^=edit-digits] .form-item,
+#idplates-labelbuilder-customize-form [id^=edit-fixes] .form-item {
   display: inline-block;
   vertical-align: text-bottom;
 }
 
-#idplates-labelbuilder-customize-form #edit-digits label,
-#idplates-labelbuilder-customize-form #edit-fixes label {
+#idplates-labelbuilder-customize-form [id^=edit-digits] label,
+#idplates-labelbuilder-customize-form [id^=edit-fixes] label {
   display: block;
 }
 
-#idplates-labelbuilder-customize-form #edit-fixes #edit-description {
+#idplates-labelbuilder-customize-form [id^=edit-fixes] [id^=edit-description] {
   font-style: italic;
   font-size: 12px;
   margin: -18px 0 0;

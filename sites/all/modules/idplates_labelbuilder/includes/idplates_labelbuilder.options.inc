@@ -40,7 +40,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
       'current_step' => 'options',
       'label' => $label,
-    ))
+    )),
   );
 
   $form['column_left'] = array(
@@ -126,6 +126,8 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $form['column_left']['instructions']['special_info'] = array(
     '#type' => 'textarea',
     '#title' => t('Anything else? Let us know.'),
+    '#attributes' => array('placeholder' => 'Start typing here...'),
+    '#default_value' => '',
   );
 
   $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : $form['column_left']['adhesives']['adhesive_option']['#default_value'];
@@ -140,7 +142,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
 
   $form['column_left']['back'] = array(
     '#type' => 'button',
-    '#value' => t('PREV: LAYOUT'),
+    '#value' => t('PREV: CUSTOMIZE'),
   );
 
   return $form;

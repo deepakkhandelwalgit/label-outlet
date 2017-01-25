@@ -124,7 +124,14 @@ $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
     <?php foreach ($label as $key => $value): ?>
     <tr>
       <th><?php print str_replace('_', ' ', $key); ?></th>
-      <td><?php print !empty($value) ? $value : '--'; ?></td>
+      <td><?php
+        if (is_array($value)) {
+          print !empty(reset($value)) ? reset($value) : '--';
+        }
+        else {
+          print !empty($value) ? $value : '--';
+        }
+        ?></td>
       <?php endforeach; ?>
     </tr>
   </table>
