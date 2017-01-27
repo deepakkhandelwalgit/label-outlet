@@ -1,11 +1,5 @@
-.page-node span.file img{
-    margin-right: 5px;
-    width: 5%;
-	float:left;
-}
+#page-intro { background-color: #ffffff; }
 
-.page-node span.file a{
-    width: 90%;
-	float:right;
-	margin-bottom:10px;
+.overlay, .overlayed-teaser a:before, #image-slider-carousel ul.slides>li:after {
+    background-color: rgba(255,255,255,0.8);
 }
