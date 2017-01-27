@@ -286,7 +286,7 @@ padding-bottom: 5px; }
 
 #header-top { background-color: #2869c2; }
 
-#header-bottom { padding: 35px 0 0 0; }
+#header-bottom { padding: 10px 0 0 0; }
 
 #header-inside { position: relative; }
 
@@ -404,7 +404,7 @@ padding-bottom: 5px; }
 }
 
 @media (min-width: 992px) {
-	#main-navigation ul.menu { margin-top: 41px; }
+	#main-navigation ul.menu { margin-top: 25px; }
 }
 
 /*superfish support*/
@@ -620,7 +620,7 @@ width: 100%; color: #636363; }
 }
 
 @media (min-width: 992px) {
-	#search-area { margin: 35px 0 0 0; }
+	#search-area { margin: 18px 0 0 0; }
 }
 
 @media (min-width: 1200px) {
@@ -637,7 +637,7 @@ width: 100%; color: #636363; }
 }
 
 /* Logo - Site name*/
-#logo-and-site-name-wrapper { padding-bottom: 20px; }
+#logo-and-site-name-wrapper { padding-bottom: 10px; }
 
 #logo { float: left; margin-right: 15px; display: inline-block; padding-top: 7px; }
 
