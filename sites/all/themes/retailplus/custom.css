@@ -26,3 +26,11 @@
 #highlighted{
 	padding: 10px 0 20px 0;
 }
+
+.view-id-mt_latest_listings .view-listings .views-field-title {
+    clear: both;
+    padding: 15px 20px 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+}
