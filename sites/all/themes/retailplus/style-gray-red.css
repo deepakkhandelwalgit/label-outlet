@@ -39,7 +39,9 @@ ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li
 
 .view-listings .category-item a:hover { background-color: rgba(234,45,73,0.95); }
 
-.overlay, .overlayed-teaser a:before, #image-slider-carousel ul.slides>li:after { background-color: rgba(234,45,73,0.8); }
+.overlay, .overlayed-teaser a:before, #image-slider-carousel ul.slides>li:after {
+    background-color: rgba(255,255,255,0.5);
+}
 
 .mean-container .mean-nav ul li li a:hover { border-top: 1px solid #ea2d49; }
 
