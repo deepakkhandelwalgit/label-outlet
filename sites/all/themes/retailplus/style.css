@@ -349,7 +349,7 @@ padding-bottom: 5px; }
 /*regions*/
 .header-top-area { color: #CCD4D4; font-size: 12px; }
 
-.header-top-area a { color: #CCD4D4; text-decoration: underline; }
+.header-top-area a { color: #FFFFFF; text-decoration: underline; }
 
 .header-top-area a:hover, .header-top-area a:focus { color: #CCD4D4; text-decoration: none; }
 
