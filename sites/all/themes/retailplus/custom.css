@@ -9,7 +9,7 @@
     text-align: center;
 }
 
-#block-views-mt-latest-listings-block-1 .view-listings .property-container {
+#block-views-mt-latest-listings-block-1.view-listings .property-container {
     background-color: #fff;
     /* border: 1px solid #e1e1e1; */
 }
