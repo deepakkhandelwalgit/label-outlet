@@ -5,18 +5,18 @@
 a, #header ul.menu li a.active, ul.menu li a, .footer-area ul.menu li.collapsed > a:before, .footer-area ul.menu li.expanded > a:before,
 #site-name a, .comment-counter, .comment .username, .summary .field-item a, .more-link a, .views-field-view-node a, a.button, #toTop,
 .view-listings .views-field-title a,
-.view-listings .flag-wrapper a.unflag-action:after, .view-listings .flag-wrapper a:hover:after, .mean-container a.meanmenu-reveal { color: #c0273c; }
+.view-listings .flag-wrapper a.unflag-action:after, .view-listings .flag-wrapper a:hover:after, .mean-container a.meanmenu-reveal { color: #A90018; }
 
 #header ul.menu li a:hover, #header ul.menu li.sfHover>a, #main-navigation .sf-menu ul, #header-top .sf-menu ul, .post-progressbar,
 .view-filters .ui-slider .ui-widget-header, .views-exposed-widgets input[type="submit"], .header-top-area .contact-info li,
 .header-top-area ul.social-bookmarks li a, .header-top-area ul.brands li a, input[type="submit"], input[type="reset"], input[type="button"],
 .panel-title a, .mean-container a.meanmenu-reveal span, .mean-container .mean-nav, .mean-container .mean-nav ul li a.mean-expand,
-.poll .bar .foreground { background-color: #c0273c; }
+.poll .bar .foreground { background-color: #A90018; }
 
-.mean-container .mean-nav ul li li a { border-top: 1px solid #c0273c; }
+.mean-container .mean-nav ul li li a { border-top: 1px solid #A90018; }
 
 .view-filters .ui-slider.ui-widget-content, .more-link a, .views-field-view-node a, a.button,
-.view-filters .ui-slider.ui-widget-content .ui-state-default, #toTop { border-color: #c0273c; }
+.view-filters .ui-slider.ui-widget-content .ui-state-default, #toTop { border-color: #A90018; }
 
 a:hover, a:focus, ul.menu li a.active:hover, ul.menu li a:hover, ul.menu li > a:hover:before, .footer-area ul.menu li a:hover,
 .footer-area ul.menu li > a:hover:before, .footer-area ul.menu li.expanded > a:hover:before, .summary .field-item a:hover,
@@ -56,8 +56,8 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 
 .node-type-mt-product .commerce-add-to-cart input[type="submit"], .node-type-mt-product .flag-outer-mt-watchlist a, .field-name-field-mt-call-to-action a.button {
   background: transparent;
-  color: #c0273c;
-  border: 1px solid #c0273c;
+  color: #A90018;
+  border: 1px solid #A90018;
 }
 
 .node-type-mt-product .commerce-add-to-cart input[type="submit"]:hover, .node-type-mt-product .flag-outer-mt-watchlist a:hover, .field-name-field-mt-call-to-action a.button:hover {
