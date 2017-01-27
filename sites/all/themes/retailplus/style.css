@@ -1312,11 +1312,11 @@ span.header-icon {
 
 .view-listings .categories-container { padding-left: 20px; }
 
-.view-listings .image-container .categories-container { position: absolute; top: 0px; left: 20px; z-index: 3; padding: 0!important; }
+.view-listings .image-container .categories-container { position: absolute; top: 0px; left: 5px; z-index: 3; padding: 0!important; }
 
 .view-listings .category-item { float: left; }
 
-.view-listings .category-item a { font-size: 11px; text-transform: uppercase; padding: 8px 20px; background-color: rgba(99,99,99,0.95); color: #ffffff;
+.view-listings .category-item a { font-size: 11px; text-transform: uppercase; padding: 5px 10px; background-color: rgba(99,99,99,0.95); color: #ffffff;
 display: inline-block; }
 
 .view-listings .category-item + .category-item a { background-color: rgba(70,70,70,0.95); }
