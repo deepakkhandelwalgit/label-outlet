@@ -60,16 +60,7 @@ function fontawesome_preprocess_html() {
   if (variable_get('fontawesome_use_cdn', FALSE)) {
     drupal_add_css(FONTAWESOME_CDN_URL, array('type' => 'external'));
   }
-  else {
-    $library = libraries_load(FONTAWESOME_LIBRARY);
-    if (!$library['loaded']) {
-      drupal_set_message($library['error message'] . t('Please make sure that '
-              . 'fontawesome was download & extracted at sites/all/libraries/fontawesome directory.'
-              . 'Please check README.txt for more details.'), 
-              'warning');
-    }
-  }
-}
+ }
 
 /**
  * Implements hook_form_FORM_ID_alter().
