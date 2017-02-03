@@ -29,6 +29,21 @@
         }, 800);
       });
 
+
+      if ($('.idplates-labelbuilder-inline').length) {
+        $('.idplates-labelbuilder-inline').parent().addClass('idplates-labelbuilder-inline-wrapper');
+        // $('.idplates-labelbuilder-inline-wrapper p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>')
+      }
+
+      $('.idplates-labelbuilder-inline-wrapper').each(function () {
+        var $this = $(this);
+        $this.find('p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>')
+        var parentHeight = 40;
+        $this.height(parentHeight);
+        $this.find('img.idplates-labelbuilder-logo').css('max-height', parentHeight);
+      });
+
+
     }
   }
 })

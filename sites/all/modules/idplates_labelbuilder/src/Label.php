@@ -11,6 +11,7 @@ class Label {
   private $layout_tid;
   private $section;
   private $adhesive;
+  private $logo;
 
   /**
    * @return mixed
@@ -122,6 +123,20 @@ class Label {
    */
   public function setAdhesive($adhesive) {
     $this->adhesive = $adhesive;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getLogo() {
+    return $this->logo;
+  }
+
+  /**
+   * @param mixed $logo
+   */
+  public function setLogo($logo) {
+    $this->logo = $logo;
   }
 
 }

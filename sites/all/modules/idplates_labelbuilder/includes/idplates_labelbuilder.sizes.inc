@@ -12,10 +12,6 @@
  *
  * @return mixed
  */
-
-/**
- *
- */
 function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   $label = new Label();
 
@@ -26,7 +22,7 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   $label->setSection('size');
 
   $ajax = array(
-    'callback' => 'idplates_label_builder_preview_ajax_callback',
+    'callback' => 'idplates_labelbuilder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
     'progress' => array(),

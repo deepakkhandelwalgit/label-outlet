@@ -115,6 +115,7 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 #idplates-labelbuilder-customize-form [type="text"],
+#idplates-labelbuilder-customize-form select,
 #idplates-labelbuilder-customize-form [type="number"] {
   height: 32px;
 }
@@ -289,7 +290,7 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 p.idplates-labelbuilder-preview-wrapper-barcode {
-  background: url('../gfx/barcode.png') repeat #fff;
+  background: url('../gfx/barcode.png') repeat;
   margin: 0 auto;
   width: 85%;
 }
@@ -321,10 +322,41 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin: 0 auto;
 }
 
+.idplates-labelbuilder-preview .idplates-labelbuilder-inline-wrapper img {
+}
+
+.idplates-labelbuilder-preview .idplates-labelbuilder-inline-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  display: table;
+  border-collapse: collapse;
+}
+
+.idplates-labelbuilder-preview .idplates-labelbuilder-inline-wrapper > * {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 5px;
+}
+
+.idplates-labelbuilder-preview .idplates-labelbuilder-wrapped-paragraphs p {
+  white-space: nowrap;
+}
+
+.idplates-labelbuilder-preview .idplates-labelbuilder-empty-logo {
+  border: 1px dashed #c0273c;
+  width: 30px;
+  border-radius: 5px;
+  line-height: 1;
+  color: #c0273c;
+  font-size: 12pt;
+  font-style: italic;
+  padding: 2px;
+
+}
+
 /**
  * Live Price
  */
-
 #edit-label-proof .idplates-labelbuilder-live-price-wrapper,
 #edit-label-proof .idplates-labelbuilder-qty-price-wrapper {
   width: 80%;
@@ -374,6 +406,11 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-right: 45px;
 }
 
+#idplates-labelbuilder-customize-form .form-type-jquery-colorpicker > label {
+  top: 9px;
+  position: relative;
+}
+
 #idplates-labelbuilder-customize-form .consecutive-options > legend {
   display: none;
 }
@@ -402,8 +439,22 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 #idplates-labelbuilder-customize-form [id^=edit-digits],
+#idplates-labelbuilder-customize-form .form-item-numbering-type,
 #idplates-labelbuilder-customize-form [id^=edit-fixes] {
   margin: 0;
+}
+
+#idplates-labelbuilder-customize-form .form-item-numbering-type {
+  width: 150px;
+}
+
+#idplates-labelbuilder-customize-form .form-item-numbering-type select {
+  line-height: 1;
+  font-size: 1em;
+}
+
+#idplates-labelbuilder-customize-form .form-item-numbering-type.form-type-select:after {
+  bottom: 15%;
 }
 
 #idplates-labelbuilder-customize-form [id^=edit-digits] .form-item,
@@ -447,6 +498,24 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   display: block;
   border-radius: 3px;
   margin-right: 6px;
+}
+
+#idplates-labelbuilder-customize-form .form-item-custom-logo input[type="submit"] {
+  padding: 5px 30px;
+  background-color: transparent;
+  border: 1px solid #acacac;
+  color: #555555;
+  height: initial;
+  margin-top: 3px;
+}
+
+#idplates-labelbuilder-customize-form .form-item-custom-logo input[type="submit"]:hover {
+  background-color: #ea2d49;
+  color: #fff;
+}
+
+#idplates-labelbuilder-customize-form .form-item-custom-logo img {
+  display: inline;
 }
 
 /**

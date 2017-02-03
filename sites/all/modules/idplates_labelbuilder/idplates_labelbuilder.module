@@ -213,7 +213,7 @@ function idplates_label_builder_get_label_preview(&$form, &$form_state) {
     '#description' => t('Quantity'),
     '#default_value' => $qty,
     '#ajax' => array(
-      'callback' => 'idplates_label_builder_live_price_ajax_callback',
+      'callback' => 'idplates_labelbuilder_live_price_ajax_callback',
       'method' => 'replace',
       'event' => 'blur',
       'progress' => array(),
@@ -261,7 +261,7 @@ function idplates_labelbuilder_add_to_cart_validate($form, &$form_state) {
   }
 }
 
-function idplates_label_builder_live_price_ajax_callback($form, $form_state) {
+function idplates_labelbuilder_live_price_ajax_callback($form, $form_state) {
   $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : $form['column_right']['label_proof']['qty']['#default_value'];
 
   $markup = theme('idplates_labelbuilder_live_price', array(
@@ -272,6 +272,241 @@ function idplates_label_builder_live_price_ajax_callback($form, $form_state) {
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
-function idplates_label_builder_preview_ajax_callback($form, $form_state) {
+function idplates_labelbuilder_preview_ajax_callback($form, $form_state) {
   return $form['column_right']['label_proof']['preview'];
+}
+
+/**
+ * @param $label
+ * @param $code
+ * @param $no_numbering
+ *
+ * @return string
+ */
+function _idplates_labelbuilder_render_label($label, $code, $no_numbering) {
+  $sections = explode('/', $code);
+  $size = explode('x', $label->size);
+  $realW = (double) $size[0];
+  $realH = (double) $size[1];
+  $width = 260;
+  $height = $width * $realH / $realW;
+  $tag_color = !empty($label->getTagColor()) ? $label->getTagColor() : 'f00';
+  $text_color = !empty($label->getText()['color']) ? $label->getText()['color'] : 'fff';
+  $font_size['a'] = !empty($label->getText()['text_a']['size']) ? $label->getText()['text_a']['size'] : '12';
+  $font_size['b'] = !empty($label->getText()['text_b']['size']) ? $label->getText()['text_b']['size'] : '10';
+  $font_size['c'] = !empty($label->getText()['text_c']['size']) ? $label->getText()['text_c']['size'] : '10';
+  $serial_number = '000001';
+
+  $section_height = _idplates_labelbuilder_get_section_heights($code, $height);
+
+  if (count($section_height) == 1) {
+    $line_height_a = $height;
+  }
+
+  $markup = '';
+  $markup .= '<div class="idplates-labelbuilder-preview-wrapper" style="width:' . $width . 'px; height: ' . $height . 'px">';
+
+  foreach ($sections as $index => $preview_section):
+    $background = '#fff';
+    $current_section_height = $section_height[$index];
+    if (ctype_upper($preview_section)) {
+      $background = '#' . $tag_color;
+    }
+    elseif (TRUE)//metal {
+    {
+      $background = 'url(' . base_path() . drupal_get_path('module', 'idplates_labelbuilder') . '/gfx/metal_background.png)';
+    }
+
+    $markup .= '<div class="idplates-labelbuilder-preview-section-wrapper"
+       style="height: ' . $current_section_height . ';color: #' . $text_color . '; background: ' . $background . ';background-size: contain">';
+
+
+    if (strpos($code, 'm') !== FALSE):
+      $markup .= '<div class="idplates-labelbuilder-preview-section idplates-labelbuilder-qrcode" style="height:100%">';
+      // QR Code
+      $label_markup = '';
+      $double_serial_size = FALSE;
+      foreach (str_split($preview_section) as $char) :
+        $char = strtolower($char);
+        $styles = '';
+        $classes = '';
+        $content = '';
+        $tag = 'p';
+        switch ($char) :
+          case 'a' :
+          case 'b' :
+          case 'c' :
+            $styles .= 'font-size:' . $font_size[$char] . 'pt';
+            $content = !empty($label->getText()['text_' . $char]['text']) ? $label->getText()['text_' . $char]['text'] : t('Text ') . strtoupper($char);
+            break;
+          case 's' :
+            $classes = $no_numbering;
+            $multiplier = $double_serial_size ? 2 : 1;
+            $styles .= 'font-size:' . $section_height['serial_height'] * $multiplier . 'pt;font-weight:bold;color:#000;';
+            $content = $serial_number;
+            $double_serial_size = FALSE;
+            break;
+          case 'm' :
+            $classes = 'idplates-labelbuilder-inline';
+            $content = theme('image', array(
+              'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/gfx/qr_code.png',
+              'attributes' => array(),
+            ));
+            $tag = 'div';
+            break;
+          case '-' :
+            $classes = 'idplates-labelbuilder-inline hidden';
+            $tag = 'div';
+            $double_serial_size = TRUE;
+            break;
+        endswitch;
+
+        $label_markup .= '<' . $tag . ' class="' . $classes . '" style="' . $styles . '">' . $content . '</' . $tag . '>';
+
+      endforeach;
+      $markup .= $label_markup;
+    elseif (strpos($code, 'l') !== FALSE):
+      $markup .= '<div class="idplates-labelbuilder-preview-section idplates-labelbuilder-logo" style="height:100%">';
+      // Logo
+      $label_markup = '';
+      $double_serial_size = FALSE;
+      foreach (str_split($preview_section) as $char) :
+        $char = strtolower($char);
+        $styles = '';
+        $classes = '';
+        $content = '';
+        $tag = 'p';
+        switch ($char) :
+          case 'a' :
+          case 'b' :
+          case 'c' :
+            $styles .= 'font-size:' . $font_size[$char] . 'pt';
+            $content = !empty($label->getText()['text_' . $char]['text']) ? $label->getText()['text_' . $char]['text'] : t('Text ') . strtoupper($char);
+            break;
+          case 'x' :
+            $classes = 'idplates-labelbuilder-preview-wrapper-barcode' . $no_numbering;
+            $content = '*' . $serial_number . '*';
+            $styles .= 'color: transparent;height:' . $section_height['barcode_height'] . 'px;margin-top:' . $section_height['barcode_margin'] . 'px;';
+            break;
+          case 's' :
+            $classes = $no_numbering;
+            $multiplier = $double_serial_size ? 2 : 1;
+            $styles .= 'font-size:' . $section_height['serial_height'] * $multiplier . 'pt;font-weight:bold;color:#000;';
+            $content = $serial_number;
+            $double_serial_size = FALSE;
+            break;
+          case '-' :
+            $classes = 'idplates-labelbuilder-inline hidden';
+            $tag = 'div';
+            $double_serial_size = TRUE;
+            break;
+          case 'l' :
+            $tag = 'div';
+            $logo = file_load($label->getLogo());
+            $content = t('LOGO HERE');
+            if (empty($logo)) {
+              $classes = 'idplates-labelbuilder-empty-logo';
+            }
+            else {
+              $content = theme('image', array(
+                'path' => file_create_url($logo->uri),
+                'attributes' => array('class' => array('idplates-labelbuilder-logo')),
+              ));
+            }
+            break;
+        endswitch;
+
+        $label_markup .= '<' . $tag . ' class="' . $classes . '" style="' . $styles . '">' . $content . '</' . $tag . '>';
+
+      endforeach;
+      $markup .= $label_markup;
+    else:
+      $markup .= '<div class="idplates-labelbuilder-preview-section" style="height:100%">';
+      $label_markup = '';
+      $double_serial_size = FALSE;
+      foreach (str_split($preview_section) as $char) :
+        $char = strtolower($char);
+        $styles = '';
+        $classes = '';
+        $content = '';
+        $tag = 'p';
+        switch ($char) :
+          case 'a' :
+          case 'b' :
+          case 'c' :
+            $styles .= 'font-size:' . $font_size[$char] . 'pt';
+            $content = !empty($label->getText()['text_' . $char]['text']) ? $label->getText()['text_' . $char]['text'] : t('Text ') . strtoupper($char);
+            break;
+          case 'x' :
+            $classes = 'idplates-labelbuilder-preview-wrapper-barcode' . $no_numbering;
+            $content = '*' . $serial_number . '*';
+            $styles .= 'color: transparent;height:' . $section_height['barcode_height'] . 'px;margin-top:' . $section_height['barcode_margin'] . 'px;';
+            break;
+          case 's' :
+            $classes = $no_numbering;
+            $multiplier = $double_serial_size ? 2 : 1;
+            $styles .= 'font-size:' . $section_height['serial_height'] * $multiplier . 'pt;font-weight:bold;color:#000;';
+            $content = $serial_number;
+            $double_serial_size = FALSE;
+            break;
+        endswitch;
+
+        $label_markup .= '<' . $tag . ' class="' . $classes . '" style="' . $styles . '">' . $content . '</' . $tag . '>';
+
+      endforeach;
+      $markup .= $label_markup;
+    endif;
+    $markup .= '</div></div>';
+  endforeach;
+  $markup .= '</div>';
+
+  return $markup;
+}
+
+function _idplates_labelbuilder_get_textline_count($code) {
+  $count = 0;
+  $textline_codes = 'ABCabc';
+  foreach (str_split($textline_codes) as $char) {
+    if (substr_count($code, $char)) {
+      $count++;
+    }
+  }
+
+  return $count;
+}
+
+function _idplates_labelbuilder_get_section_heights($code, $height) {
+  $section_height = array();
+
+  switch (_idplates_labelbuilder_get_textline_count($code)) {
+    case 1:
+      $section_height[0] = '29%';
+      $section_height[1] = '72%';
+      $section_height['barcode_height'] = $height * .72 * .6;
+      $section_height['serial_height'] = $height * .72 * .33 * .5;
+      $section_height['barcode_margin'] = -4;
+      break;
+    case 2:
+      $section_height[0] = '43%';
+      $section_height[1] = '58%';
+      $section_height['barcode_height'] = $height * .58 * .5;
+      $section_height['serial_height'] = $height * .58 * .4 * .5;
+      $section_height['barcode_margin'] = -5;
+      break;
+    case 3:
+      $section_height[0] = '37%';
+      $section_height[1] = '42%';
+      $section_height[2] = '21%';
+      $section_height['barcode_height'] = $height * .42 * .65;
+      $section_height['serial_height'] = $height * .42 * .3 * .8;
+      $section_height['barcode_margin'] = 3;
+      break;
+    default:
+      $section_height[0] = '100%';
+      $section_height['barcode_height'] = $height * .5;
+      $section_height['serial_height'] = $height * .25 * .8;
+      $section_height['barcode_margin'] = 10;
+  }
+
+  return $section_height;
 }

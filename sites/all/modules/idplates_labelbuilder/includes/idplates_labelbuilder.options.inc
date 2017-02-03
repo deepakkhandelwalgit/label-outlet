@@ -20,16 +20,20 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
 
   $extras = array();
   $adhesives = array();
+  $add_ons = array();
 
   foreach ($product_wrapper->field_adhesive_options as $adhesive) {
     $adhesives[] = $adhesive->value();
-    $adhesives[] = $adhesive;
+  }
+  foreach ($product_wrapper->field_add_on_options as $add_on) {
+    $add_ons[] = $add_on;
   }
 
-  $extras[] = $adhesives;
+//  $extras[] = $adhesives;
+//  $extras[] = $add_ons;
 
   $ajax = array(
-    'callback' => 'idplates_label_builder_preview_ajax_callback',
+    'callback' => 'idplates_labelbuilder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
     'event' => 'change',
@@ -56,9 +60,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     ),
   );
 
-  $options = array(
-    'default' => t('Standard Adhesive'),
-  );
+  $options = array();
 
   foreach ($adhesives as $adhesive) {
     //    $image = $adhesive->field_label_size->field_ls_image->value();

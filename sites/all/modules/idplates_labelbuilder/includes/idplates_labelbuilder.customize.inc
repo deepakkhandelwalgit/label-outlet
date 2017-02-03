@@ -11,23 +11,13 @@
 function idplates_labelbuilder_customize_form($form, &$form_state) {
   $label = $_SESSION['idplates']['label'];
   $label->setSection('customize');
-  $text_fields = array(
-    'a' => array(
-      'title' => t('Company Name'),
-      'size' => 12,
-    ),
-    'b' => array(
-      'title' => t('1-888-555-5555'),
-      'size' => 8,
-    ),
-    'c' => array(
-      'title' => t('Additional Text'),
-      'size' => 10,
-    ),
-  );
+  $product = commerce_product_load($label->getSizeTid());
+  $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
+
+  $text_fields = _idplates_labelbuilder_create_text_fields($label);
 
   $ajax = array(
-    'callback' => 'idplates_label_builder_preview_ajax_callback',
+    'callback' => 'idplates_labelbuilder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
     'event' => 'change',
@@ -69,7 +59,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form['column_left']['color']['text_color'] = array(
     '#type' => 'jquery_colorpicker',
     '#title' => t('Text Color'),
-    '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : 'FF0000',
+    '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : 'FFFFFF',
     '#ajax' => $ajax,
   );
 
@@ -78,6 +68,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#title' => t('Text'),
   );
 
+  $text_input = array();
   foreach ($text_fields as $key => $text_field) {
     $form['column_left']['text_container']['text_container_' . $key] = array(
       '#type' => 'container',
@@ -90,7 +81,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#title' => t('Text ' . strtoupper($key)),
       '#attributes' => array('placeholder' => $text_field['title']),
       '#size' => 32,
-      '#default_value' => !empty($label->getText()['text_' . $key]) ? $label->getText()['text_' . $key] : 'Text ' . strtoupper($key),
+      '#default_value' => !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : '',
     );
 
     $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#ajax']['event'] = 'blur';
@@ -105,8 +96,20 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     );
 
     $text_input['text_' . $key] = array(
-      'text' => !empty($label->getText()['text_' . $key]) ? $label->getText()['text_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#default_value'],
-      'size' => !empty($label->getText()['size_' . $key]) ? $label->getText()['size_' . $key] : $form['column_left']['text_container']['text_container_' . $key]['size_' . $key]['#default_value'],
+      'text' => !empty($form_state['input']['text_' . $key]) ? $form_state['input']['text_' . $key] : $label->getText()['text_' . $key]['text'],
+      'size' => !empty($form_state['input']['size_' . $key]) ? $form_state['input']['size_' . $key] : $label->getText()['text_' . $key]['size'],
+    );
+  }
+  $layout_code = _idplates_labelbuilder_get_layout_code($label);
+
+  if (strpos(strtolower($layout_code), 'l') !== FALSE) {
+    $form['column_left']['logo'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Custom Logo'),
+    );
+    $form['column_left']['logo']['custom_logo'] = array(
+      '#type' => 'managed_file',
+      '#upload_location' => 'public://files/logos/',
     );
   }
 
@@ -119,7 +122,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form['column_left']['numbering']['numbering_options'] = array(
     '#type' => 'radios',
     '#options' => array(
-      'no' => t('No Numbering (Blank Pad only)'),
       'custom' => t('I will supply custom numbering'),
       'consecutive' => t('Use Consecutive Number/Barcode below'),
     ),
@@ -134,26 +136,28 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#attributes' => array('class' => array('consecutive-options indent')),
   );
 
-
   $hide_consecutive = array(
     'visible' => array(
       ':input[name="numbering_options"]' => array('value' => 'consecutive'),
     ),
   );
 
+  if (strpos(strtolower($layout_code), 'm') === FALSE) {
+    $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
+      '#type' => 'select',
+      '#title' => t('Numbering Type'),
+      '#options' => array(
+        '39' => 'Code 39',
+        '128' => 'Code 128',
+      ),
+      '#states' => $hide_consecutive,
+    );
+  }
+
   $form['column_left']['numbering']['consecutive']['digits'] = array(
     '#type' => 'container',
     '#attributes' => array('class' => array('container-inline')),
   );
-
-  //  $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
-  //    '#type' => 'select',
-  //    '#title' => t('Starting #'),
-  //    '#options' => array(
-  //      'test',
-  //      'test2',
-  //    ),
-  //  );
 
   $form['column_left']['numbering']['consecutive']['advanced'] = array(
     '#type' => 'fieldset',
@@ -244,7 +248,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#value' => t('NEXT: OPTIONS'),
   );
 
-
   $tag_color = !empty($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
 
   $label->setTagColor($tag_color);
@@ -254,6 +257,12 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $label->setText($text_input + array(
       'color' => $text_color,
     ));
+
+  if (!empty($form_state['values']['custom_logo'])) {
+    $label->setLogo($form_state['values']['custom_logo']);
+  }
+
+  $label->numbering = idplates_labelbuilder_build_numbering_options($form, $form_state);
 
   $form_state['label'] = $label;
 
@@ -281,8 +290,15 @@ function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
  * @param $form_state
  */
 function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
+  global $user;
+  $file = file_load($form_state['values']['custom_logo']);
+  // Change status to permanent.
+  $file->status = FILE_STATUS_PERMANENT;
+  file_save($file);
+  // Record that the module (in this example, user module) is using the file.
+  file_usage_add($file, 'idplates_labelbuilder', 'commerce_line_item', $user->uid);
+
   $_SESSION['idplates']['customize'] = $form_state['values'];
-  $form_state['label']->numbering = idplates_labelbuilder_build_numbering_options($form, $form_state);
   $_SESSION['idplates']['label'] = $form_state['label'];
 
   $form_state['redirect'] = 'labelbuilder/options';
@@ -302,3 +318,45 @@ function idplates_labelbuilder_build_numbering_options($form, $form_state) {
     'padding' => $form_state['values']['padding'],
   );
 }
+
+function _idplates_labelbuilder_create_text_fields($label) {
+  $code = _idplates_labelbuilder_get_layout_code($label);
+
+  $text_lines = !empty($code) ? _idplates_labelbuilder_get_textline_count($code) : 3;
+
+  $text_field_defaults = array(
+    'a' => array(
+      'title' => t('Company Name'),
+      'size' => 12,
+    ),
+    'b' => array(
+      'title' => t('1-888-555-5555'),
+      'size' => 8,
+    ),
+    'c' => array(
+      'title' => t('Additional Text'),
+      'size' => 10,
+    ),
+  );
+
+  $text_fields = array();
+  $key = 'a';
+  while ($text_lines > 0) {
+    $text_fields[$key] = $text_field_defaults[$key];
+    $key++;
+    $text_lines--;
+  }
+  return $text_fields;
+}
+
+
+function _idplates_labelbuilder_get_layout_code($label) {
+  $layout = taxonomy_term_load($label->getLayoutTid());
+  if (!empty($layout)) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $layout_wrapper->field_layout_code->value();
+    return $layout_wrapper->field_layout_code->value();
+  }
+  return FALSE;
+}
+

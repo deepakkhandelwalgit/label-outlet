@@ -22,19 +22,19 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
   $label->setSection('layouts');
 
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
-  $layouts_wrapper = $product_wrapper->field_layout_options;
+  $layouts = $product_wrapper->field_layout_options->value();
   $style = !empty($form_state['values']['styles']) ? $form_state['values']['styles'] : 'BAR';
   $options = array();
 
   $ajax = array(
-    'callback' => 'idplates_label_builder_preview_ajax_callback',
+    'callback' => 'idplates_labelbuilder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
     'progress' => array(),
   );
 
-  foreach ($layouts_wrapper as $layout_wrapper) {
-    $layout = $layout_wrapper->value();
+  foreach ($layouts as $layout) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     if (!empty($layout_wrapper->field_ll_image)) {
       $image = $layout_wrapper->field_ll_image->value();
     }
@@ -59,7 +59,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
       'current_step' => 'layout',
       'label' => $label,
-    ))
+    )),
   );
 
   $form['column_left'] = array(
@@ -94,7 +94,6 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     '#type' => 'radios',
     '#title' => t('Layouts'),
     '#options' => $options,
-    '#default_value' => key($options),
     '#required' => TRUE,
     '#prefix' => '<div id="idplates-labelbuilder-layout-ajax-wrapper">',
     '#suffix' => '</div>',
