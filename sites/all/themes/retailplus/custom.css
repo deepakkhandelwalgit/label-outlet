@@ -34,3 +34,7 @@
     font-weight: 700;
     line-height: 1.2;
 }
+
+.custom-left, .custom-right{
+  float:left;
+}
