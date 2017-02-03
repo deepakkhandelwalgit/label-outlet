@@ -38,3 +38,7 @@
 .custom-left, .custom-right{
   float:left;
 }
+
+.file-icon {
+    display: none;
+}
