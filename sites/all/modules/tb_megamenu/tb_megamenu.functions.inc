@@ -480,7 +480,6 @@ function tb_megamenu_style_options($block_config) {
     '' => t('Default'),
     'black' => t('Black'),
     'blue' => t('Blue'),
-    'green' => t('Green'),
 	'white' => t('White'),
   );
   $options = array();
@@ -584,7 +583,7 @@ function tb_megamenu_replace_css() {
     drupal_get_path('module', 'tb_megamenu') . '/css/default.css',
     drupal_get_path('module', 'tb_megamenu') . '/css/styles/black.css',
     drupal_get_path('module', 'tb_megamenu') . '/css/styles/blue.css',
-    drupal_get_path('module', 'tb_megamenu') . '/css/styles/green.css',
+    drupal_get_path('module', 'tb_megamenu') . '/css/styles/white.css',
     drupal_get_path('module', 'tb_megamenu') . '/css/styles/orange.css',
   );
   foreach ($files as $css_file) {
