@@ -56,16 +56,16 @@
   color: #464646;
 }
 .tb-megamenu.style-white .nav li.dropdown.active > .dropdown-toggle {
-  background-color: inherit;
+  background-color: #FFF;
   color: #A90018;
 }
 .tb-megamenu.style-white .nav > li.dropdown.open.active > a:hover,
 .tb-megamenu.style-white .nav > li.dropdown.open.active > a:focus {
-  background-color: #A90018;
+  background-color: #FFF;
   color: #FFFFFF;
 }
 .tb-megamenu.style-white .dropdown-menu {
-  background-color: #A90018;
+  background-color: #FFF;
   border: none;
 }
 .tb-megamenu.style-white .dropdown-menu li > a {
