@@ -191,9 +191,18 @@
 	background-color: #FFF;
 	background-color: #FFF;
 	background-image:none;
+	font-weight:600;
 }
 .tb-megamenu .dropdown-menu li > a:hover {
     border-top: 1px solid #292C28;
     padding: 5px 20px;
     text-shadow: none;
+}
+
+.tb-megamenu.style-white .dropdown-menu .active > a:active {
+	text-decoration: none;
+	outline: 0;
+	background-color: #FFF;
+	background-color: #FFF;
+	background-image:none;
 }
