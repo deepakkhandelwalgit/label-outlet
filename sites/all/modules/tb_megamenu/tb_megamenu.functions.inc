@@ -481,6 +481,7 @@ function tb_megamenu_style_options($block_config) {
     'black' => t('Black'),
     'blue' => t('Blue'),
     'green' => t('Green'),
+	'white' => t('White'),
   );
   $options = array();
   foreach ($styles as $value => $title) {
