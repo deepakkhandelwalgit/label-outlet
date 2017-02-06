@@ -55,8 +55,8 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 .summary .field-item a:hover { background-color: transparent; }
 
 .node-type-mt-product .commerce-add-to-cart input[type="submit"], .node-type-mt-product .flag-outer-mt-watchlist a, .field-name-field-mt-call-to-action a.button {
-  background: transparent;
-  color: #A90018;
+  background: #a11d2f;
+  color: #FFFFFF;
   border: 1px solid #A90018;
 }
 
