@@ -201,7 +201,8 @@
 	color: #fff;
 	text-decoration: none;
 	outline: 0;
-	background-color: #eee;
-	background-color: #eee;
+	background-color: none;
+	background-color: none;
 	background-image:none;
+	border-color:#292C28;
 }
