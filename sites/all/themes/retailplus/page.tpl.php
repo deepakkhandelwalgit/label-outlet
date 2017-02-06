@@ -15,14 +15,7 @@
 
                 <!-- #header-top-inside -->
                 <div id="header-top-inside" class="clearfix">
-                    <div class="row"> 
-					
-					<?php if ($logo):?>
-        	                            <div id="logo">
-        	                            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"> <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" /> </a>
-        	                            </div>
-        	                            <?php endif; ?>
-
+                    <div class="row">
                         <?php if ($page['header_top_left']) :?>
                         <div class="<?php print $header_top_left_grid_class; ?>">
                             <!-- #header-top-left -->
