@@ -183,18 +183,6 @@
 .block-view-demo .views-field-title a:focus {
   color: #A90018;
 }
-.tb-megamenu.style-white .dropdown-menu a:active {
-    color: #fff;
-    text-decoration: none;
-    outline: 0;
-    background-color: #eee;
-}
-.tb-megamenu.style-white .dropdown-menu .active > a:hover {
-    color: #fff;
-    text-decoration: none;
-    outline: 0;
-    background-color: #ccc;
-}
 
 .tb-megamenu.style-white .dropdown-menu .active > a,
 .tb-megamenu.style-white .dropdown-menu .active > a:hover {
@@ -203,5 +191,4 @@
 	background-color: #FFF;
 	background-color: #FFF;
 	background-image:none;
-	border
 }
