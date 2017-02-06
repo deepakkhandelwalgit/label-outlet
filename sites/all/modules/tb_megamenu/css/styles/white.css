@@ -184,6 +184,22 @@
   color: #A90018;
 }
 
+.tb-megamenu.style-white .dropdown-menu li > a:hover,
+.tb-megamenu.style-white .dropdown-menu li > a:focus,
+.tb-megamenu.style-white .dropdown-submenu:hover > a {
+	text-decoration: none;
+	color: #fff;
+	background-color: none;
+	background-color: none;
+	background-image: none;
+	background-image: none;
+	background-image: none;
+	background-image: none;
+	background-image: none);
+	background-repeat: none;
+	filter: none;
+}
+
 .tb-megamenu.style-white .dropdown-menu .active > a,
 .tb-megamenu.style-white .dropdown-menu .active > a:hover {
 	text-decoration: none;
