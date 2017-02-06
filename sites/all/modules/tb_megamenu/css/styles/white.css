@@ -6,6 +6,7 @@
   color: #464646;
   font-weight: bold;
   border-right:none;
+  font-size:18px;
 }
 .tb-megamenu.style-white .nav > li > a:focus,
 .tb-megamenu.style-white .nav > li > a:hover {
@@ -205,4 +206,17 @@
 	background-color: #FFF;
 	background-color: #FFF;
 	background-image:none;
+}
+
+.tb-megamenu.style-white .nav > li > a {
+    border-right: 1px solid #222;
+    border-top: 0;
+    color: #fff;
+    font-weight: bold;
+    padding: 20px 15px;
+    text-shadow: none;
+}
+.tb-megamenu .nav li.dropdown.open > .dropdown-toggle .caret, .tb-megamenu .nav li.dropdown.active > .dropdown-toggle .caret, .tb-megamenu .nav li.dropdown.open.active > .dropdown-toggle .caret {
+    border-top-color: #292C28;
+    border-bottom-color: #292C28;
 }
