@@ -5,6 +5,7 @@
 .tb-megamenu.style-white .nav > li > a {
   color: #464646;
   font-weight: bold;
+  border-right:none;
 }
 .tb-megamenu.style-white .nav > li > a:focus,
 .tb-megamenu.style-white .nav > li > a:hover {

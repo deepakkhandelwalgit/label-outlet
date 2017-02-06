@@ -1,0 +1,16 @@
+name = Commerce Product Comparison
+description = Allows to compare product.
+core = 7.x
+package = Commerce (contrib)
+configure = admin/commerce/config/compare
+
+dependencies[] = ctools
+dependencies[] = commerce
+dependencies[] = commerce_product
+
+; Information added by Drupal.org packaging script on 2015-09-17
+version = "7.x-1.1+2-dev"
+core = "7.x"
+project = "commerce_product_comparison"
+datestamp = "1442505671"
+
