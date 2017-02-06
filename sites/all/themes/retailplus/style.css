@@ -1915,7 +1915,7 @@ margin-right: 8px; }
 }
 
 .node-mt-product div.horizontal-tabs ul.horizontal-tabs-list > li > a:hover,
-.node-mt-product div.horizontal-tabs ul.horizontal-tabs-list > li.selected > a:hover { background-color: #3f8edb; text-decoration: none; color: #fff!important; margin-bottom: 1px; border: none!important; }
+.node-mt-product div.horizontal-tabs ul.horizontal-tabs-list > li.selected > a:hover { background-color: #a11d2f; text-decoration: none; color: #fff!important; margin-bottom: 1px; border: none!important; }
 
 .node-mt-product div.horizontal-tabs ul.horizontal-tabs-list > li > a strong {
   font-weight: normal;
