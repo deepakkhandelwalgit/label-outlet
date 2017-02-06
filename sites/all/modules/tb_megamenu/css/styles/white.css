@@ -209,7 +209,7 @@
 }
 
 .tb-megamenu.style-white .nav > li > a {
-    padding: 20px 15px;
+    padding: 15px 15px;
 }
 .dropdown-toggle .caret, .tb-megamenu .nav li.dropdown.active > .dropdown-toggle .caret, .tb-megamenu .nav li.dropdown.open.active > .dropdown-toggle .caret {
     border-top-color: #292C28;
