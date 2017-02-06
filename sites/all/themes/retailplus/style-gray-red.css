@@ -76,4 +76,8 @@ a.button {
     text-decoration: none;
 	background: #a11d2f;
 	border: 1px solid #292C28;
+	background-image: url(../sites/all/themes/retailplus/imagesshopping-cart-24.png);
+	background-repeat: no-repeat;
+	background-position:left;
+	padding-left:24px;
 }
