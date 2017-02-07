@@ -13,6 +13,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $label->setSection('customize');
   $product = commerce_product_load($label->getSizeTid());
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
+  $layout_code = _idplates_labelbuilder_get_layout_code($label);
 
   $text_fields = _idplates_labelbuilder_create_text_fields($label);
 
@@ -49,12 +50,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#attributes' => array('class' => array('container-inline')),
   );
 
-  $form['column_left']['color']['tag_color'] = array(
-    '#type' => 'jquery_colorpicker',
-    '#title' => t('Tag Color'),
-    '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
-    '#ajax' => $ajax,
-  );
+  if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
+    $form['column_left']['color']['tag_color'] = array(
+      '#type' => 'jquery_colorpicker',
+      '#title' => t('Tag Color'),
+      '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
+      '#ajax' => $ajax,
+    );
+  }
 
   $form['column_left']['color']['text_color'] = array(
     '#type' => 'jquery_colorpicker',
@@ -100,7 +103,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       'size' => !empty($form_state['input']['size_' . $key]) ? $form_state['input']['size_' . $key] : $label->getText()['text_' . $key]['size'],
     );
   }
-  $layout_code = _idplates_labelbuilder_get_layout_code($label);
 
   if (strpos(strtolower($layout_code), 'l') !== FALSE) {
     $form['column_left']['logo'] = array(
@@ -291,12 +293,13 @@ function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
  */
 function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
   global $user;
-  $file = file_load($form_state['values']['custom_logo']);
-  // Change status to permanent.
-  $file->status = FILE_STATUS_PERMANENT;
-  file_save($file);
-  // Record that the module (in this example, user module) is using the file.
-  file_usage_add($file, 'idplates_labelbuilder', 'commerce_line_item', $user->uid);
+  if ($file = file_load($form_state['values']['custom_logo'])) {
+    // Change status to permanent.
+    $file->status = FILE_STATUS_PERMANENT;
+    file_save($file);
+    // Record that the module (in this example, user module) is using the file.
+    file_usage_add($file, 'idplates_labelbuilder', 'commerce_line_item', $user->uid);
+  }
 
   $_SESSION['idplates']['customize'] = $form_state['values'];
   $_SESSION['idplates']['label'] = $form_state['label'];

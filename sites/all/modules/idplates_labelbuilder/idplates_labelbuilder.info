@@ -3,6 +3,7 @@ description = ID Plates Label Builder
 core = 7.x
 
 dependencies[] = commerce
+dependencies[] = commerce_price_table
 
 scripts[] = js/idplates_labelbuilder.js
 

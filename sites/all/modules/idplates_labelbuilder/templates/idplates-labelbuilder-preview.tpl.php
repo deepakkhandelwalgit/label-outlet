@@ -35,6 +35,7 @@ if ($fid = $label->getLogo()) {
 }
 
 $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
+
 ?>
 
 <div class="idplates-labelbuilder-preview">
