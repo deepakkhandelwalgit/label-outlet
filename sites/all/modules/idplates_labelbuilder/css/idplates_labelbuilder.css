@@ -348,9 +348,9 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   border-radius: 5px;
   line-height: 1;
   color: #c0273c;
-  font-size: 12pt;
+  font-size: 10pt;
   font-style: italic;
-  padding: 2px;
+  padding: 0 8px;
 
 }
 

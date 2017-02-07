@@ -25,14 +25,23 @@ if (!empty($product)) {
   }
 }
 
+$show_logo = FALSE;
+if ($fid = $label->getLogo()) {
+  $file = file_load($fid);
+  $uri = $file->uri;
+
+  $url = file_create_url($uri);
+  $show_logo = TRUE;
+}
+
 $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
 ?>
 
 <div class="idplates-labelbuilder-preview">
   <?php
   if ($section == 'customize' || $section == 'options') :
-   print _idplates_labelbuilder_render_label($label, $code, $no_numbering);
-   else:
+    print _idplates_labelbuilder_render_label($label, $code, $no_numbering);
+  else:
     if (!empty($image)) :
       print render(theme('image', array(
         'path' => $image['uri'],
@@ -58,5 +67,13 @@ $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
         ?></td>
       <?php endforeach; ?>
     </tr>
+    <?php if ($show_logo): ?>
+      <tr>
+        <th>
+          Logo
+        </th>
+        <td><?php print print l('Image', $url, array('query' => array('download' => '1'))); ?></td>
+      </tr>
+    <?php endif; ?>
   </table>
 </div>

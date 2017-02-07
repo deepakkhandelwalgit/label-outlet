@@ -109,7 +109,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     );
     $form['column_left']['logo']['custom_logo'] = array(
       '#type' => 'managed_file',
-      '#upload_location' => 'public://files/logos/',
+      '#upload_location' => 'public://logos/',
     );
   }
 

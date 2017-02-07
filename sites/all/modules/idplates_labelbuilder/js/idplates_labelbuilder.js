@@ -32,7 +32,7 @@
 
       if ($('.idplates-labelbuilder-inline').length) {
         $('.idplates-labelbuilder-inline').parent().addClass('idplates-labelbuilder-inline-wrapper');
-        // $('.idplates-labelbuilder-inline-wrapper p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>')
+        $('.idplates-labelbuilder-inline-wrapper p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>')
       }
 
       $('.idplates-labelbuilder-inline-wrapper').each(function () {
