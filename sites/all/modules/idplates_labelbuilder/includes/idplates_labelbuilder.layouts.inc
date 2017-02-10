@@ -111,7 +111,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
 
   $label->setLayoutTid($form_state['values']['layouts']);
   $form_state['label'] = $label;
-  idplates_label_builder_get_label_preview($form, $form_state);
+  idplates_labelbuilder_get_label_preview($form, $form_state);
 
   return $form;
 }

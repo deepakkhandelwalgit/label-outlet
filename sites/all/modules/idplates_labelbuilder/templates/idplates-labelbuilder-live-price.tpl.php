@@ -17,7 +17,7 @@ if (!empty($tid)) {
   $product = commerce_product_load($label->getSizeTid());
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
   $price_table_breakpoints = $product_wrapper->field_price_table->value();
-  if (_idplates_labelbuilder_use_metal_price($label)) {
+  if (_idplates_labelbuilder_use_metal_price($label) && !empty($product_wrapper->field_metal_color_price_table)) {
     $price_table_breakpoints = $product_wrapper->field_metal_color_price_table->value();
   }
   foreach ($price_table_breakpoints as $breakpoint) {

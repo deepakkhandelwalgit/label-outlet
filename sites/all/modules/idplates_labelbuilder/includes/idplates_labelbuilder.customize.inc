@@ -44,11 +44,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       'class' => array('column-right'),
     ),
   );
-  $form['column_left']['color'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Color'),
-    '#attributes' => array('class' => array('container-inline')),
-  );
+
+  if (_idplates_labelbuilder_needs_color($layout_code)) {
+    $form['column_left']['color'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Color'),
+      '#attributes' => array('class' => array('container-inline')),
+    );
+  }
 
   if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
     $form['column_left']['color']['tag_color'] = array(
@@ -59,49 +62,50 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     );
   }
 
-  $form['column_left']['color']['text_color'] = array(
-    '#type' => 'jquery_colorpicker',
-    '#title' => t('Text Color'),
-    '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : 'FFFFFF',
-    '#ajax' => $ajax,
-  );
+  if (_idplates_labelbuilder_needs_text_options($layout_code)) {
+    $form['column_left']['color']['text_color'] = array(
+      '#type' => 'jquery_colorpicker',
+      '#title' => t('Text Color'),
+      '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : 'FFFFFF',
+      '#ajax' => $ajax,
+    );
 
-  $form['column_left']['text_container'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Text'),
-  );
 
-  $text_input = array();
-  foreach ($text_fields as $key => $text_field) {
-    $form['column_left']['text_container']['text_container_' . $key] = array(
-      '#type' => 'container',
+    $form['column_left']['text_container'] = array(
+      '#type' => 'fieldset',
       '#title' => t('Text'),
-      '#attributes' => array('class' => array('container-inline')),
-    );
-    $form['column_left']['text_container']['text_container_' . $key]['text_' . $key] = array(
-      '#type' => 'textfield',
-      '#ajax' => $ajax,
-      '#title' => t('Text ' . strtoupper($key)),
-      '#attributes' => array('placeholder' => $text_field['title']),
-      '#size' => 32,
-      '#default_value' => !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : '',
     );
 
-    $form['column_left']['text_container']['text_container_' . $key]['text_' . $key]['#ajax']['event'] = 'blur';
+    $text_input = array();
+    foreach ($text_fields as $key => $text_field) {
+      $form['column_left']['text_container']['text_container_' . $key] = array(
+        '#type' => 'container',
+        '#title' => t('Text'),
+        '#attributes' => array('class' => array('container-inline')),
+      );
+      $form['column_left']['text_container']['text_container_' . $key]['text_' . $key] = array(
+        '#type' => 'textfield',
+        '#ajax' => $ajax,
+        '#title' => t('Text ' . strtoupper($key)),
+        '#attributes' => array('placeholder' => $text_field['title']),
+        '#size' => 32,
+        '#default_value' => !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : '',
+      );
 
-    $form['column_left']['text_container']['text_container_' . $key]['size_' . $key] = array(
-      '#type' => 'numberfield',
-      '#default_value' => $text_field['size'],
-      '#ajax' => $ajax,
-      '#maxlength' => 2,
-      '#description' => t('pt'),
-      '#default_value' => !empty($label->getText()['size_' . $key]) ? $label->getText()['size_' . $key] : 12,
-    );
+      $form['column_left']['text_container']['text_container_' . $key]['size_' . $key] = array(
+        '#type' => 'numberfield',
+        '#default_value' => $text_field['size'],
+        '#ajax' => $ajax,
+        '#maxlength' => 2,
+        '#description' => t('pt'),
+        '#default_value' => !empty($label->getText()['size_' . $key]) ? $label->getText()['size_' . $key] : 12,
+      );
 
-    $text_input['text_' . $key] = array(
-      'text' => !empty($form_state['input']['text_' . $key]) ? $form_state['input']['text_' . $key] : $label->getText()['text_' . $key]['text'],
-      'size' => !empty($form_state['input']['size_' . $key]) ? $form_state['input']['size_' . $key] : $label->getText()['text_' . $key]['size'],
-    );
+      $text_input['text_' . $key] = array(
+        'text' => !empty($form_state['input']['text_' . $key]) ? $form_state['input']['text_' . $key] : $label->getText()['text_' . $key]['text'],
+        'size' => !empty($form_state['input']['size_' . $key]) ? $form_state['input']['size_' . $key] : $label->getText()['text_' . $key]['size'],
+      );
+    }
   }
 
   if (strpos(strtolower($layout_code), 'l') !== FALSE) {
@@ -256,9 +260,11 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
 
   $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : $form['column_left']['color']['text_color']['#default_value'];
 
-  $label->setText($text_input + array(
-      'color' => $text_color,
-    ));
+  if (!empty($text_color) && !empty($text_input)) {
+    $label->setText($text_input + array(
+        'color' => $text_color,
+      ));
+  }
 
   if (!empty($form_state['values']['custom_logo'])) {
     $label->setLogo($form_state['values']['custom_logo']);
@@ -268,7 +274,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
 
   $form_state['label'] = $label;
 
-  idplates_label_builder_get_label_preview($form, $form_state);
+  idplates_labelbuilder_get_label_preview($form, $form_state);
 
   return $form;
 }
@@ -314,6 +320,7 @@ function idplates_label_builder_numbering_ajax_callback($form, &$form_state) {
 function idplates_labelbuilder_build_numbering_options($form, $form_state) {
   return array(
     'numbering_option' => $form_state['values']['numbering_options'],
+    'numbering_type' => $form_state['values']['numbering_type'],
     'starting_digit' => $form_state['values']['starting_digit'],
     'number_of_digits' => $form_state['values']['number_of_digits'],
     'prefix' => $form_state['values']['prefix'],

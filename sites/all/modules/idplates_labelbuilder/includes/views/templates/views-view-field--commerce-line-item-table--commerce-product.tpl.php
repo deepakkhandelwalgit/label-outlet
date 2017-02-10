@@ -29,12 +29,11 @@ $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
 
 $label = !empty($line_item->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
 
-if (!empty($label)) {
-
-  $label->backend_view = TRUE;
+if (!empty($label) && $is_admin) {
 
   $output = theme('idplates_labelbuilder_preview', array(
     'label' => $label,
+    'backend' => true,
   ));
 
   print $output;

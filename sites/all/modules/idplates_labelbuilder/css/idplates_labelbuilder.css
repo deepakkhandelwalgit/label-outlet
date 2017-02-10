@@ -2,6 +2,10 @@
   z-index: 999999;
 }
 
+[id*=idplates-labelbuilder] .column-right input[disabled="disabled"] {
+  background-color: #dadada;
+}
+
 [id*=idplates-labelbuilder] input {
   max-width: 100%;
 }
@@ -28,6 +32,11 @@ input[type="submit"].form-button-disabled {
 input[type="submit"].form-button-disabled:hover {
   background-color: #666;
   color: #ccc;
+}
+
+[id*=idplates-labelbuilder] .idplates-labelbuilder-description {
+  font-style: italic;
+  font-size: .75em;
 }
 
 /**
@@ -172,6 +181,7 @@ input[type="submit"].form-button-disabled:hover {
 .idplates-labelbuilder-layout-img-wrapper img {
   margin: 0 auto;
   max-width: 95%;
+  max-height: 92%;
 }
 
 .idplates-labelbuilder-size-info-wrapper,
@@ -265,6 +275,11 @@ input[type="submit"].form-button-disabled:hover {
   line-height: 1.1;
 }
 
+.idplates-labelbuilder-preview-section-wrapper > div:first-child {
+  position: relative;
+  z-index: 11;
+}
+
 .idplates-labelbuilder-preview-section-wrapper {
   text-align: center;
   font-weight: bold;
@@ -312,6 +327,17 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 .idplates-labelbuilder-preview-table td {
   text-align: right;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 75px;
+}
+
+.idplates-labelbuilder-preview-table.backend td {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  max-width: none;
 }
 
 .idplates-labelbuilder-preview {
@@ -351,7 +377,16 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   font-size: 10pt;
   font-style: italic;
   padding: 0 8px;
+}
 
+.idplates-labelbuilder-preview #idplates-labelbuilder-hanging-tag-canvas {
+  border-left: solid 1px black;
+  border-top: solid 1px black;
+  border-radius: 15px 15px 0 0;
+  z-index: 10;
+  position: relative;
+  margin-bottom: -22px;
+  box-sizing: border-box;
 }
 
 /**
@@ -521,4 +556,3 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 /**
  * Options
  */
-

@@ -3,6 +3,8 @@
 class Label {
   public $size;
   public $numbering;
+  public $review;
+  public $notes;
   private $tag_color;
   private $text;
   private $layout;
@@ -12,6 +14,7 @@ class Label {
   private $section;
   private $adhesive;
   private $logo;
+  private $extras;
 
   /**
    * @return mixed
@@ -137,6 +140,20 @@ class Label {
    */
   public function setLogo($logo) {
     $this->logo = $logo;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getExtras() {
+    return $this->extras;
+  }
+
+  /**
+   * @param mixed $extras
+   */
+  public function setExtras($extras) {
+    $this->extras = $extras;
   }
 
 }

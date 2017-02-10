@@ -1,33 +1,28 @@
 (function ($) {
   Drupal.behaviors.idplatesLabelBuilder = {
     attach: function (context, settings) {
-
       var timer;
+      var selectors = '.idplates-labelbuilder-qty-price-wrapper #edit-qty, ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-text"], ' +
+          '#idplates-labelbuilder-options-form [id^="edit-notes"]';
 
-      $('.idplates-labelbuilder-qty-price-wrapper #edit-qty').on('keyup', function (e) {
+
+      $(selectors, context).on('keyup', function (e) {
         clearTimeout(timer);
         timer = setTimeout(function () {
-          $('#' + e.target.id).blur();
-          // $(document).ajaxComplete(function (event, xhr, settings) {
-          //   $('.idplates-labelbuilder-qty-price-wrapper #edit-qty').focus();
-          // });
+          $('#' + e.target.id).change();
+          localStorage.inputToFocus = e.target.id;
         }, 800);
       });
 
-      $('#idplates-labelbuilder-customize-form [id^="edit-text"]').on('keyup', function (e) {
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          $('#' + e.target.id).blur();
-          // $(document).ajaxComplete(function (event, xhr, settings) {
-          //   console.log($(event));
-          //   console.log(event);
-          //   console.log(e.target.id);
-          //   if (event.target.activeElement.id == e.target.id) {
-          //     $('#' + e.target.id).focus();
-          //   }
-          // });
-        }, 800);
-      });
+      // Get the input just used, and refocus after ajax reloads the preview.
+      var $inputToFocus = $('#' + localStorage.inputToFocus);
+      if ($inputToFocus.length) {
+        $inputToFocus.focus();
+        var val = $inputToFocus.val();
+        $inputToFocus.val(val);
+        localStorage.inputToFocus = '';
+      }
 
 
       if ($('.idplates-labelbuilder-inline').length) {
@@ -37,8 +32,8 @@
 
       $('.idplates-labelbuilder-inline-wrapper').each(function () {
         var $this = $(this);
-        $this.find('p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>')
-        var parentHeight = 40;
+        $this.find('p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>');
+        var parentHeight = $this.parent().height();
         $this.height(parentHeight);
         $this.find('img.idplates-labelbuilder-logo').css('max-height', parentHeight);
       });

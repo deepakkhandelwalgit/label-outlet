@@ -83,7 +83,7 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   $label->setSizeTid($form_state['values']['sizes']);
   $form_state['label'] = $label;
 
-  idplates_label_builder_get_label_preview($form, $form_state);
+  idplates_labelbuilder_get_label_preview($form, $form_state);
 
   return $form;
 }
