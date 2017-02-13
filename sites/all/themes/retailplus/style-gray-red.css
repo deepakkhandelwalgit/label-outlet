@@ -69,12 +69,13 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 #main-navigation .sf-menu ul li a.active { color: #ffffff; }
 
 a.button {
-    padding: 10px;
-    font-size: 23px;
+    padding: 5px;
+    font-size: 25px;
     display: inline-block;
     color: #FFFFFF;
     text-decoration: none;
     background: #a11d2f;
     padding-left: 0px;
     border: 15px solid #a11d2f;
+    width: 100%;
 }
