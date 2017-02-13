@@ -32,6 +32,8 @@ ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li
 .nav-tabs > li.active > a:hover, .panel-heading a:hover, .mean-container .mean-nav ul li a:hover, .mean-container .mean-nav ul li a.mean-expand:hover
 { background-color: #da3148; }
 
+a.button:hover { background-color: #f26b3a; }
+
 .node-type-mt-product .group-mt-main-area-left .field-type-taxonomy-term-reference .field-item a:hover {
   border-color: #da3148;
   background: #da3148;
