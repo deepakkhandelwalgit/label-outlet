@@ -32,7 +32,7 @@ ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li
 .nav-tabs > li.active > a:hover, .panel-heading a:hover, .mean-container .mean-nav ul li a:hover, .mean-container .mean-nav ul li a.mean-expand:hover
 { background-color: #da3148; }
 
-a.button:hover { background-color: #f26b3a; }
+a.button:hover { background-color: #f95407; }
 
 .node-type-mt-product .group-mt-main-area-left .field-type-taxonomy-term-reference .field-item a:hover {
   border-color: #da3148;
@@ -50,7 +50,7 @@ a.button:hover { background-color: #f26b3a; }
 ul.social-bookmarks li a:hover, ul.brands li a:hover, ul.links li a:hover, .view-popular-tags .views-row a:hover { border-color: #da3148; }
 .more-link a:hover, .views-field-view-node a:hover, a.button:hover,
 input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover,
-#main .webform-client-form .form-actions input:hover { border-color: #f26b3a!important; }
+#main .webform-client-form .form-actions input:hover { border-color: #f95407!important; }
 
 /*resets
 --------------------------------*/
