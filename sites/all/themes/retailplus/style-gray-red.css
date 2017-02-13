@@ -37,7 +37,7 @@ ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li
   background: #da3148;
 }
 
-.view-listings .category-item a:hover { background-color: rgba(234,45,73,0.95); }
+.view-listings .category-item a:hover { background-color: #f26b3a; }
 
 .overlay, .overlayed-teaser a:before, #image-slider-carousel ul.slides>li:after {
     background-color: rgba(255,255,255,0.5);
