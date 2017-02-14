@@ -17,17 +17,16 @@ if (module_exists('comment')) {
 }
 
 function ctools_node_comment_form_content_type_render($subtype, $conf, $panel_args, $context) {
-  $node = isset($context->data) ? clone($context->data) : NULL;
+  if (empty($context->data->nid)) {
+    return;
+  }
+  $node = clone $context->data;
   $block = new stdClass();
   $block->module = 'comments';
   $block->delta  = $node->nid;
-
   $block->title = t('Add comment');
 
-  if (empty($node)) {
-    $block->content = t('Comment form here.');
-  }
-  else if ($node->comment == COMMENT_NODE_OPEN) {
+  if ($node->comment == COMMENT_NODE_OPEN) {
     if (user_access('post comments')) {
       $comment = new stdClass();
       $comment->nid = $node->nid;
@@ -77,20 +76,3 @@ function ctools_node_comment_form_content_type_edit_form_submit($form, &$form_st
   }
 }
 
-/**
- * Alter the comment form to get a little more control over it.
- */
-function ctools_form_comment_form_alter(&$form, &$form_state) {
-  if (!empty($form_state['ctools comment alter'])) {
-    // Force the form to post back to wherever we are.
-    $form['#action'] = url($_GET['q'], array('fragment' => 'comment-form'));
-    if (empty($form['#submit'])) {
-      $form['#submit'] = array('comment_form_submit');
-    }
-    $form['#submit'][] = 'ctools_node_comment_form_submit';
-  }
-}
-
-function ctools_node_comment_form_submit(&$form, &$form_state) {
-  $form_state['redirect'][0] = $_GET['q'];
-}

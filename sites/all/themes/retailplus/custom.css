@@ -1,11 +1,44 @@
-.page-node span.file img{
-    margin-right: 5px;
-    width: 5%;
-	float:left;
+#page-intro { background-color: #ffffff; }
+
+#block-views-mt-latest-listings-block-1 .view-listings .views-field-title {
+    clear: both;
+    padding: 10px 5px 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
 }
 
-.page-node span.file a{
-    width: 90%;
-	float:right;
-	margin-bottom:10px;
+#block-views-mt-latest-listings-block-1 .view-listings .views-row .property-container {
+    background-color: #fff;
+    border: none;
+}
+
+#block-views-mt-latest-listings-block-1 .view-header {
+	background-color: #CCD4D4;
+}
+
+#headline{
+	padding:5px;	
+	text-align:center;
+}
+
+#highlighted{
+	padding: 10px 0 20px 0;
+}
+
+.view-mt-latest-listings .property-container .views-field-title {
+    clear: both;
+    padding: 15px 20px 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.custom-left, .custom-right{
+  float:left;
+}
+
+.file-icon {
+    display: none;
 }

@@ -16,7 +16,6 @@
                 <!-- #header-top-inside -->
                 <div id="header-top-inside" class="clearfix">
                     <div class="row">
-
                         <?php if ($page['header_top_left']) :?>
                         <div class="<?php print $header_top_left_grid_class; ?>">
                             <!-- #header-top-left -->
@@ -58,7 +57,7 @@
                 <div id="header-inside" class="clearfix">
                     <div class="row">
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                         	<!-- #header-inside-left -->
                             <div id="header-inside-left" class="clearfix">
                                 <div class="header-area">
@@ -88,7 +87,7 @@
                             </div>
                             <!-- EOF:#header-inside-left -->
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <!-- #header-inside-right -->
                             <div id="header-inside-right" class="clearfix">
                                 <div class="header-area">
