@@ -195,13 +195,23 @@ function idplates_labelbuilder_get_label_preview(&$form, &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Label Proof'),
   );
+
+  $unique_layout = '';
+  if ($product = commerce_product_load($form_state['label']->getSizeTid())) {
+    if ($product->type == 'rear_view_mirror_hang_tags') {
+      $unique_layout = 'hanging_tag';
+    }
+    if ($product->type == 'info_dot') {
+      $unique_layout = 'info_dot';
+    }
+  }
   $form['column_right']['label_proof']['preview'] = array(
     '#type' => 'item',
     '#prefix' => '<div id="idplates-labelbuilder-preview-ajax-wrapper">',
     '#suffix' => '</div>',
     '#markup' => theme('idplates_labelbuilder_preview', array(
       'label' => $form_state['label'],
-      'unique_layout' => 'hanging_tag',
+      'unique_layout' => $unique_layout,
     )),
   );
 

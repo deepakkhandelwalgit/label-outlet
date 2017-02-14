@@ -11,11 +11,10 @@
 function idplates_labelbuilder_customize_form($form, &$form_state) {
   $label = $_SESSION['idplates']['label'];
   $label->setSection('customize');
-  $product = commerce_product_load($label->getSizeTid());
-  $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
   $layout_code = _idplates_labelbuilder_get_layout_code($label);
 
   $text_fields = _idplates_labelbuilder_create_text_fields($label);
+  $default_text_color = 'FFFFFF';
 
   $ajax = array(
     'callback' => 'idplates_labelbuilder_preview_ajax_callback',
@@ -60,13 +59,15 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
       '#ajax' => $ajax,
     );
+    // Background is white, so make the default text colour red.
+    $default_text_color = 'FF0000';
   }
 
   if (_idplates_labelbuilder_needs_text_options($layout_code)) {
     $form['column_left']['color']['text_color'] = array(
       '#type' => 'jquery_colorpicker',
       '#title' => t('Text Color'),
-      '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : 'FFFFFF',
+      '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : $default_text_color,
       '#ajax' => $ajax,
     );
 
@@ -274,7 +275,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
 
   $form_state['label'] = $label;
 
-  idplates_labelbuilder_get_label_preview($form, $form_state);
+  idplates_labelbuilder_get_label_preview($form, $form_state, $layout);
 
   return $form;
 }
@@ -356,6 +357,7 @@ function _idplates_labelbuilder_create_text_fields($label) {
     $key++;
     $text_lines--;
   }
+
   return $text_fields;
 }
 
@@ -365,8 +367,10 @@ function _idplates_labelbuilder_get_layout_code($label) {
   if (!empty($layout)) {
     $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     $layout_wrapper->field_layout_code->value();
+
     return $layout_wrapper->field_layout_code->value();
   }
+
   return FALSE;
 }
 
