@@ -53,12 +53,6 @@
 	margin:0 0 0 .75em;
 }
 
-.dropdown-toggle .caret, .tb-megamenu .nav li.dropdown.active > .dropdown-toggle .caret, .tb-megamenu .nav li.dropdown.open.active > .dropdown-toggle .caret {
-    border-top-color: #292C28;
-    border-bottom-color: #292C28;
-    margin-top: 12px;
-}
-
 #header #block-menu-menu-industry ul.menu li{
     display: block;
     float: none;
