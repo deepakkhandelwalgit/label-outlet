@@ -1,6 +1,6 @@
 <div class="container boxed-slideshow">
     <div id="slideshow" class="bannercontainer main-slider">
-       
+
         <div class="banner">
             <ul>
             <?php foreach ($rows as $id => $row) { ?>
@@ -18,9 +18,9 @@
                 if ($node->type=='mt_slideshow_entry') {  ?>
                     <?php if ($node->field_mt_slideshow_entry_path) { ?>
                     <?php $path = $node->field_mt_slideshow_entry_path[$lang][0]['value']; ?>
-                    <li data-link="<?php print url($path); ?>" data-transition="<?php print $rs_boxed_effect ?>" data-masterspeed="800">
+                    <li data-link="<?php print url($path); ?>">
                     <?php } else { ?>
-                    <li data-transition="<?php print $rs_boxed_effect ?>" data-masterspeed="800">
+                    <li >
                     <?php } ?>
 
                         <img src="<?php print $image; ?>" title="<?php print $title; ?>" alt="<?php print $alt; ?>"/>
