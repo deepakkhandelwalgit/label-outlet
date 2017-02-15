@@ -64,16 +64,16 @@
     background: none;
     color: #464646;
 	border-top: 1px solid #eee;
-    padding: 20px 20px;
+    padding: 40px 20px;
     text-shadow: none;
 	font-size:14px;
 	line-height: 20px;
 }
-#header #block-menu-menu-industry ul.menu li.first a{
+#header #block-menu-menu-industry ul.menu li.first.leaf a{
 	border-top: none;
 }
 
-#header #block-menu-menu-industry ul.menu li.first a:hover{
+#header #block-menu-menu-industry ul.menu li.first.leaf a:hover{
 	border-top: none;
 }
 #header #block-menu-menu-industry ul.menu li a:hover{
