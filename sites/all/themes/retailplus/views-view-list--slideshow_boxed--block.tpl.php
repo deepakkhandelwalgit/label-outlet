@@ -25,13 +25,7 @@
 
                         <img src="<?php print $image; ?>" title="<?php print $title; ?>" alt="<?php print $alt; ?>"/>
 
-                        <div class="tp-caption sft fadeout"
-                        data-x="left"
-                        data-y="top"
-                        data-speed="500"
-                        data-start="1200"
-                        data-voffset="50"
-                        data-easing="Power0.easeIn">
+                        <div>
                             <div class="title">
                                 <?php $title = $node->title; ?>
                                 <?php if ($node->field_mt_slideshow_entry_path) { ?>
@@ -46,7 +40,7 @@
                         </div>
                     </li>
                 <?php } else { ?>
-                    <li data-transition="<?php print $rs_boxed_effect ?>" data-link="<?php print $nodeurl ?>" data-masterspeed="800">
+                    <li data-link="<?php print $nodeurl ?>" >
                         <?php print $row; ?>
                     </li>
                 <?php } ?> 
@@ -57,14 +51,6 @@
         </div>
     </div>
 </div>
-<?php
-$rs_boxed_effect_time = (int) theme_get_setting('rs_slideshow_boxed_effect_time')*1000;
-
-if (theme_get_setting('rs_slideshow_boxed_preview')) {
-    $rs_directional_preview = "preview1";
-} else {
-    $rs_directional_preview = "square";
-}
 
 
 drupal_add_js('
