@@ -59,7 +59,7 @@
     margin-top: 12px;
 }
 
-.submain li{
+.submain ul li{
     display: block;
     float: none;
     list-style: none;
