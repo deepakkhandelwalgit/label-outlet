@@ -42,3 +42,13 @@
 .file-icon {
     display: none;
 }
+
+#block-views-header-block-block-1 .item-list ul{
+	
+	list-style-type: none;
+}
+
+#block-views-header-block-block-1 .item-list ul li{
+	
+	margin:0 0 0 .75em;
+}
