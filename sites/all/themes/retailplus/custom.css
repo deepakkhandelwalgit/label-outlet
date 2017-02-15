@@ -59,7 +59,7 @@
     margin-top: 12px;
 }
 
-.block-menu-menu-industry ul li.leaf{
+#block-menu-menu-industry ul li{
     display: block;
     float: none;
     list-style: none;
