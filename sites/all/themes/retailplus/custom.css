@@ -64,28 +64,23 @@
     background: none;
     color: #464646;
 	border-top: 1px solid #eee;
-    padding: 10px 20px;
+    padding: 20px 20px;
     text-shadow: none;
 	font-size:14px;
 	line-height: 20px;
 }
 #header #block-menu-menu-industry ul.menu li.first a{
-    background: none;
-    color: #464646;
 	border-top: none;
-    padding: 5px 20px;
-    text-shadow: none;
-	font-size:14px;
-	line-height: 20px;
+}
+
+#header #block-menu-menu-industry ul.menu li.first a:hover{
+	border-top: none;
 }
 #header #block-menu-menu-industry ul.menu li a:hover{
     background: none;
 	background-color: none;
     color: #A90018;
 	border-top: 1px solid #292C28;
-    padding: 5px 20px;
-    text-shadow: none;
-	line-height: 1.75;
 }
 #header #block-menu-menu-industry h2{
 	font-size: 16px;
