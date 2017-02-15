@@ -63,7 +63,7 @@
     list-style: none;
     margin-left: 0;	
 	font-size:14px;
-	margin-bottom:10px;
+	margin-bottom:5px;
 }
 #header #block-menu-menu-industry ul.menu li a{
     background: none;
@@ -72,6 +72,7 @@
     text-shadow: none;
 	font-size:14px;
 	line-height: 20px;
+	padding:5px 20px;
 }
 #header #block-menu-menu-industry ul.menu li.first.leaf a{
 	border-top: none;
