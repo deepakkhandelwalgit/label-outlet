@@ -1,6 +1,6 @@
 <div class="container boxed-slideshow">
     <div id="slideshow" class="bannercontainer main-slider">
-        <?php $rs_boxed_effect=theme_get_setting('rs_slideshow_boxed_effect'); ?>
+       <?php $rs_boxed_effect=theme_get_setting('rs_slideshow_boxed_effect'); ?>
         <div class="banner">
             <ul>
             <?php foreach ($rows as $id => $row) { ?>
