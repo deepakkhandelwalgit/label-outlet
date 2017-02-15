@@ -69,7 +69,7 @@
 #block-menu-menu-industry ul.menu li a{
     background: none;
     color: #A90018;
-	border-top: 1px solid #292C28;
+	border-bottom: 1px solid #eee;
     padding: 5px 20px;
     text-shadow: none;
 	font-size:14px;
@@ -77,7 +77,7 @@
 #block-menu-menu-industry ul.menu li a:hover{
     background: none;
     color: #A90018;
-	border-top: 1px solid #292C28;
+	border-bottom: 1px solid #292C28;
     padding: 5px 20px;
     text-shadow: none;
 }
