@@ -53,6 +53,10 @@
 	margin:0 0 0 .75em;
 }
 
+#header #block-menu-menu-industry ul.menu {
+    font-family: Helvetica Neue, Arial, Sans-serif;
+}
+
 #header #block-menu-menu-industry ul.menu li{
     display: block;
     float: none;
