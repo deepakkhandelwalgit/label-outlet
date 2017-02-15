@@ -58,3 +58,10 @@
     border-bottom-color: #292C28;
     margin-top: 12px;
 }
+
+.submain li{
+    display: block;
+    float: none;
+    list-style: none;
+    margin-left: 0;	
+}
