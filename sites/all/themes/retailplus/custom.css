@@ -78,3 +78,9 @@
     text-shadow: none;
 	line-height: 1.75;
 }
+#header #block-menu-menu-industry h2{
+	font-size: 16px;
+	font-weight:600;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
