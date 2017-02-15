@@ -93,3 +93,8 @@
     margin-bottom: 0px;
     margin-top: 0px;
 }
+
+.tb-megamenu .nav li.dropdown > .dropdown-toggle .caret{
+	margin-top:12px;
+}
+}
