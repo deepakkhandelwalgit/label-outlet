@@ -1,6 +1,6 @@
-#header-top { background-color: #a11d2f; }
+#header-top { background-color: #A90018; }
 
-.header-top-area .item-list ul.quicktabs-tabs > li > a:hover:after, .header-top-area .nav-tabs > li > a:hover:after { color: #a11d2f; }
+.header-top-area .item-list ul.quicktabs-tabs > li > a:hover:after, .header-top-area .nav-tabs > li > a:hover:after { color: #A90018; }
 
 a, #header ul.menu li a.active, ul.menu li a, .footer-area ul.menu li.collapsed > a:before, .footer-area ul.menu li.expanded > a:before,
 #site-name a, .comment-counter, .comment .username, .summary .field-item a, .more-link a, .views-field-view-node a, a.button, #toTop,
@@ -57,7 +57,7 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 .summary .field-item a:hover { background-color: transparent; }
 
 .node-type-mt-product .commerce-add-to-cart input[type="submit"], .node-type-mt-product .flag-outer-mt-watchlist a, .field-name-field-mt-call-to-action a.button {
-  background: #a11d2f;
+  background: #A90018;
   color: #FFFFFF;
   border: 1px solid #A90018;
 }
