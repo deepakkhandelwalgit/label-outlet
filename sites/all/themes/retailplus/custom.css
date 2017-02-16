@@ -99,4 +99,10 @@
 .tb-megamenu .nav li.dropdown > .dropdown-toggle .caret{
 	margin-top:12px;
 }
+
+.block-views-header-block-block-1{
+	padding:0px;
+}
+div#block-views-product-categories-block h3{
+	text-align:center;
 }
