@@ -29,7 +29,7 @@
 	padding: 10px 0 20px 0;
 }
 
-.view-mt-latest-listings .property-container .views-field-title {
+.view-mt-latest-listings .property-container .views-field-title, .view-product-categories .property-container .views-field-title {
     clear: both;
     padding: 15px 5px 0;
     font-size: 16px;
