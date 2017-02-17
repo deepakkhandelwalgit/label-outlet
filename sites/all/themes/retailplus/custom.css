@@ -31,7 +31,7 @@
 
 .view-mt-latest-listings .property-container .views-field-title {
     clear: both;
-    padding: 15px 20px 0;
+    padding: 15px 5px 0;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.2;
@@ -106,3 +106,9 @@
 div#block-views-product-categories-block h3{
 	text-align:center;
 }
+
+.info{
+	padding-left:5px;
+	font-size:14px;
+}
+
