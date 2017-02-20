@@ -21,15 +21,17 @@
 #headline{
 	padding:5px;	
 	text-align:center;
+	background: #A90018;
+    color: #fff;
 }
 
 #highlighted{
 	padding: 10px 0 20px 0;
 }
 
-.view-mt-latest-listings .property-container .views-field-title {
+.view-mt-latest-listings .property-container .views-field-title, .view-product-categories .views-field-title {
     clear: both;
-    padding: 15px 20px 0;
+    padding: 15px 5px 0;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.2;
@@ -42,3 +44,75 @@
 .file-icon {
     display: none;
 }
+
+#block-views-header-block-block-1 .item-list ul{
+	
+	list-style-type: none;
+}
+
+#block-views-header-block-block-1 .item-list ul li{
+	
+	margin:0 0 0 .75em;
+}
+
+#header #block-menu-menu-industry ul.menu {
+    font-family: Helvetica Neue, Arial, Sans-serif;
+}
+
+#header #block-menu-menu-industry ul.menu li{
+    display: block;
+    float: none;
+    list-style: none;
+    margin-left: 0;	
+	font-size:14px;
+	margin-bottom:5px;
+}
+#header #block-menu-menu-industry ul.menu li a{
+    background: none;
+    color: #464646;
+	border-top: 1px solid #eee;
+    text-shadow: none;
+	font-size:14px;
+	line-height: 20px;
+	padding:5px 20px;
+}
+#header #block-menu-menu-industry ul.menu li.first.leaf a{
+	border-top: none;
+}
+
+#header #block-menu-menu-industry ul.menu li.first.leaf a:hover{
+	border-top: none;
+}
+#header #block-menu-menu-industry ul.menu li a:hover{
+    background: none;
+	background-color: none;
+    color: #A90018;
+	border-top: 1px solid #292C28;
+}
+#header #block-menu-menu-industry h2{
+	font-size: 16px;
+	font-weight:600;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.tb-megamenu .nav li.dropdown > .dropdown-toggle .caret{
+	margin-top:12px;
+}
+
+.block-views-header-block-block-1{
+	padding:0px;
+}
+div#block-views-product-categories-block h3{
+	text-align:center;
+}
+
+.info{
+	padding-left:5px;
+	font-size:14px;
+}
+
+.group-mt-main-area-center tbody{
+	border-bottom: 0px;
+}
+
