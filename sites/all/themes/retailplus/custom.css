@@ -62,7 +62,7 @@
 
 #block-views-header-block-block-2 .item-list ul li{
 	
-	margin:0 0 0 .75em;
+	margin:0 0 0 0em;
 }
 
 #header #block-menu-menu-industry ul.menu {
@@ -124,5 +124,10 @@ div#block-views-product-categories-block h3{
 
 .group-mt-main-area-center tbody{
 	border-bottom: 0px;
+}
+
+#featured {
+    padding: 20px 0;
+    border-top: 1px solid #d7d7d7;
 }
 
