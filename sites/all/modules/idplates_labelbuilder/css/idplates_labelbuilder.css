@@ -24,18 +24,23 @@
   width: 30%;
 }
 
+[id*=idplates-labelbuilder] .column-right legend,
+[id*=idplates-labelbuilder] .column-right table * {
+  color: #666
+}
+
 [id*=idplates-labelbuilder] #edit-submit {
   float: right;
 }
 
 input[type="submit"].form-button-disabled {
-  background-color: #666;
-  color: #ccc;
+  background-color: #dadada;
+  color: #aaa;
 }
 
 input[type="submit"].form-button-disabled:hover {
-  background-color: #666;
-  color: #ccc;
+  background-color: #dadada;
+  color: #aaa;
 }
 
 [id*=idplates-labelbuilder] .idplates-labelbuilder-description {
@@ -242,7 +247,7 @@ input[type="submit"].form-button-disabled:hover {
   margin: 0;
   padding: 0;
   border-radius: 8px;
-  border-color: #333;
+  border-color: #ccc;
 }
 
 #edit-label-proof legend {
@@ -254,7 +259,6 @@ input[type="submit"].form-button-disabled:hover {
   font-size: 1.1em;
   margin: 0;
   border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid #ccc;
   background-color: #f5f5f5;
   text-align: center;
 }
@@ -353,6 +357,16 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   max-width: none;
 }
 
+#edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-per-label{
+  font-size: .8em;
+  text-transform: lowercase;
+}
+
+#edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-total {
+  color: #c0273c !important;
+  font-weight: bold;
+}
+
 .idplates-labelbuilder-preview {
   text-align: center;
 }
@@ -427,14 +441,13 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 #edit-label-proof .idplates-labelbuilder-qty-price-wrapper {
-  border-top: 2px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 
 #edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-item-qty {
   width: 33%;
   display: inline-block;
   text-align: center;
-
 }
 
 #edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-item-qty input {
@@ -578,5 +591,46 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 /**
- * Options
+ * Responsive
  */
+@media screen and (max-width: 1199px) {
+  [id*=idplates-labelbuilder] .column-left {
+    width: 62.5%;
+  }
+
+  [id*=idplates-labelbuilder] .column-right {
+    width: 35%;
+  }
+
+  .idplates-labelbuilder-preview-wrapper {
+    left: -6px;
+  }
+
+  #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+    font-size: 19px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  [id*=idplates-labelbuilder] .column-left {
+    float: none;
+    width: 100%;
+  }
+
+  [id*=idplates-labelbuilder] .column-right {
+    float: none;
+    width: 330px;
+    margin: 30px auto 0;
+  }
+
+  #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+    font-size: 2vw;
+  }
+}
+

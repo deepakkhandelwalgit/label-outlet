@@ -35,10 +35,11 @@ if (!empty($tid)) {
           <tr>
             <th><?php print t('COST'); ?></th>
             <td>
-              <?php print commerce_currency_format($price_table['amount'] * $quantity); ?>
+              <span
+                  class="idplates-labelbuilder-preview-price-total"><?php print commerce_currency_format($price_table['amount'] * $quantity); ?></span>
               <br>
-              <?php print commerce_currency_format($price_table['amount']); ?> /
-              label
+              <span
+                  class="idplates-labelbuilder-preview-price-per-label"><?php print commerce_currency_format($price_table['amount']); ?>/label</span>
             </td>
           </tr>
         </table>
