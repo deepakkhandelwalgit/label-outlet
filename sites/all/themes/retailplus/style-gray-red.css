@@ -70,6 +70,8 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 #header ul.menu li a:hover, #header ul.menu li.sfHover>a,
 #main-navigation .sf-menu ul li a.active { color: #ffffff; }
 
+#main-navigation .sf-menu ul li a.sf-depth-2.active { color:#A90018; }
+
 a.button {
     padding: 0px;
     font-size: 25px;
