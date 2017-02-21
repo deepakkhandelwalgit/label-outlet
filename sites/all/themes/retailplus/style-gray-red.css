@@ -82,6 +82,10 @@ a.button {
     width: 100%;
 }
 
+ #main-navigation .sf-menu ul{
+ background-color: rgba(255,255,255,0.5);
+ }
+
  #main-navigation .sf-menu ul li a{
 	 color:#CCC;
  }
