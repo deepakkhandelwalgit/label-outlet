@@ -32,7 +32,6 @@ function idplates_shipping_commerce_fedex_rate_request_alter(&$request, $order) 
 
   $request['RequestedShipment']['RequestedPackageLineItems'] = $package_line_items;
 
-  dpm($request);
 }
 
 /**

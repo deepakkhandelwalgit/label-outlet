@@ -2,7 +2,6 @@
 
 /**
  * @file This template will display the layout preview.
- *
  */
 
 $attributes = $variables['attributes'];

@@ -48,7 +48,6 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     }
   }
 
-  //todo jace - get style option in a better manner and line 26
   $style_options = array(
     'BAR' => 'Barcodes',
     'NUM' => 'Numbering Only',

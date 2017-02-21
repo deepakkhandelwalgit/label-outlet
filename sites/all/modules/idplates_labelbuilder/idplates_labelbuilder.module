@@ -6,6 +6,7 @@
  */
 
 define("FREE_COLORS", array('000000'));
+define("INFO_DOT_SKUS", array('PHF257', 'PHF111', 'PHF005'));
 
 /**
  * Implements hook_menu().
@@ -128,6 +129,14 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'label' => NULL,
       ),
     ),
+    'idplates_labelbuilder_hanging_tag' => array(
+      'template' => 'idplates-labelbuilder-hanging-tag',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'label' => NULL,
+        'code' => NULL,
+      ),
+    ),
   );
 }
 
@@ -197,14 +206,11 @@ function idplates_labelbuilder_get_label_preview(&$form, &$form_state) {
   );
 
   $unique_layout = '';
-  if ($product = commerce_product_load($form_state['label']->getSizeTid())) {
-    if ($product->type == 'rear_view_mirror_hang_tags') {
-      $unique_layout = 'hanging_tag';
-    }
-    if ($product->type == 'info_dot') {
-      $unique_layout = 'info_dot';
-    }
+  if ($layout = taxonomy_term_load($form_state['label']->getLayoutTid())) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $unique_layout = $layout_wrapper->field_layout_form->value();
   }
+
   $form['column_right']['label_proof']['preview'] = array(
     '#type' => 'item',
     '#prefix' => '<div id="idplates-labelbuilder-preview-ajax-wrapper">',
@@ -309,6 +315,7 @@ function idplates_labelbuilder_preview_ajax_callback($form, $form_state) {
  * @param $label
  * @param $code
  * @param $no_numbering
+ * @param $unique_layout
  *
  * @return string
  */
@@ -317,29 +324,30 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
   $size = explode('x', $label->size);
   $realW = (double) $size[0];
   $realH = (double) $size[1];
-  $width = 260;
+  $width = $unique_layout == 'infodot' ? 80 : 260;
   $height = $width * $realH / $realW;
-  if ($unique_layout === 'hanging_tag') {
-    $height -= 120;
-  }
   $tag_color = !empty($label->getTagColor()) ? $label->getTagColor() : 'f00';
   $text_color = !empty($label->getText()['color']) ? $label->getText()['color'] : 'fff';
   $font_size['a'] = !empty($label->getText()['text_a']['size']) ? $label->getText()['text_a']['size'] : '12';
   $font_size['b'] = !empty($label->getText()['text_b']['size']) ? $label->getText()['text_b']['size'] : '10';
   $font_size['c'] = !empty($label->getText()['text_c']['size']) ? $label->getText()['text_c']['size'] : '10';
   $serial_number = '000001';
-
-  $section_height = _idplates_labelbuilder_get_section_heights($code, $height);
-
-  if (count($section_height) == 1) {
-    $line_height_a = $height;
+  // Hanging tag variables.
+  if ($hanging_tag = strpos($unique_layout, 'rearview') !== FALSE) {
+    $long_tag = strpos($unique_layout, 'long') !== FALSE;
+    $height -= 120;
   }
+
+  $section_height = _idplates_labelbuilder_get_section_heights($code, $height, $unique_layout, $sections);
 
   $markup = '';
-  if ($unique_layout == 'hanging_tag') {
-    $markup .= _idplates_labelbuilder_render_hanging_tag();
+  if ($hanging_tag) {
+    $markup .= theme('idplates_labelbuilder_hanging_tag', array(
+      'label' => $label,
+      'code' => $code,
+    ));
   }
-  $markup .= '<div class="idplates-labelbuilder-preview-wrapper" style="width:' . $width . 'px; height: ' . $height . 'px">';
+  $markup .= '<div class="idplates-labelbuilder-preview-wrapper ' . $unique_layout . '" style="width:' . $width . 'px; height: ' . $height . 'px">';
 
   foreach ($sections as $index => $preview_section):
     $background = '#fff';
@@ -355,7 +363,6 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
        style="height: ' . $current_section_height . ';color: #' . $text_color . '; background: ' . $background . ';background-size: contain">';
     $markup .= '<div class="idplates-labelbuilder-preview-section" style="height:100%">';
     $label_markup = '';
-    $double_serial_size = FALSE;
     foreach (str_split($preview_section) as $char) :
       $char = strtolower($char);
       $styles = '';
@@ -374,37 +381,37 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
           $content = '*' . $serial_number . '*';
           $styles .= 'color: transparent;height:' . $section_height['barcode_height'] . 'px;margin-top:' . $section_height['barcode_margin'] . 'px;';
           break;
-        case 'x':
-          $classes = 'idplates-labelbuilder-preview-wrapper-barcode' . $no_numbering;
-          $content = '*' . $serial_number . '*';
-          $styles .= 'color: transparent;height:' . $section_height['barcode_height'] . 'px;margin-top:' . $section_height['barcode_margin'] . 'px;';
-          break;
         case 's':
           $classes = $no_numbering;
-          $multiplier = $double_serial_size ? 2 : 1;
-          $styles .= 'font-size:' . $section_height['serial_height'] * $multiplier . 'pt;font-weight:bold;color:#000;';
+          if ($unique_layout == 'infodot') {
+            $section_height['serial_height'] = 14;
+            if (strpos(strtolower($code), 'm') !== FALSE) {
+              $section_height['serial_height'] = 10;
+            }
+          }
+          $styles .= 'font-size:' . $section_height['serial_height'] . 'pt;font-weight:bold;color:#000;';
           $content = $serial_number;
-          $double_serial_size = FALSE;
           break;
         case 'm':
-          $classes = 'idplates-labelbuilder-inline';
+          if ($unique_layout !== 'infodot') {
+            $classes = 'idplates-labelbuilder-inline';
+          }
           $content = theme('image', array(
-            'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/gfx/qr_code.png',
-            'attributes' => array(),
+            'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/gfx/datamatrix.svg',
+            'attributes' => array('class' => array('idplates-labelbuilder-qr-code' . ($long_tag ? ' long-tag' : ''))),
           ));
           $tag = 'div';
           break;
         case '-':
           $classes = 'idplates-labelbuilder-inline hidden';
           $tag = 'div';
-          $double_serial_size = TRUE;
           break;
         case 'l':
           $tag = 'div';
           $logo = file_load($label->getLogo());
-          $content = t('LOGO HERE');
+          $content = '<div class="idplates-labelbuilder-empty-logo">LOGO<br>HERE</div>';
           if (empty($logo)) {
-            $classes = 'idplates-labelbuilder-empty-logo';
+            $classes = 'idplates-labelbuilder-empty-logo-wrapper' . ($long_tag ? ' long-tag' : '');
           }
           else {
             $content = theme('image', array(
@@ -424,23 +431,6 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
   $markup .= '</div>';
 
   return $markup;
-}
-
-function _idplates_labelbuilder_render_hanging_tag() {
-  //    <script type="application/javascript">
-  //    function draw() {
-  //      var canvas = document.getElementById('canvas');
-  //      if (canvas.getContext) {
-  //        var ctx = canvas.getContext('2d');
-  //
-  //        ctx.fillStyle = 'rgb(200,0,0)';
-  //        ctx.fillRect (10, 10, 50, 50);
-  //
-  //        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-  //        ctx.fillRect (30, 30, 50, 50);
-  //      }
-  //    }
-  //  </script>
 }
 
 /**
@@ -467,40 +457,129 @@ function _idplates_labelbuilder_get_textline_count($code) {
  *
  * @param $code
  * @param $height
+ * @param $unique_layout
+ * @param $sections
  *
  * @return array
  */
-function _idplates_labelbuilder_get_section_heights($code, $height) {
+function _idplates_labelbuilder_get_section_heights($code, $height, $unique_layout, $sections) {
+  if (count($sections) == 1 && (strpos(strtolower($code), 'x') === FALSE)) {
+    return array(
+      0 => '100%',
+      'serial_height' => 14,
+    );
+  }
+
+  $logo = strpos(strtolower($code), 'l') !== FALSE;
+  if ($no_qr_code = strpos(strtolower($code), 'm') === FALSE) {
+    $numbering_only = strpos(strtolower($code), 'x') === FALSE;
+  }
+
   $section_height = array();
 
-  switch (_idplates_labelbuilder_get_textline_count($code)) {
-    case 1:
-      $section_height[0] = '29%';
-      $section_height[1] = '72%';
-      $section_height['barcode_height'] = $height * .72 * .6;
-      $section_height['serial_height'] = $height * .72 * .33 * .5;
-      $section_height['barcode_margin'] = -4;
-      break;
-    case 2:
-      $section_height[0] = '43%';
-      $section_height[1] = '58%';
-      $section_height['barcode_height'] = $height * .58 * .5;
-      $section_height['serial_height'] = $height * .58 * .4 * .5;
-      $section_height['barcode_margin'] = -5;
-      break;
-    case 3:
-      $section_height[0] = '37%';
-      $section_height[1] = '42%';
-      $section_height[2] = '21%';
-      $section_height['barcode_height'] = $height * .42 * .65;
-      $section_height['serial_height'] = $height * .42 * .3 * .8;
-      $section_height['barcode_margin'] = 3;
+  switch ($unique_layout) {
+    case 'rearview-mirror-long':
+      switch (_idplates_labelbuilder_get_textline_count($code)) {
+        case 1:
+        case 2:
+          // logo
+          if ($logo) {
+            // This doesn't add up to 100, that's ok. The bottom section is
+            // position absolute, so section[1] is given a little more percent
+            // to give us some better margins that we can't achieve with css
+            // because they are table cells.
+            $section_height[0] = '17%';
+            $section_height[1] = '23%';
+            $section_height[2] = '63%';
+            $section_height['barcode_height'] = $height * .48 * .85;
+            $section_height['barcode_margin'] = 0;
+          }
+          else {
+            $section_height[0] = '22%';
+            $section_height[1] = '78%';
+            $section_height['barcode_height'] = $height * .78 * .65;
+            $section_height['barcode_margin'] = 15;
+          }
+          break;
+        case 3:
+          $section_height[0] = '22%';
+          $section_height[1] = '62%';
+          $section_height[2] = '16%';
+          $section_height['barcode_height'] = $height * .62 * .65;
+          $section_height['serial_height'] = $height * .62 * .3 * .7;
+          $section_height['barcode_margin'] = 3;
+          break;
+        default:
+          $section_height[0] = '100%';
+          $section_height['barcode_height'] = $height * .7;
+          $section_height['barcode_margin'] = 10;
+      }
+
+      $section_height['serial_height'] = 49;
       break;
     default:
-      $section_height[0] = '100%';
-      $section_height['barcode_height'] = $height * .5;
-      $section_height['serial_height'] = $height * .25 * .8;
-      $section_height['barcode_margin'] = 10;
+      if ($logo) {
+        switch (_idplates_labelbuilder_get_textline_count($code)) {
+          case 1:
+          case 2:
+            $section_height[0] = '43%';
+            $section_height[1] = '58%';
+            $section_height['barcode_height'] = $height * .58 * .5;
+            $section_height['serial_height'] = $height * .58 * .2;
+            $section_height['barcode_margin'] = -5;
+            break;
+          case 3:
+            $section_height[0] = '37%';
+            $section_height[1] = '42%';
+            $section_height[2] = '21%';
+            $section_height['barcode_height'] = $height * .42 * .65;
+            $section_height['serial_height'] = $height * .42 * .25;
+            $section_height['barcode_margin'] = 3;
+            break;
+          default:
+            $section_height[0] = '100%';
+            $section_height['barcode_height'] = $height * .5;
+            $section_height['serial_height'] = $height * .2;
+            $section_height['barcode_margin'] = 10;
+        }
+      }
+      else {
+        switch (_idplates_labelbuilder_get_textline_count($code)) {
+          case 1:
+            $section_height[0] = '29%';
+            $section_height[1] = '72%';
+            $section_height['barcode_height'] = $height * .72 * .6;
+            $section_height['serial_height'] = $height * .72 * .165;
+            $section_height['barcode_margin'] = -4;
+            break;
+          case 2:
+            $section_height[0] = '43%';
+            $section_height[1] = '58%';
+            $section_height['barcode_height'] = $height * .58 * .5;
+            $section_height['serial_height'] = $height * .58 * .2;
+            $section_height['barcode_margin'] = -5;
+            break;
+          case 3:
+            $section_height[0] = '37%';
+            $section_height[1] = '42%';
+            $section_height[2] = '21%';
+            $section_height['barcode_height'] = $height * .42 * .65;
+            $section_height['serial_height'] = $height * .42 * .25;
+            $section_height['barcode_margin'] = 3;
+            break;
+          default:
+            $section_height[0] = '100%';
+            $section_height['barcode_height'] = $height * .5;
+            $section_height['serial_height'] = $height * .2;
+            $section_height['barcode_margin'] = 10;
+        }
+        if (!$no_qr_code) {
+          $section_height['serial_height'] = $height * .2;
+        }
+      }
+  }
+  if ($numbering_only) {
+    $section_height['serial_height'] *= 3;
   }
 
   return $section_height;

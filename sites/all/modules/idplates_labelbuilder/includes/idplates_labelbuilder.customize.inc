@@ -59,6 +59,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
       '#ajax' => $ajax,
     );
+  } else {
     // Background is white, so make the default text colour red.
     $default_text_color = 'FF0000';
   }
@@ -275,7 +276,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
 
   $form_state['label'] = $label;
 
-  idplates_labelbuilder_get_label_preview($form, $form_state, $layout);
+  idplates_labelbuilder_get_label_preview($form, $form_state);
 
   return $form;
 }

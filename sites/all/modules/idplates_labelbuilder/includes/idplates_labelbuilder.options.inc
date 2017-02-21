@@ -21,13 +21,21 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $adhesives = array();
   $add_ons = array();
 
-  foreach ($product_wrapper->field_adhesive_options as $adhesive) {
-    $adhesives[] = $adhesive->value();
+  if (!empty($product_wrapper->field_adhesive_options)) {
+    foreach ($product_wrapper->field_adhesive_options as $adhesive) {
+      $adhesives[] = $adhesive->value();
+    }
   }
-  foreach ($product_wrapper->field_add_on_options as $add_on) {
-    $add_ons[] = $add_on;
+  if (!empty($product_wrapper->field_intensification_options)) {
+    foreach ($product_wrapper->field_intensification_options as $intensification) {
+      $intensifications[] = $intensification->value();
+    }
   }
-
+  if (!empty($product_wrapper->field_add_on_options)) {
+    foreach ($product_wrapper->field_add_on_options as $add_on) {
+      $add_ons[] = $add_on;
+    }
+  }
 
   $ajax = array(
     'callback' => 'idplates_labelbuilder_preview_ajax_callback',
@@ -71,6 +79,20 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     //    );
     $adhesive_options[$adhesive->product_id] = $adhesive->title;
   }
+  $intensification_options = array();
+
+  foreach ($intensifications as $intensification) {
+    //    $image = $intensification->field_label_size->field_ls_image->value();
+    //    $size = $intensification->field_label_size->name->value();
+    //    $options[$intensification->product_id->value()] = theme('image', array(
+    //        'path' => $image['uri'],
+    //        'size' => $size,
+    //        'attributes' => array(),
+    //      )
+    //    );
+    $intsf_label = str_replace('_', ' ', $intensification->sku);
+    $intensification_options[$intensification->product_id] = ucwords($intsf_label);
+  }
 
   $add_on_options = array();
   foreach ($add_ons as $add_on) {
@@ -90,28 +112,18 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#required' => TRUE,
     '#ajax' => $ajax,
   );
-
-  //  $form['column_left']['cleaner'] = array(
-  //    '#type' => 'fieldset',
-  //    '#title' => t('Cleaner'),
-  //  );
-  //  $form['column_left']['cleaner']['cleaner_options'] = array(
-  //    '#type' => 'checkboxes',
-  //    '#options' => array(
-  //      'cleaner' => t('Surface Cleaner - 8oz Spray Bottle'),
-  //    ),
-  //  );
-
-  //  $form['column_left']['application_aid'] = array(
-  //    '#type' => 'fieldset',
-  //    '#title' => t('Application Aid'),
-  //  );
-  //  $form['column_left']['application_aid']['roller'] = array(
-  //    '#type' => 'checkboxes',
-  //    '#options' => array(
-  //      'cleaner' => t('Application Roller'),
-  //    ),
-  //  );
+  if (!empty($intensification_options)) {
+    $form['column_left']['intensifications'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Intensifications'),
+    );
+    $form['column_left']['intensifications']['intensification_option'] = array(
+      '#type' => 'checkboxes',
+      '#options' => $intensification_options,
+      '#required' => TRUE,
+      '#ajax' => $ajax,
+    );
+  }
 
   $form['column_left']['add_ons'] = array(
     '#type' => 'fieldset',
@@ -154,12 +166,21 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   );
 
   $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : $form['column_left']['adhesives']['adhesive_option']['#default_value'];
+  $selected_intensification = !empty($form_state['values']['intensification_option']) ? $form_state['values']['intensification_option'] : NULL;
   $selected_add_ons = !empty($form_state['values']['add_on_options']) ? $form_state['values']['add_on_options'] : NULL;
   $extras = array();
   $extras[] = array(
     'product_id' => $selected_adhesive,
     'qty' => $form_state['values']['qty'],
   );
+  foreach ($selected_intensification as $intensification) {
+    if (!empty($intensification)) {
+      $extras[] = array(
+        'product_id' => $intensification,
+        'qty' => $form_state['values']['qty'],
+      );
+    }
+  }
   foreach ($selected_add_ons as $selected_add_on) {
     if (!empty($selected_add_on)) {
       $extras[] = array(

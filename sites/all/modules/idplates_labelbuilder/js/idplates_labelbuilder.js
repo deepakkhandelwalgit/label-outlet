@@ -36,6 +36,8 @@
         var parentHeight = $this.parent().height();
         $this.height(parentHeight);
         $this.find('img.idplates-labelbuilder-logo').css('max-height', parentHeight);
+        $this.find('img.idplates-labelbuilder-qr-code').css('height', (parentHeight * .7));
+        $this.find('img.idplates-labelbuilder-qr-code').css('width', (parentHeight * .7));
       });
 
 

@@ -1,3 +1,7 @@
+[id*=idplates-labelbuilder] {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 [id*=idplates-labelbuilder] .colorpicker {
   z-index: 999999;
 }
@@ -269,6 +273,15 @@ input[type="submit"].form-button-disabled:hover {
   box-shadow: 4px 4px 8px #bbb;
 }
 
+.idplates-labelbuilder-preview-wrapper.infodot {
+  border-radius: 50%;
+}
+
+.idplates-labelbuilder-preview-wrapper.infodot img {
+  height: 44px;
+  width: 44px;
+}
+
 .idplates-labelbuilder-preview-wrapper p {
   margin: 0;
   padding: 0;
@@ -368,15 +381,26 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   white-space: nowrap;
 }
 
+.idplates-labelbuilder-preview .idplates-labelbuilder-qr-code.long-tag {
+  margin-top: -50px;
+}
+
 .idplates-labelbuilder-preview .idplates-labelbuilder-empty-logo {
   border: 1px dashed #c0273c;
-  width: 30px;
   border-radius: 5px;
   line-height: 1;
   color: #c0273c;
   font-size: 10pt;
   font-style: italic;
-  padding: 0 8px;
+  padding: 2px 8px;
+  margin-top: 3px;
+}
+
+.idplates-labelbuilder-preview .long-tag .idplates-labelbuilder-empty-logo {
+  font-size: 20pt;
+  padding: 8px;
+  margin: 0 auto;
+  width: 45%;
 }
 
 .idplates-labelbuilder-preview #idplates-labelbuilder-hanging-tag-canvas {
