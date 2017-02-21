@@ -93,6 +93,9 @@ a.button {
 	 background-color: #FFF;
 	 color:#A90018;
  }
+ #header ul.menu li ul li a:link{
+	 color:#3F3F3f;
+ }
  
 #header ul.menu li ul li a:hover, #header ul.menu li ul li a:active, #header ul.menu li ul li a:focus, #header ul.menu ul li.sfHover>a,
 #main-navigation .sf-menu ul li ul li a.active { color: #A90018; }
