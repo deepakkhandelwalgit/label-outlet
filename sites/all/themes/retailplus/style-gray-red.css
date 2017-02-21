@@ -81,3 +81,7 @@ a.button {
     border: 15px solid #eb4016;
     width: 100%;
 }
+
+ #main-navigation .sf-menu ul li a{
+	 color:#CCC;
+ }
