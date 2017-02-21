@@ -1,5 +1,5 @@
 <?php
-function mymodule_form_mailchimp_signup_subscribe_block_join_list_form_alter(&$form, $form_state, $form_id) {
+function mailchimphtml_form_mailchimp_signup_subscribe_block_join_list_form_alter(&$form, $form_state, $form_id) {
   $desc = &$form['description']['#markup'];
   $desc = <<<HTML
 <div class="my-class">$desc</div>
