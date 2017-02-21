@@ -93,3 +93,6 @@ a.button {
 	 background-color: #FFF;
 	 color:#A90018;
  }
+   #main-navigation .sf-menu ul li a:active{
+	 color:#A90018;
+ }
