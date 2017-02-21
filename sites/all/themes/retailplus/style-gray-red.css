@@ -34,6 +34,12 @@ ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li
   color:#3f3f3f; 
 }
 
+#main-navigation .sf-menu ul li ul li a, #main-navigation .sf-menu ul li ul li a:hover{
+	
+background-color: #fff; 
+color:#3f3f3f; 
+}
+
 a.button:hover { background-color: #f95407; }
 
 .node-type-mt-product .group-mt-main-area-left .field-type-taxonomy-term-reference .field-item a:hover {
