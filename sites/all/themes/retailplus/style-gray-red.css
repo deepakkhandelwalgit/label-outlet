@@ -30,15 +30,7 @@ a:hover, a:focus, ul.menu li a.active:hover, ul.menu li a:hover, ul.menu li > a:
 input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, #main .webform-client-form .form-actions input:hover,
 ul.links li a:hover, .item-list ul.quicktabs-tabs > li > a:hover, .nav-tabs > li > a:hover, .item-list ul.quicktabs-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:hover, .panel-heading a:hover, .mean-container .mean-nav ul li a:hover, .mean-container .mean-nav ul li a.mean-expand:hover
-{ background-color: #fff; 
-  color:#3f3f3f; 
-}
-
-#main-navigation .sf-menu ul li ul li a, #main-navigation .sf-menu ul li ul li a:hover{
-	
-background-color: #fff; 
-color:#3f3f3f; 
-}
+{ background-color: #da3148; }
 
 a.button:hover { background-color: #f95407; }
 
