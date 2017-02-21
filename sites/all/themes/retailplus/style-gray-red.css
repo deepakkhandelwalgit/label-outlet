@@ -94,5 +94,5 @@ a.button {
 	 color:#A90018;
  }
  
- #header ul.menu li ul li a:hover, #header ul.menu ul li.sfHover>a,
+#header ul.menu li ul li a:hover, #header ul.menu li ul li a:active, #header ul.menu ul li.sfHover>a,
 #main-navigation .sf-menu ul li ul li a.active { color: #A90018; }
