@@ -23,7 +23,9 @@ if (!empty($product)) {
   if (!empty($layout)) {
     $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     $label->setLayout($layout->name);
-    $image = $layout_wrapper->field_ll_image->value();
+    if ($section != 'size') {
+      $image = $layout_wrapper->field_ll_image->value();
+    }
     $code = $layout_wrapper->field_layout_code->value();
   }
 }
