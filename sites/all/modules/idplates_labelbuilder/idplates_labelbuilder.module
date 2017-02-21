@@ -46,39 +46,7 @@ function idplates_labelbuilder_menu() {
     'file' => 'includes/idplates_labelbuilder.options.inc',
   );
 
-  $items['test'] = array(
-    'title' => 'ID Advantage',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('testy'),
-    'access arguments' => array('access content'),
-  );
-
   return $items;
-}
-
-function testy($form, &$form_state) {
-  $form['numbering_options'] = array(
-    '#type' => 'radios',
-    '#options' => array(
-      'no' => 'no',
-      'custom' => 'custom',
-      'consecutive' => 'consecutive',
-    ),
-    '#title' => t('Select the options for numbering.'),
-    '#default_value' => 'no',
-  );
-
-  $form['consecutive_options'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Starting Barcode Number'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-      ),
-    ),
-  );
-
-  return $form;
 }
 
 /**
