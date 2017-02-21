@@ -89,3 +89,7 @@ a.button {
  #main-navigation .sf-menu ul li a{
 	 color:#3F3F3f;
  }
+  #main-navigation .sf-menu ul li a:hover{
+	 background-color: none;
+	 color:#A90018;
+ }
