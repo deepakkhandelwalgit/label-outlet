@@ -99,3 +99,7 @@ a.button {
  
 #header ul.menu li ul li a:hover, #header ul.menu li ul li a:active, #header ul.menu li ul li a:focus, #header ul.menu ul li.sfHover>a,
 #main-navigation .sf-menu ul li ul li a.active { color: #A90018; }
+
+  #main-navigation .sf-menu ul li ul li a:hover{
+	 color:#A90018;
+ }
