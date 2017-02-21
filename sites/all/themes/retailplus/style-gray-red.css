@@ -68,7 +68,7 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 }
 
 #header ul.menu li a:hover, #header ul.menu li.sfHover>a,
-#main-navigation .sf-menu ul li a.active { color: #A90018; }
+#main-navigation .sf-menu ul li a.active { color: #ffffff; }
 
 a.button {
     padding: 0px;
@@ -93,3 +93,6 @@ a.button {
 	 background-color: #FFF;
 	 color:#A90018;
  }
+ 
+ #header ul.menu li ul li a:hover, #header ul.menu ul li.sfHover>a,
+#main-navigation .sf-menu ul li ul li a.active { color: #ffffff; }
