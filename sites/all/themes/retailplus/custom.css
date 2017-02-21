@@ -134,4 +134,6 @@ div#block-views-product-categories-block h3{
     padding: 30px 0;
     border-top: 1px solid #d7d7d7;
 }
-
+#block-views-header-block-block-1 {
+    padding: 0 0 5px 0;
+}
