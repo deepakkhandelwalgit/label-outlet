@@ -137,3 +137,7 @@ div#block-views-product-categories-block h3{
 #block-views-header-block-block-1 {
     padding: 0 0 5px 0;
 }
+
+#main.content {
+    padding: 10px 0;
+}
