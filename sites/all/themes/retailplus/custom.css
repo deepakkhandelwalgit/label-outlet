@@ -151,6 +151,6 @@ div#block-views-product-categories-block h3{
     padding: 10px 0;
 }
 
-.view-id-mt_testimonials .view-display-id-block_1 .views-field-nothing{
+.view-id-mt_testimonials.view-display-id-block_1 .views-field-nothing{
 	border-top: 1px solid #3f3f3f;
 }
