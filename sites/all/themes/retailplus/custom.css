@@ -45,6 +45,11 @@ margin:5px 0 5px 0;
   float:left;
 }
 
+.block-left, .block-right{
+  float:left;
+  width:50%;
+}
+
 .file-icon {
     display: none;
 }
