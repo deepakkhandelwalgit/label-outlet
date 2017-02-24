@@ -43,5 +43,16 @@
 
     }
   }
+  Drupal.behaviors.DisableInputEnter = {
+    attach: function(context, settings) {
+      $('input', context).once('disable-input-enter', function() {
+        $(this).keypress(function(e) {
+          if (e.keyCode == 13) {
+            e.preventDefault();
+          }
+        });
+      });
+    }
+  }
 })
 (jQuery);
