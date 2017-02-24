@@ -29,11 +29,18 @@ $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
 
 $label = !empty($line_item->data['idplates_labelbuilder']['label']) ? $line_item->data['idplates_labelbuilder']['label'] : NULL;
 
+$unique_layout = '';
+
 if (!empty($label) && $is_admin) {
+  if ($layout = taxonomy_term_load($label->getLayoutTid())) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $unique_layout = $layout_wrapper->field_layout_form->value();
+  }
 
   $output = theme('idplates_labelbuilder_preview', array(
     'label' => $label,
-    'backend' => true,
+    'backend' => TRUE,
+    'unique_layout' => $unique_layout,
   ));
 
   print $output;
