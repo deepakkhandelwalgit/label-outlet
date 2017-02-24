@@ -42,7 +42,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
     'event' => 'change',
-    'progress' => '',
+    'progress' => array('type' => 'throbber', 'message' => ''),
   );
 
   $form['breadcrumb'] = array(

@@ -21,7 +21,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
     'event' => 'change',
-    'progress' => array(),
+    'progress' => array('type' => 'throbber', 'message' => ''),
   );
 
   $form['breadcrumb'] = array(
@@ -59,7 +59,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
       '#ajax' => $ajax,
     );
-  } else {
+  }
+  else {
     // Background is white, so make the default text colour red.
     $default_text_color = 'FF0000';
   }

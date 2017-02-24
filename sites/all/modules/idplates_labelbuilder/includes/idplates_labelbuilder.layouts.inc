@@ -30,7 +30,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     'callback' => 'idplates_labelbuilder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
-    'progress' => array(),
+    'progress' => array('type' => 'throbber', 'message' => ''),
   );
 
   foreach ($layouts as $layout) {

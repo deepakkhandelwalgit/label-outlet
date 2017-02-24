@@ -25,7 +25,7 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
     'callback' => 'idplates_labelbuilder_preview_ajax_callback',
     'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
     'method' => 'replace',
-    'progress' => array(),
+    'progress' => array('type' => 'throbber', 'message' => ''),
   );
 
   $display_wrapper = entity_metadata_wrapper('node', $node);
