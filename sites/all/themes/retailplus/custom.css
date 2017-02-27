@@ -167,5 +167,12 @@ div#block-views-product-categories-block h3{
 }
 
 .service-image{
-	padding-top:10px;
+	padding-top:20px;
+}
+.subfooter-area .block {
+    padding: 0px 20px 0px 0px;
+}
+
+.text-center{
+	text-align:center;
 }
