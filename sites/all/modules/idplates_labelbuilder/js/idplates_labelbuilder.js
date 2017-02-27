@@ -6,8 +6,14 @@
           '#idplates-labelbuilder-customize-form [id^="edit-text"], ' +
           '#idplates-labelbuilder-options-form [id^="edit-notes"]';
 
-
       $(selectors, context).on('keyup', function (e) {
+        // get keycode of current keypress event
+        var code = (e.keyCode || e.which);
+        // do nothing if it's home, end, arrow keys, shift, ctrl, alt
+        if(code == 35 || code == 36 || code == 37 || code == 38 || code == 39 || code == 40 || code == 16 || code == 17 || code == 18) {
+          return;
+        }
+
         clearTimeout(timer);
         timer = setTimeout(function () {
           $('#' + e.target.id).change();
