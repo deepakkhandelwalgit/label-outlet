@@ -172,11 +172,13 @@ div#block-views-product-categories-block h3{
 .subfooter-area .block {
     padding: 0px 20px 0px 0px;
 }
+
 .text-center{
 	text-align:center;
 	padding:20px 0px;
 }
 .center-image{
+width:900px;	
 margin-left: auto;
 margin-right: auto;
 }
