@@ -6,7 +6,8 @@
   z-index: 999999;
 }
 
-[id*=idplates-labelbuilder] .column-right input[disabled="disabled"] {
+[id*=idplates-labelbuilder] .column-right input[disabled="disabled"],
+[id*=idplates-labelbuilder] #edit-submit:disabled  {
   background-color: #dadada;
 }
 
@@ -33,7 +34,8 @@
   float: right;
 }
 
-input[type="submit"].form-button-disabled {
+input[type="submit"].form-button-disabled,
+[id*=idplates-labelbuilder] #edit-submit:disabled  {
   background-color: #dadada;
   color: #aaa;
 }

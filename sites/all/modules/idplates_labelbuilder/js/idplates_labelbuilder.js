@@ -43,15 +43,35 @@
 
     }
   }
-  Drupal.behaviors.DisableInputEnter = {
-    attach: function(context, settings) {
-      $('input', context).once('disable-input-enter', function() {
-        $(this).keypress(function(e) {
+  Drupal.behaviors.idplatesLabelBuilderDisableInputEnter = {
+    attach: function (context, settings) {
+      $('input', context).once('disable-input-enter', function () {
+        $(this).keypress(function (e) {
           if (e.keyCode == 13) {
             e.preventDefault();
           }
         });
       });
+    }
+  }
+
+  Drupal.behaviors.idplatesLabelBuilderDisableSubmit = {
+    attach: function (context, settings) {
+      var checked = false;
+      $('#idplates-labelbuilder-size-form input, #idplates-labelbuilder-layout-form input').each(function () {
+        var $this = $(this);
+        if ($this.is(':checked')) {
+          checked = true;
+          // Break the loop.
+          return false;
+        }
+      });
+
+      if (checked) {
+        $('#edit-submit').removeAttr('disabled');
+      } else {
+        $('#edit-submit').attr('disabled', 'disabled');
+      }
     }
   }
 })
