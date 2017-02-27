@@ -161,3 +161,7 @@ div#block-views-product-categories-block h3{
     box-shadow: 0;
     position: relative;
 }
+
+#footer .col-sm-4{
+	width:32.66;
+}
