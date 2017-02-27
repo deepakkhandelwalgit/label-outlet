@@ -176,3 +176,7 @@ div#block-views-product-categories-block h3{
 .text-center{
 	text-align:center;
 }
+.center-image{
+margin-left: auto;
+margin-right: auto;
+}
