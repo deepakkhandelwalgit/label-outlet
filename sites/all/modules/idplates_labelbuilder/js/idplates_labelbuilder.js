@@ -67,7 +67,6 @@
 
         var checked = false;
         $('#idplates-labelbuilder-size-form input, #idplates-labelbuilder-layout-form input').each(function () {
-          console.log('hey');
           var $this = $(this);
           if ($this.is(':checked')) {
             checked = true;

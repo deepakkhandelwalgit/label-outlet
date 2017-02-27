@@ -136,7 +136,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   );
   $form['column_left']['add_ons']['description'] = array(
     '#type' => 'item',
-    '#markup' => t('Note: You will receive 1 Spray Bottle and 1 Application roller for FREE with your order. For additional supplies, select the product needed from the above options.'),
+    '#markup' => t('Note: You will receive 1 Surface Cleaner and 1 Application Roller for FREE with your order. For additional supplies, select the product needed from the above options.'),
     '#prefix' => '<div class="idplates-labelbuilder-description">',
     '#suffix' => '</div>',
   );

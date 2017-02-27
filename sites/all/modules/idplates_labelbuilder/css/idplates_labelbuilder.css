@@ -6,6 +6,10 @@
   z-index: 999999;
 }
 
+[id*=idplates-labelbuilder] .jquery_colorpicker .color_picker {
+  top: 10px !important;
+}
+
 [id*=idplates-labelbuilder] .column-right input[disabled="disabled"],
 [id*=idplates-labelbuilder] #edit-submit:disabled {
   background-color: #dadada;
@@ -125,14 +129,18 @@ input[type="submit"].form-button-disabled:hover {
   font-weight: normal;
 }
 
-[id*=idplates-labelbuilder]  fieldset {
+[id*=idplates-labelbuilder] fieldset {
   border: none;
   margin: 0 0 25px 0;
   padding: 0;
 }
 
-[id*=idplates-labelbuilder]  fieldset legend{
+[id*=idplates-labelbuilder] fieldset legend {
   border: none;
+}
+
+[id*=idplates-labelbuilder] .fieldset-wrapper {
+  padding-left: 25px;
 }
 
 [id*=idplates-labelbuilder] .column-left legend {
@@ -147,7 +155,7 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 #idplates-labelbuilder-customize-form [type="number"] {
-  width: 7%;
+  width: 60px;
   padding: 10px 5px 10px 10px;
 }
 
@@ -373,6 +381,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 #edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-total {
   color: #c0273c !important;
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 .idplates-labelbuilder-preview {
@@ -484,11 +493,11 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 #idplates-labelbuilder-customize-form .form-type-jquery-colorpicker {
-  margin-right: 45px;
+  margin-right: 95px;
 }
 
 #idplates-labelbuilder-customize-form .form-type-jquery-colorpicker > label {
-  top: 9px;
+  top: 17px;
   position: relative;
 }
 
@@ -502,6 +511,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 #idplates-labelbuilder-customize-form .advanced-numbering {
+  margin: 0;
   top: -15px;
 }
 
@@ -599,6 +609,10 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   display: inline;
 }
 
+#idplates-labelbuilder-customize-form #edit-color {
+  margin-bottom: 58px;
+}
+
 /**
  * Responsive
  */
@@ -611,7 +625,8 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
     width: 35%;
   }
 
-  .idplates-labelbuilder-preview-wrapper {
+  .idplates-labelbuilder-preview-wrapper,
+  .idplates-labelbuilder-preview #idplates-labelbuilder-hanging-tag-canvas {
     left: -6px;
   }
 

@@ -56,13 +56,13 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     $form['column_left']['color']['tag_color'] = array(
       '#type' => 'jquery_colorpicker',
       '#title' => t('Tag Color'),
-      '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'FF0000',
+      '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'ED1C24',
       '#ajax' => $ajax,
     );
   }
   else {
     // Background is white, so make the default text colour red.
-    $default_text_color = 'FF0000';
+    $default_text_color = 'ED1C24';
   }
 
   if (_idplates_labelbuilder_needs_text_options($layout_code)) {
