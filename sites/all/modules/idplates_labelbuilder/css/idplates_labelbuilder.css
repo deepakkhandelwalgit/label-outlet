@@ -7,7 +7,7 @@
 }
 
 [id*=idplates-labelbuilder] .column-right input[disabled="disabled"],
-[id*=idplates-labelbuilder] #edit-submit:disabled  {
+[id*=idplates-labelbuilder] #edit-submit:disabled {
   background-color: #dadada;
 }
 
@@ -35,7 +35,7 @@
 }
 
 input[type="submit"].form-button-disabled,
-[id*=idplates-labelbuilder] #edit-submit:disabled  {
+[id*=idplates-labelbuilder] #edit-submit:disabled {
   background-color: #dadada;
   color: #aaa;
 }
@@ -359,7 +359,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   max-width: none;
 }
 
-#edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-per-label{
+#edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-per-label {
   font-size: .8em;
   text-transform: lowercase;
 }
@@ -461,6 +461,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 
 #edit-label-proof .idplates-labelbuilder-qty-price-wrapper .form-submit {
   margin: 16px;
+  margin-right: 0;
   float: right;
 }
 

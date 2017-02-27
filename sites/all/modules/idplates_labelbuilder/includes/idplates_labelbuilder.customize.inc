@@ -320,14 +320,15 @@ function idplates_label_builder_numbering_ajax_callback($form, &$form_state) {
 }
 
 function idplates_labelbuilder_build_numbering_options($form, $form_state) {
+  $label = $form_state['label'];
   return array(
-    'numbering_option' => $form_state['values']['numbering_options'],
-    'numbering_type' => $form_state['values']['numbering_type'],
-    'starting_digit' => $form_state['values']['starting_digit'],
-    'number_of_digits' => $form_state['values']['number_of_digits'],
-    'prefix' => $form_state['values']['prefix'],
-    'suffix' => $form_state['values']['suffix'],
-    'padding' => $form_state['values']['padding'],
+    'numbering_option' => !empty($form_state['values']['numbering_options']) ? $form_state['values']['numbering_options'] : $label->numbering['numbering_option'],
+    'numbering_type' => !empty($form_state['values']['numbering_type']) ? $form_state['values']['numbering_type'] : $label->numbering['numbering_type'],
+    'starting_digit' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : $label->numbering['starting_digit'],
+    'number_of_digits' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : $label->numbering['number_of_digits'],
+    'prefix' => !empty($form_state['values']['prefix']) ? $form_state['values']['prefix'] : $label->numbering['prefix'],
+    'suffix' => !empty($form_state['values']['suffix']) ? $form_state['values']['suffix'] : $label->numbering['suffix'],
+    'padding' => !empty($form_state['values']['padding']) ? $form_state['values']['padding'] : $label->numbering['padding'],
   );
 }
 
