@@ -514,7 +514,7 @@ function _idplates_labelbuilder_get_section_heights($code, $height, $unique_layo
       else {
         switch (_idplates_labelbuilder_get_textline_count($code)) {
           case 1:
-            $section_height[0] = '29%';
+            $section_height[0] = '30%';
             $section_height[1] = '72%';
             $section_height['barcode_height'] = $height * .72 * .6;
             $section_height['serial_height'] = $height * .72 * .165;

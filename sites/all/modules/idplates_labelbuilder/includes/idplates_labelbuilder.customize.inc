@@ -137,7 +137,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     ),
     '#title' => t('Select the options for numbering.'),
     '#ajax' => $ajax,
-    '#default_value' => 'consecutive',
+    '#default_value' => !empty($label->numbering['numbering_option']) ? $label->numbering['numbering_option'] : 'consecutive',
   );
 
   $form['column_left']['numbering']['consecutive'] = array(
@@ -182,30 +182,27 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#attributes' => array('class' => array('container-inline')),
   );
 
+  $max_length = !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 6;
   $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
     '#type' => 'textfield',
     '#title' => t('Starting #'),
     '#states' => $hide_consecutive,
-    '#maxlength' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 3,
-    '#size' => 3,
-    '#default_value' => !empty($label->numbering['starting_digit']) ? $label->numbering['starting_digit'] : '001',
+    '#maxlength' => $max_length,
+    '#size' => 6,
+    '#default_value' => !empty($label->numbering['starting_digit']) ? substr($label->numbering['starting_digit'], -$max_length) : str_pad('1', $max_length, '0', STR_PAD_LEFT),
   );
 
   $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
     '#type' => 'textfield',
     '#title' => t('Digits'),
     '#states' => $hide_consecutive,
-    '#default_value' => !empty($label->numbering['number_of_digits']) ? $label->numbering['number_of_digits'] : 3,
+    '#default_value' => !empty($label->numbering['number_of_digits']) ? $label->numbering['number_of_digits'] : 6,
     '#maxlength' => 3,
     '#size' => 3,
     '#ajax' => array(
       'callback' => 'idplates_label_builder_numbering_ajax_callback',
       'wrapper' => 'idplates-labelbuilder-numbering-ajax-wrapper',
       'method' => 'replace',
-      'progress' => array(
-        'type' => '',
-        'message' => '',
-      ),
     ),
   );
 
