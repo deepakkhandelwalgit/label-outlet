@@ -15,6 +15,12 @@
  */
 function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
   $label = new Label();
+  $ajax = array(
+    'callback' => 'idplates_labelbuilder_preview_ajax_callback',
+    'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
+    'method' => 'replace',
+    'progress' => array(),
+  );
 
   if (!empty($_SESSION['idplates']['label'])) {
     $label = $_SESSION['idplates']['label'];
@@ -23,16 +29,15 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
 
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
   $layouts = $product_wrapper->field_layout_options->value();
-  $style = !empty($form_state['values']['styles']) ? $form_state['values']['styles'] : 'BAR';
+  $style = 'BAR';
+  if (!empty($form_state['input']['styles'])) {
+    $style = $form_state['input']['styles'];
+  }
+  elseif ($layout_id = $label->getLayout()) {
+    $style = substr($layout_id, 0, 3);
+  }
+
   $options = array();
-
-  $ajax = array(
-    'callback' => 'idplates_labelbuilder_preview_ajax_callback',
-    'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
-    'method' => 'replace',
-    'progress' => array('type' => 'throbber', 'message' => ''),
-  );
-
   foreach ($layouts as $layout) {
     $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     if (!empty($layout_wrapper->field_ll_image)) {
@@ -46,6 +51,12 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
         )
       );
     }
+  }
+
+  $default_layout = key($options);
+  $layout_tid = $label->getLayoutTid();
+  if (array_key_exists($layout_tid, $options)) {
+    $default_layout = $layout_tid;
   }
 
   $style_options = array(
@@ -77,15 +88,12 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     '#type' => 'radios',
     '#title' => t('Tags with:'),
     '#options' => $style_options,
-    '#default_value' => key($style_options),
+    '#default_value' => $style,
     '#ajax' => array(
       'callback' => 'idplates_label_builder_layout_ajax_callback',
       'wrapper' => 'idplates-labelbuilder-layout-ajax-wrapper',
       'method' => 'replace',
-      'progress' => array(
-        'type' => 'throbber',
-        'message' => '',
-      ),
+      'progress' => array(),
     ),
   );
 
@@ -93,6 +101,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     '#type' => 'radios',
     '#title' => t('Layouts'),
     '#options' => $options,
+    '#default_value' => $default_layout,
     '#required' => TRUE,
     '#prefix' => '<div id="idplates-labelbuilder-layout-ajax-wrapper">',
     '#suffix' => '</div>',
@@ -108,7 +117,8 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     '#value' => t('NEXT: DETAILS'),
   );
 
-  $label->setLayoutTid($form_state['values']['layouts']);
+  $selected_layout = !empty($form_state['values']['layouts']) ? $form_state['values']['layouts'] : key($options);
+  $label->setLayoutTid($selected_layout);
   $form_state['label'] = $label;
   idplates_labelbuilder_get_label_preview($form, $form_state);
 
