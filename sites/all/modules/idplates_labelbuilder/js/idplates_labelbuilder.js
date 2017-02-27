@@ -57,20 +57,24 @@
 
   Drupal.behaviors.idplatesLabelBuilderDisableSubmit = {
     attach: function (context, settings) {
-      var checked = false;
-      $('#idplates-labelbuilder-size-form input, #idplates-labelbuilder-layout-form input').each(function () {
-        var $this = $(this);
-        if ($this.is(':checked')) {
-          checked = true;
-          // Break the loop.
-          return false;
-        }
-      });
+      if ($('#idplates-labelbuilder-size-form, #idplates-labelbuilder-layout-form').length) {
 
-      if (checked) {
-        $('#edit-submit').removeAttr('disabled');
-      } else {
-        $('#edit-submit').attr('disabled', 'disabled');
+        var checked = false;
+        $('#idplates-labelbuilder-size-form input, #idplates-labelbuilder-layout-form input').each(function () {
+          console.log('hey');
+          var $this = $(this);
+          if ($this.is(':checked')) {
+            checked = true;
+            // Break the loop.
+            return false;
+          }
+        });
+
+        if (checked) {
+          $('#edit-submit').removeAttr('disabled');
+        } else {
+          $('#edit-submit').attr('disabled', 'disabled');
+        }
       }
     }
   }
