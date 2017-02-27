@@ -154,3 +154,10 @@ div#block-views-product-categories-block h3{
 .view-id-mt_testimonials.view-display-id-block_1 .views-field-nothing{
 	border-top: 1px solid #3f3f3f;
 }
+
+#bottom{
+	padding: 10px 0 15px 0;
+    -webkit-box-shadow: 0 1px 5px #FFFFFF;
+    box-shadow: 0;
+    position: relative;
+}
