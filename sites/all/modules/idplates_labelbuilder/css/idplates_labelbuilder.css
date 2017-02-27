@@ -23,6 +23,8 @@
 [id*=idplates-labelbuilder] .column-right {
   float: right;
   width: 30%;
+  border: 1px solid #cbcbcb;
+  border-radius: 8px;
 }
 
 [id*=idplates-labelbuilder] .column-right legend,
@@ -123,10 +125,14 @@ input[type="submit"].form-button-disabled:hover {
   font-weight: normal;
 }
 
-[id*=idplates-labelbuilder] .column-left fieldset {
+[id*=idplates-labelbuilder]  fieldset {
   border: none;
   margin: 0 0 25px 0;
   padding: 0;
+}
+
+[id*=idplates-labelbuilder]  fieldset legend{
+  border: none;
 }
 
 [id*=idplates-labelbuilder] .column-left legend {
