@@ -51,6 +51,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
         )
       );
     }
+    $styles_with_layouts[] = substr($layout->name, 0, 3);
   }
 
   $default_layout = key($options);
@@ -59,11 +60,15 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     $default_layout = $layout_tid;
   }
 
+  // Creates array of styles with available layouts.
   $style_options = array(
     'BAR' => 'Barcodes',
     'NUM' => 'Numbering Only',
     'TXT' => 'Text Only',
   );
+  $styles_with_layouts = array_flip(array_unique($styles_with_layouts));
+  $style_options = array_intersect_key($style_options, $styles_with_layouts);
+
   $form['breadcrumb'] = array(
     '#type' => 'item',
     '#markup' => theme('idplates_labelbuilder_breadcrumb', array(
