@@ -51,9 +51,17 @@ input[type="submit"].form-button-disabled:hover {
   color: #aaa;
 }
 
-[id*=idplates-labelbuilder] .idplates-labelbuilder-description {
+[id*=idplates-labelbuilder] .idplates-labelbuilder-description,
+[id*=idplates-labelbuilder] .form-item-numbering-options .description {
   font-style: italic;
   font-size: .75em;
+}
+
+[id*=idplates-labelbuilder] .form-item-numbering-options .description {
+  font-size: .7em;
+  margin-left: 1.4em;
+  top: -5px;
+  position: relative;
 }
 
 /**
@@ -139,8 +147,25 @@ input[type="submit"].form-button-disabled:hover {
   border: none;
 }
 
-[id*=idplates-labelbuilder] .fieldset-wrapper {
+#idplates-labelbuilder-customize-form .fieldset-wrapper,
+#idplates-labelbuilder-options-form .fieldset-wrapper {
   padding-left: 25px;
+}
+
+#idplates-labelbuilder-customize-form .form-item.form-type-checkbox:first-child,
+#idplates-labelbuilder-options-form .form-item.form-type-checkbox:first-child,
+#idplates-labelbuilder-customize-form .form-item.form-type-radio:first-child,
+#idplates-labelbuilder-options-form .form-item.form-type-radio:first-child {
+  margin-top: 1em;
+}
+
+#idplates-labelbuilder-customize-form label + .form-radios > .form-item.form-type-radio:first-child,
+#idplates-labelbuilder-options-form label + .form-radios > .form-item.form-type-radio:first-child {
+  margin-top: initial
+}
+
+#edit-label-proof .fieldset-wrapper {
+  padding: 0;
 }
 
 [id*=idplates-labelbuilder] .column-left legend {

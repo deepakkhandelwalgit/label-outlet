@@ -31,12 +31,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       'label' => $label,
     )),
   );
+
   $form['column_left'] = array(
     '#type' => 'container',
     '#attributes' => array(
       'class' => array('column-left'),
     ),
   );
+
   $form['column_right'] = array(
     '#type' => 'container',
     '#attributes' => array(
@@ -72,7 +74,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : $default_text_color,
       '#ajax' => $ajax,
     );
-
 
     $form['column_left']['text_container'] = array(
       '#type' => 'fieldset',
@@ -121,142 +122,136 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#upload_location' => 'public://logos/',
       '#required' => TRUE,
       '#default_value' => !empty($label->getLogo()) ? $label->getLogo() : NULL,
+      '#ajax' => $ajax,
     );
   }
 
-  $form['column_left']['numbering'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Numbering'),
-    '#prefix' => '<div id="idplates-labelbuilder-numbering-ajax-wrapper">',
-    '#suffix' => '</div>',
-  );
-  $form['column_left']['numbering']['numbering_options'] = array(
-    '#type' => 'radios',
-    '#options' => array(
-      'custom' => t('I will supply custom numbering'),
-      'consecutive' => t('Use Consecutive Number/Barcode below'),
-    ),
-    '#title' => t('Select the options for numbering.'),
-    '#ajax' => $ajax,
-    '#default_value' => !empty($label->numbering['numbering_option']) ? $label->numbering['numbering_option'] : 'consecutive',
-  );
+  if (strpos(strtolower($layout_code), 's') !== FALSE) {
+    $form['column_left']['numbering'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Numbering'),
+      '#prefix' => '<div id="idplates-labelbuilder-numbering-ajax-wrapper">',
+      '#suffix' => '</div>',
+    );
 
-  $form['column_left']['numbering']['consecutive'] = array(
-    '#type' => 'fieldset',
-    '#title' => 'Consecutive Options',
-    '#attributes' => array('class' => array('consecutive-options indent')),
-  );
-
-  $hide_consecutive = array(
-    'visible' => array(
-      ':input[name="numbering_options"]' => array('value' => 'consecutive'),
-    ),
-  );
-  $hide_custom_desc = array(
-    'visible' => array(
-      ':input[name="numbering_options"]' => array('value' => 'custom'),
-    ),
-  );
-
-  if (strpos(strtolower($layout_code), 'm') === FALSE) {
-    $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
-      '#type' => 'select',
-      '#title' => t('Numbering Type'),
+    $form['column_left']['numbering']['numbering_options'] = array(
+      '#type' => 'radios',
       '#options' => array(
-        '39' => 'Code 39',
-        '128' => 'Code 128',
+        'custom' => t('I will supply custom numbering'),
+        'consecutive' => t('Use Consecutive Number/Barcode below'),
       ),
+      '#title' => t('Select the options for numbering'),
+      '#ajax' => $ajax,
+      '#default_value' => !empty($label->numbering['numbering_option']) ? $label->numbering['numbering_option'] : 'consecutive',
+    );
+
+    $form['column_left']['numbering']['numbering_options']['custom']['#description'] = t('Orders requiring custom numbering will receive further instructions after order completion on how to submit their numbering values.');
+
+    $form['column_left']['numbering']['consecutive'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Consecutive Options',
+      '#attributes' => array('class' => array('consecutive-options indent')),
+    );
+
+    $hide_consecutive = array(
+      'visible' => array(
+        ':input[name="numbering_options"]' => array('value' => 'consecutive'),
+      ),
+    );
+
+    if (strpos(strtolower($layout_code), 'm') === FALSE) {
+      $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
+        '#type' => 'select',
+        '#title' => t('Numbering Type'),
+        '#options' => array(
+          '39' => 'Code 39',
+          '128' => 'Code 128',
+        ),
+        '#states' => $hide_consecutive,
+      );
+    }
+
+    $form['column_left']['numbering']['consecutive']['digits'] = array(
+      '#type' => 'container',
+      '#attributes' => array('class' => array('container-inline')),
+    );
+
+    $form['column_left']['numbering']['consecutive']['advanced'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Advanced',
+      '#attributes' => array('class' => array('advanced-numbering indent')),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
       '#states' => $hide_consecutive,
     );
+    $form['column_left']['numbering']['consecutive']['advanced']['fixes'] = array(
+      '#type' => 'container',
+      '#attributes' => array('class' => array('container-inline')),
+    );
+
+    $max_length = !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 6;
+    $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Starting #'),
+      '#states' => $hide_consecutive,
+      '#maxlength' => $max_length,
+      '#size' => 6,
+      '#default_value' => !empty($label->numbering['starting_digit']) ? substr($label->numbering['starting_digit'], -$max_length) : str_pad('1', $max_length, '0', STR_PAD_LEFT),
+    );
+
+    $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Digits'),
+      '#states' => $hide_consecutive,
+      '#default_value' => !empty($label->numbering['number_of_digits']) ? $label->numbering['number_of_digits'] : 6,
+      '#maxlength' => 3,
+      '#size' => 3,
+      '#ajax' => array(
+        'callback' => 'idplates_label_builder_numbering_ajax_callback',
+        'wrapper' => 'idplates-labelbuilder-numbering-ajax-wrapper',
+        'method' => 'replace',
+      ),
+    );
+
+    $form['column_left']['numbering']['consecutive']['advanced']['fixes']['prefix'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Prefix'),
+      '#default_value' => !empty($label->numbering['prefix']) ? $label->numbering['prefix'] : '',
+      '#states' => $hide_consecutive,
+      '#maxlength' => 3,
+      '#size' => 3,
+    );
+
+    $form['column_left']['numbering']['consecutive']['advanced']['fixes']['consecutive'] = array(
+      '#type' => 'item',
+      '#markup' => '<div class="consecutive-placeholder">' . t('Consecutive Number') . '</div>',
+      '#states' => $hide_consecutive,
+    );
+
+    $form['column_left']['numbering']['consecutive']['advanced']['fixes']['suffix'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Suffix'),
+      '#states' => $hide_consecutive,
+      '#maxlength' => 3,
+      '#size' => 3,
+      '#default_value' => !empty($label->numbering['suffix']) ? $label->numbering['suffix'] : '',
+    );
+
+    $form['column_left']['numbering']['consecutive']['advanced']['fixes']['description'] = array(
+      '#type' => 'item',
+      '#markup' => t('Prefix and Suffix text does not change. Only the Consecutive number will change for each tag.'),
+      '#states' => $hide_consecutive,
+    );
+
+    $form['column_left']['numbering']['consecutive']['advanced']['padding'] = array(
+      '#type' => 'radios',
+      '#title' => t('Padding'),
+      '#states' => $hide_consecutive,
+      '#options' => array(t('Zeros'), t('None')),
+      '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 0,
+      '#ajax' => $ajax,
+    );
   }
-
-  $form['column_left']['numbering']['consecutive']['digits'] = array(
-    '#type' => 'container',
-    '#attributes' => array('class' => array('container-inline')),
-  );
-
-  $form['column_left']['numbering']['consecutive']['advanced'] = array(
-    '#type' => 'fieldset',
-    '#title' => 'Advanced',
-    '#attributes' => array('class' => array('advanced-numbering indent')),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-    '#states' => $hide_consecutive,
-  );
-  $form['column_left']['numbering']['consecutive']['advanced']['fixes'] = array(
-    '#type' => 'container',
-    '#attributes' => array('class' => array('container-inline')),
-  );
-
-  $max_length = !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 6;
-  $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Starting #'),
-    '#states' => $hide_consecutive,
-    '#maxlength' => $max_length,
-    '#size' => 6,
-    '#default_value' => !empty($label->numbering['starting_digit']) ? substr($label->numbering['starting_digit'], -$max_length) : str_pad('1', $max_length, '0', STR_PAD_LEFT),
-  );
-
-  $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Digits'),
-    '#states' => $hide_consecutive,
-    '#default_value' => !empty($label->numbering['number_of_digits']) ? $label->numbering['number_of_digits'] : 6,
-    '#maxlength' => 3,
-    '#size' => 3,
-    '#ajax' => array(
-      'callback' => 'idplates_label_builder_numbering_ajax_callback',
-      'wrapper' => 'idplates-labelbuilder-numbering-ajax-wrapper',
-      'method' => 'replace',
-    ),
-  );
-
-  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['prefix'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Prefix'),
-    '#default_value' => !empty($label->numbering['prefix']) ? $label->numbering['prefix'] : '',
-    '#states' => $hide_consecutive,
-    '#maxlength' => 3,
-    '#size' => 3,
-  );
-
-  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['consecutive'] = array(
-    '#type' => 'item',
-    '#markup' => '<div class="consecutive-placeholder">' . t('Consecutive Number') . '</div>',
-    '#states' => $hide_consecutive,
-  );
-
-  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['suffix'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Suffix'),
-    '#states' => $hide_consecutive,
-    '#maxlength' => 3,
-    '#size' => 3,
-    '#default_value' => !empty($label->numbering['suffix']) ? $label->numbering['suffix'] : '',
-  );
-
-  $form['column_left']['numbering']['consecutive']['advanced']['fixes']['description'] = array(
-    '#type' => 'item',
-    '#markup' => t('Prefix and Suffix text does not change. Only the Consecutive number will change for each tag.'),
-    '#states' => $hide_consecutive,
-  );
-
-  $form['column_left']['numbering']['consecutive']['advanced']['padding'] = array(
-    '#type' => 'radios',
-    '#title' => t('Padding'),
-    '#states' => $hide_consecutive,
-    '#options' => array(t('Zeros'), t('None')),
-    '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 0,
-    '#ajax' => $ajax,
-  );
-  $form['column_left']['numbering']['custom']['description']= array(
-    '#type' => 'item',
-    '#markup' => t('Orders requiring custom numbering will receive further instructions after order completion on how to submit their numbering values.'),
-    '#states' => $hide_custom_desc,
-    '#prefix' => '<div class="idplates-labelbuilder-description">',
-    '#suffix' => '</div>',
-  );
 
   $form['column_left']['back'] = array(
     '#type' => 'button',
