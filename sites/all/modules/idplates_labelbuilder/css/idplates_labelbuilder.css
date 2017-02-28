@@ -168,6 +168,21 @@ input[type="submit"].form-button-disabled:hover {
   margin-top: initial
 }
 
+[id*=idplates-labelbuilder-options-form] #edit-review .form-item:first-child {
+  position: relative;
+}
+
+[id*=idplates-labelbuilder-options-form] #edit-review .form-item:first-child input {
+  position: absolute;
+  top: 7px;
+  left: 0;
+}
+
+[id*=idplates-labelbuilder-options-form] #edit-review .form-item:first-child label {
+  padding-left: 20px;
+  display: block;
+}
+
 #edit-label-proof .fieldset-wrapper {
   padding: 0;
 }
