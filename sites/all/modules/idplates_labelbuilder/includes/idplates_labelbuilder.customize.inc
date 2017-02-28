@@ -124,7 +124,11 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#required' => TRUE,
       '#title' => t('Custom Logo'),
       '#default_value' => !empty($label->getLogo()) ? $label->getLogo() : NULL,
-      '#ajax' => $ajax,
+      '#process' => array(
+        'file_managed_file_process',
+        'filefield_sources_field_process',
+        'idplates_labelbuilder_managed_file_ajax_submit',
+      ),
     );
   }
 
@@ -291,6 +295,78 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
 }
 
 /**
+ * Ripping off and altering the #ajax callback function used for managed_file
+ * elements.
+ *
+ * @see file_ajax_upload()
+ */
+function idplates_labelbuilder_managed_file_ajax() {
+  $form_parents = func_get_args();
+  $form_build_id = (string) array_pop($form_parents);
+
+  if (empty($_POST['form_build_id']) || $form_build_id != $_POST['form_build_id']) {
+    // Invalid request.
+    drupal_set_message(t('An unrecoverable error occurred. The uploaded file likely exceeded the maximum file size (@size) that this server supports.', array('@size' => format_size(file_upload_max_size()))), 'error');
+    $commands = array();
+    $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+    return array('#type' => 'ajax', '#commands' => $commands);
+  }
+
+  list($form, $form_state, $form_id, $form_build_id, $commands) = ajax_get_form();
+
+  if (!$form) {
+    // Invalid form_build_id.
+    drupal_set_message(t('An unrecoverable error occurred. Use of this form has expired. Try reloading the page and submitting again.'), 'error');
+    $commands = array();
+    $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+    return array('#type' => 'ajax', '#commands' => $commands);
+  }
+
+  // Get the current element and count the number of files.
+  $current_element = $form;
+  foreach ($form_parents as $parent) {
+    $current_element = $current_element[$parent];
+  }
+  $current_file_count = isset($current_element['#file_upload_delta']) ? $current_element['#file_upload_delta'] : 0;
+
+  // Process user input. $form and $form_state are modified in the process.
+  drupal_process_form($form['#form_id'], $form, $form_state);
+
+  // Retrieve the element to be rendered.
+  foreach ($form_parents as $parent) {
+    $form = $form[$parent];
+  }
+
+  // Add the special Ajax class if a new file was added.
+  if (isset($form['#file_upload_delta']) && $current_file_count < $form['#file_upload_delta']) {
+    $form[$current_file_count]['#attributes']['class'][] = 'ajax-new-content';
+  }
+  // Otherwise just add the new content class on a placeholder.
+  else {
+    $form['#suffix'] .= '<span class="ajax-new-content"></span>';
+  }
+
+  $output = theme('status_messages') . drupal_render($form);
+  $js = drupal_add_js();
+  $settings = call_user_func_array('array_merge_recursive', $js['settings']['data']);
+
+  // Update the label preview.
+  $unique_layout = '';
+  if ($layout = taxonomy_term_load($form_state['label']->getLayoutTid())) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $unique_layout = $layout_wrapper->field_layout_form->value();
+  }
+  $label_preview = theme('idplates_labelbuilder_preview', array(
+    'label' => $form_state['label'],
+    'unique_layout' => $unique_layout,
+  ));
+  $commands[] = ajax_command_replace('#idplates-labelbuilder-preview-ajax-wrapper', $label_preview);
+    $commands[] = ajax_command_replace(NULL, $output, $settings);
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
  * Custom validate callback for Label Builder Numbering & Barcode section.
  *
  * @param $form
@@ -322,6 +398,33 @@ function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
   $_SESSION['idplates']['label'] = $form_state['label'];
 
   $form_state['redirect'] = 'labelbuilder/options';
+}
+
+/**
+ * A secondary submit handler for managed files
+ *
+ * Forces the form to update the saved/deleted files currently uploaded to the
+ * form and rebuild the form, displaying the current files and a upload-state
+ * managed_file
+ *
+ * @param $element
+ * @param $form_state
+ * @param $form
+ *
+ * @return mixed
+ */
+function idplates_labelbuilder_managed_file_ajax_submit($element, &$form_state, $form) {
+  $ajax_path = 'idplates_labelbuilder_managed_file/ajax/' .
+    '/' . $form['form_build_id']['#value'];
+  $wrapper = 'idplates-labelbuilder-customize-form';
+
+  $element['upload_button']['#ajax']['wrapper'] = $wrapper;
+  $element['upload_button']['#ajax']['path'] = $ajax_path;
+
+  $element['remove_button']['#ajax']['wrapper'] = $wrapper;
+  $element['remove_button']['#ajax']['path'] = $ajax_path;
+
+  return $element;
 }
 
 function idplates_label_builder_numbering_ajax_callback($form, &$form_state) {

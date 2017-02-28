@@ -46,6 +46,14 @@ function idplates_labelbuilder_menu() {
     'file' => 'includes/idplates_labelbuilder.options.inc',
   );
 
+  $items['idplates_labelbuilder_managed_file/ajax/'] = array(
+    'page callback' => 'idplates_labelbuilder_managed_file_ajax',
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('access content'),
+    'theme callback' => 'ajax_base_page_theme',
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/idplates_labelbuilder.customize.inc',
+  );
   return $items;
 }
 
