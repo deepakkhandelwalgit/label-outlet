@@ -2,6 +2,10 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+[id*=idplates-labelbuilder] input.form-text {
+  color: #000;
+}
+
 [id*=idplates-labelbuilder] .colorpicker {
   z-index: 999999;
 }
@@ -100,17 +104,17 @@ input[type="submit"].form-button-disabled:hover {
   margin: 0 5px;
 }
 
-#idplates-labelbuilder-size-form input[type='radio'],
-#idplates-labelbuilder-layout-form input[type='radio'] {
+[id*=idplates-labelbuilder-size-form] input[type='radio'],
+[id*=idplates-labelbuilder-layout-form] input[type='radio'] {
   display: none;
 }
 
-#idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-wrapper,
-#idplates-labelbuilder-layout-form input[type='radio']:checked + label .idplates-labelbuilder-layout-wrapper {
+[id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-wrapper,
+[id*=idplates-labelbuilder-layout-form] input[type='radio']:checked + label .idplates-labelbuilder-layout-wrapper {
   border: solid 1px #c0273c;
 }
 
-#idplates-labelbuilder-size-form input[type='radio']:checked + label .idplates-labelbuilder-size-info:before {
+[id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-info:before {
   color: #c0273c;
   content: '';
   background-image: url('../gfx/checkmark.png');
@@ -120,15 +124,15 @@ input[type="submit"].form-button-disabled:hover {
   margin-right: 3px;
 }
 
-#idplates-labelbuilder-size-form .idplates-labelbuilder-size-wrapper:hover,
-#idplates-labelbuilder-layout-form .idplates-labelbuilder-layout-wrapper:hover,
-#idplates-labelbuilder-layout-form .form-item-styles label:hover {
+[id*=idplates-labelbuilder-size-form] .idplates-labelbuilder-size-wrapper:hover,
+[id*=idplates-labelbuilder-layout-form] .idplates-labelbuilder-layout-wrapper:hover,
+[id*=idplates-labelbuilder-layout-form] .form-item-styles label:hover {
   cursor: pointer;
 }
 
-#idplates-labelbuilder-layout-form .form-type-radios.form-item-styles,
+[id*=idplates-labelbuilder-layout-form] .form-type-radios.form-item-styles,
 [id*=idplates-labelbuilder] .column-left legend,
-#idplates-labelbuilder-size-form .form-item-sizes > label:first-child {
+[id*=idplates-labelbuilder-size-form] .form-item-sizes > label:first-child {
   width: 100%;
   background-color: #c0273c;
   color: #fff;
@@ -147,20 +151,20 @@ input[type="submit"].form-button-disabled:hover {
   border: none;
 }
 
-#idplates-labelbuilder-customize-form .fieldset-wrapper,
-#idplates-labelbuilder-options-form .fieldset-wrapper {
+[id*=idplates-labelbuilder-customize-form] .fieldset-wrapper,
+[id*=idplates-labelbuilder-options-form] .fieldset-wrapper {
   padding-left: 25px;
 }
 
-#idplates-labelbuilder-customize-form .form-item.form-type-checkbox:first-child,
-#idplates-labelbuilder-options-form .form-item.form-type-checkbox:first-child,
-#idplates-labelbuilder-customize-form .form-item.form-type-radio:first-child,
-#idplates-labelbuilder-options-form .form-item.form-type-radio:first-child {
+[id*=idplates-labelbuilder-customize-form] .form-item.form-type-checkbox:first-child,
+[id*=idplates-labelbuilder-options-form] .form-item.form-type-checkbox:first-child,
+[id*=idplates-labelbuilder-customize-form] .form-item.form-type-radio:first-child,
+[id*=idplates-labelbuilder-options-form] .form-item.form-type-radio:first-child {
   margin-top: 1em;
 }
 
-#idplates-labelbuilder-customize-form label + .form-radios > .form-item.form-type-radio:first-child,
-#idplates-labelbuilder-options-form label + .form-radios > .form-item.form-type-radio:first-child {
+[id*=idplates-labelbuilder-customize-form] label + .form-radios > .form-item.form-type-radio:first-child,
+[id*=idplates-labelbuilder-options-form] label + .form-radios > .form-item.form-type-radio:first-child {
   margin-top: initial
 }
 
@@ -173,31 +177,31 @@ input[type="submit"].form-button-disabled:hover {
   text-transform: none;
 }
 
-#idplates-labelbuilder-customize-form [type="text"],
-#idplates-labelbuilder-customize-form select,
-#idplates-labelbuilder-customize-form [type="number"] {
+[id*=idplates-labelbuilder-customize-form] [type="text"],
+[id*=idplates-labelbuilder-customize-form] select,
+[id*=idplates-labelbuilder-customize-form] [type="number"] {
   height: 32px;
 }
 
-#idplates-labelbuilder-customize-form [type="number"] {
+[id*=idplates-labelbuilder-customize-form] input.form-text[type="number"] {
   width: 60px;
   padding: 10px 5px 10px 10px;
 }
 
-#idplates-labelbuilder-size-form .form-item-sizes > label:first-child .form-required {
+[id*=idplates-labelbuilder-size-form] .form-item-sizes > label:first-child .form-required {
   display: none;
 }
 
-#idplates-labelbuilder-size-form #edit-sizes.form-radios:after,
-#idplates-labelbuilder-layout-form .form-type-radios:after,
+[id*=idplates-labelbuilder-size-form] #edit-sizes.form-radios:after,
+[id*=idplates-labelbuilder-layout-form] .form-type-radios:after,
 #idplates-labelbuilder-layout-ajax-wrapper:after {
   clear: both;
   content: '';
   display: block;
 }
 
-#idplates-labelbuilder-size-form .form-type-radio.form-item-sizes,
-#idplates-labelbuilder-layout-form .form-type-radio.form-item-layouts {
+[id*=idplates-labelbuilder-size-form] .form-type-radio.form-item-sizes,
+[id*=idplates-labelbuilder-layout-form] .form-type-radio.form-item-layouts {
   float: left;
 }
 
@@ -245,16 +249,16 @@ input[type="submit"].form-button-disabled:hover {
   border-top: solid 1px #ccc;
 }
 
-#idplates-labelbuilder-size-form .form-type-radios.form-item-sizes {
+[id*=idplates-labelbuilder-size-form] .form-type-radios.form-item-sizes {
   margin-top: 0;
 }
 
-#idplates-labelbuilder-layout-form .form-type-radios.form-item-styles {
+[id*=idplates-labelbuilder-layout-form] .form-type-radios.form-item-styles {
   margin: 0;
   padding: 5px 25px 0;
 }
 
-#idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+[id*=idplates-labelbuilder-layout-form] .form-type-radios.form-item-styles label {
   float: left;
   font-size: 24px;
   margin: 0 10px 0 0;
@@ -265,13 +269,13 @@ input[type="submit"].form-button-disabled:hover {
   display: none;
 }
 
-#idplates-labelbuilder-layout-form .form-type-radio.form-item-styles {
+[id*=idplates-labelbuilder-layout-form] .form-type-radio.form-item-styles {
   float: left;
   padding: 0 12px;
   margin: 0;
 }
 
-#idplates-labelbuilder-layout-form .form-item-styles input[type='radio']:checked + label {
+[id*=idplates-labelbuilder-layout-form] .form-item-styles input[type='radio']:checked + label {
   padding: 0 15px 5px;
   background: #fff;
   font-weight: bold;
@@ -513,34 +517,38 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 /**
  * Customize
  */
-#idplates-labelbuilder-customize-form fieldset {
+[id*=idplates-labelbuilder-customize-form] fieldset {
   padding-top: 0;
 }
 
-#idplates-labelbuilder-customize-form .form-type-jquery-colorpicker {
+[id*=idplates-labelbuilder-customize-form] .form-type-jquery-colorpicker {
   margin-right: 95px;
 }
 
-#idplates-labelbuilder-customize-form .form-type-jquery-colorpicker > label {
+[id*=idplates-labelbuilder-customize-form] .form-type-jquery-colorpicker > label {
   top: 17px;
   position: relative;
 }
 
-#idplates-labelbuilder-customize-form .consecutive-options > legend {
+[id*=idplates-labelbuilder-customize-form] .consecutive-options > legend {
   display: none;
 }
 
-#idplates-labelbuilder-customize-form .consecutive-options.indent {
+[id*=idplates-labelbuilder-customize-form] .consecutive-options.indent {
   width: 95%;
   margin: 0 auto;
 }
 
-#idplates-labelbuilder-customize-form .advanced-numbering {
+[id*=idplates-labelbuilder-customize-form] .consecutive-options .fieldset-wrapper {
+  padding-left: 0;
+}
+
+[id*=idplates-labelbuilder-customize-form] .advanced-numbering {
   margin: 0;
   top: -15px;
 }
 
-#idplates-labelbuilder-customize-form .advanced-numbering > legend {
+[id*=idplates-labelbuilder-customize-form] .advanced-numbering > legend {
   background: none;
   border: none;
   padding: 0;
@@ -550,41 +558,41 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   left: 220px;
 }
 
-#idplates-labelbuilder-customize-form .form-item-numbering-options {
+[id*=idplates-labelbuilder-customize-form] .form-item-numbering-options {
   margin-bottom: 0;
 }
 
-#idplates-labelbuilder-customize-form [id^=edit-digits],
-#idplates-labelbuilder-customize-form .form-item-numbering-type,
-#idplates-labelbuilder-customize-form [id^=edit-fixes] {
+[id*=idplates-labelbuilder-customize-form] [id^=edit-digits],
+[id*=idplates-labelbuilder-customize-form] .form-item-numbering-type,
+[id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] {
   margin: 0;
 }
 
-#idplates-labelbuilder-customize-form .form-item-numbering-type {
+[id*=idplates-labelbuilder-customize-form] .form-item-numbering-type {
   width: 150px;
 }
 
-#idplates-labelbuilder-customize-form .form-item-numbering-type select {
+[id*=idplates-labelbuilder-customize-form] .form-item-numbering-type select {
   line-height: 1;
   font-size: 1em;
 }
 
-#idplates-labelbuilder-customize-form .form-item-numbering-type.form-type-select:after {
+[id*=idplates-labelbuilder-customize-form] .form-item-numbering-type.form-type-select:after {
   bottom: 15%;
 }
 
-#idplates-labelbuilder-customize-form [id^=edit-digits] .form-item,
-#idplates-labelbuilder-customize-form [id^=edit-fixes] .form-item {
+[id*=idplates-labelbuilder-customize-form] [id^=edit-digits] .form-item,
+[id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] .form-item {
   display: inline-block;
   vertical-align: text-bottom;
 }
 
-#idplates-labelbuilder-customize-form [id^=edit-digits] label,
-#idplates-labelbuilder-customize-form [id^=edit-fixes] label {
+[id*=idplates-labelbuilder-customize-form] [id^=edit-digits] label,
+[id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] label {
   display: block;
 }
 
-#idplates-labelbuilder-customize-form [id^=edit-fixes] [id^=edit-description] {
+[id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] [id^=edit-description] {
   font-style: italic;
   font-size: 12px;
   margin: -18px 0 0;
@@ -592,20 +600,20 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   display: block;
 }
 
-#idplates-labelbuilder-customize-form .form-item-padding label {
+[id*=idplates-labelbuilder-customize-form] .form-item-padding label {
   display: inline-block;
   margin-right: 1em;
 }
 
-#idplates-labelbuilder-customize-form .form-item-padding .form-radios {
+[id*=idplates-labelbuilder-customize-form] .form-item-padding .form-radios {
   display: inline-block;
 }
 
-#idplates-labelbuilder-customize-form .form-item-padding .form-radios .form-item {
+[id*=idplates-labelbuilder-customize-form] .form-item-padding .form-radios .form-item {
   display: inline;
 }
 
-#idplates-labelbuilder-customize-form .consecutive-placeholder {
+[id*=idplates-labelbuilder-customize-form] .consecutive-placeholder {
   background-color: #ddd;
   color: #c0273c;
   text-align: center;
@@ -616,7 +624,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-right: 6px;
 }
 
-#idplates-labelbuilder-customize-form .form-item-custom-logo input[type="submit"] {
+[id*=idplates-labelbuilder-customize-form] .form-item-custom-logo input[type="submit"] {
   padding: 5px 30px;
   background-color: transparent;
   border: 1px solid #acacac;
@@ -625,16 +633,16 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-top: 3px;
 }
 
-#idplates-labelbuilder-customize-form .form-item-custom-logo input[type="submit"]:hover {
+[id*=idplates-labelbuilder-customize-form] .form-item-custom-logo input[type="submit"]:hover {
   background-color: #ea2d49;
   color: #fff;
 }
 
-#idplates-labelbuilder-customize-form .form-item-custom-logo img {
+[id*=idplates-labelbuilder-customize-form] .form-item-custom-logo img {
   display: inline;
 }
 
-#idplates-labelbuilder-customize-form #edit-color {
+[id*=idplates-labelbuilder-customize-form] #edit-color {
   margin-bottom: 57px;
 }
 
@@ -655,7 +663,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
     left: -6px;
   }
 
-  #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+  [id*=idplates-labelbuilder-layout-form] .form-type-radios.form-item-styles label {
     font-size: 19px;
   }
 }
@@ -672,13 +680,13 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
     margin: 30px auto 0;
   }
 
-  #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+  [id*=idplates-labelbuilder-layout-form] .form-type-radios.form-item-styles label {
     font-size: 24px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  #idplates-labelbuilder-layout-form .form-type-radios.form-item-styles label {
+  [id*=idplates-labelbuilder-layout-form] .form-type-radios.form-item-styles label {
     font-size: 2vw;
   }
 }

@@ -93,6 +93,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
         '#title' => t('Text ' . strtoupper($key)),
         '#attributes' => array('placeholder' => $text_field['title']),
         '#size' => 32,
+        '#required' => TRUE,
         '#default_value' => !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : '',
       );
 
@@ -121,6 +122,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       '#type' => 'managed_file',
       '#upload_location' => 'public://logos/',
       '#required' => TRUE,
+      '#title' => t('Custom Logo'),
       '#default_value' => !empty($label->getLogo()) ? $label->getLogo() : NULL,
       '#ajax' => $ajax,
     );
