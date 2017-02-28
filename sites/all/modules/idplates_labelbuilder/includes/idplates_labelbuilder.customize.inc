@@ -152,6 +152,11 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       ':input[name="numbering_options"]' => array('value' => 'consecutive'),
     ),
   );
+  $hide_custom_desc = array(
+    'visible' => array(
+      ':input[name="numbering_options"]' => array('value' => 'custom'),
+    ),
+  );
 
   if (strpos(strtolower($layout_code), 'm') === FALSE) {
     $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
@@ -244,6 +249,13 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#options' => array(t('Zeros'), t('None')),
     '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 0,
     '#ajax' => $ajax,
+  );
+  $form['column_left']['numbering']['custom']['description']= array(
+    '#type' => 'item',
+    '#markup' => t('Orders requiring custom numbering will receive further instructions after order completion on how to submit their numbering values.'),
+    '#states' => $hide_custom_desc,
+    '#prefix' => '<div class="idplates-labelbuilder-description">',
+    '#suffix' => '</div>',
   );
 
   $form['column_left']['back'] = array(
