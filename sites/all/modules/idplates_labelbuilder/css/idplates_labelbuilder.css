@@ -61,11 +61,18 @@ input[type="submit"].form-button-disabled:hover {
   font-size: .75em;
 }
 
-[id*=idplates-labelbuilder] .form-item-numbering-options .description {
+[id*=idplates-labelbuilder] .form-item-numbering-options .description,
+[id*=idplates-labelbuilder] .form-item-custom-logo .description {
   font-size: .7em;
   margin-left: 1.4em;
   top: -5px;
   position: relative;
+}
+
+[id*=idplates-labelbuilder] .form-item-custom-logo .description {
+  font-style: italic;
+  margin-top: 5px;
+  margin-left: 0;
 }
 
 /**

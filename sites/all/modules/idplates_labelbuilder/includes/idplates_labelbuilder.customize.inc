@@ -116,13 +116,14 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   if (strpos(strtolower($layout_code), 'l') !== FALSE) {
     $form['column_left']['logo'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Custom Logo'),
+      '#title' => t('Logo'),
     );
     $form['column_left']['logo']['custom_logo'] = array(
       '#type' => 'managed_file',
       '#upload_location' => 'public://logos/',
       '#required' => TRUE,
-      '#title' => t('Custom Logo'),
+      '#description' => 'Allowed file types: <strong>png gif jpg jpeg.</strong>',
+      '#title' => t('Logo Image File'),
       '#default_value' => !empty($label->getLogo()) ? $label->getLogo() : NULL,
       '#process' => array(
         'file_managed_file_process',
@@ -352,22 +353,25 @@ function idplates_labelbuilder_managed_file_ajax() {
   $js = drupal_add_js();
   $settings = call_user_func_array('array_merge_recursive', $js['settings']['data']);
 
-  //@todo: You need some logic in here to remove the logo from this label object you keep passing
-  //@todo: around so the logo is removed from the preview as as well.
   // Update the label preview.
+  $label = $form_state['label'];
   $unique_layout = '';
-  
+
+  if (empty($form['fid']['#value'])) {
+    $label->setLogo(0);
+  }
+
   if ($layout = taxonomy_term_load($form_state['label']->getLayoutTid())) {
     $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     $unique_layout = $layout_wrapper->field_layout_form->value();
   }
 
   $label_preview = theme('idplates_labelbuilder_preview', array(
-    'label' => $form_state['label'],
+    'label' => $label,
     'unique_layout' => $unique_layout,
   ));
 
-  $commands[] = ajax_command_replace('#idplates-labelbuilder-preview-ajax-wrapper', $label_preview);
+  $commands[] = ajax_command_replace('.idplates-labelbuilder-preview', $label_preview);
   $commands[] = ajax_command_replace(NULL, $output, $settings);
   return array('#type' => 'ajax', '#commands' => $commands);
 }
