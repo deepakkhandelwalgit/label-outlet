@@ -396,6 +396,13 @@ function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
  */
 function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
   global $user;
+
+  $label = $form_state['label'];
+
+  if (!empty($form_state['values']['custom_logo'])) {
+    $label->setLogo($form_state['values']['custom_logo']);
+  }
+
   if ($file = file_load($form_state['values']['custom_logo'])) {
     // Change status to permanent.
     $file->status = FILE_STATUS_PERMANENT;
