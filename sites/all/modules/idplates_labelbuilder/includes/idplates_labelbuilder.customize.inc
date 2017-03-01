@@ -269,9 +269,11 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     '#value' => t('NEXT: OPTIONS'),
   );
 
-  $tag_color = !empty($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
+  if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
+    $tag_color = isset($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
 
-  $label->setTagColor($tag_color);
+    $label->setTagColor($tag_color);
+  }
 
   $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : $form['column_left']['color']['text_color']['#default_value'];
 
@@ -350,19 +352,23 @@ function idplates_labelbuilder_managed_file_ajax() {
   $js = drupal_add_js();
   $settings = call_user_func_array('array_merge_recursive', $js['settings']['data']);
 
+  //@todo: You need some logic in here to remove the logo from this label object you keep passing
+  //@todo: around so the logo is removed from the preview as as well.
   // Update the label preview.
   $unique_layout = '';
+  
   if ($layout = taxonomy_term_load($form_state['label']->getLayoutTid())) {
     $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     $unique_layout = $layout_wrapper->field_layout_form->value();
   }
+
   $label_preview = theme('idplates_labelbuilder_preview', array(
     'label' => $form_state['label'],
     'unique_layout' => $unique_layout,
   ));
-  $commands[] = ajax_command_replace('#idplates-labelbuilder-preview-ajax-wrapper', $label_preview);
-    $commands[] = ajax_command_replace(NULL, $output, $settings);
 
+  $commands[] = ajax_command_replace('#idplates-labelbuilder-preview-ajax-wrapper', $label_preview);
+  $commands[] = ajax_command_replace(NULL, $output, $settings);
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
@@ -414,14 +420,10 @@ function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
  * @return mixed
  */
 function idplates_labelbuilder_managed_file_ajax_submit($element, &$form_state, $form) {
-  $ajax_path = 'idplates_labelbuilder_managed_file/ajax/' .
+  $ajax_path = 'idplates_labelbuilder_managed_file/ajax/' . implode('/', $element['#array_parents']) .
     '/' . $form['form_build_id']['#value'];
-  $wrapper = 'idplates-labelbuilder-customize-form';
 
-  $element['upload_button']['#ajax']['wrapper'] = $wrapper;
   $element['upload_button']['#ajax']['path'] = $ajax_path;
-
-  $element['remove_button']['#ajax']['wrapper'] = $wrapper;
   $element['remove_button']['#ajax']['path'] = $ajax_path;
 
   return $element;

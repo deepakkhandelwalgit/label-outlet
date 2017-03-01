@@ -46,7 +46,7 @@ function idplates_labelbuilder_menu() {
     'file' => 'includes/idplates_labelbuilder.options.inc',
   );
 
-  $items['idplates_labelbuilder_managed_file/ajax/'] = array(
+  $items['idplates_labelbuilder_managed_file/ajax'] = array(
     'page callback' => 'idplates_labelbuilder_managed_file_ajax',
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('access content'),
@@ -54,6 +54,7 @@ function idplates_labelbuilder_menu() {
     'type' => MENU_CALLBACK,
     'file' => 'includes/idplates_labelbuilder.customize.inc',
   );
+
   return $items;
 }
 
@@ -308,6 +309,8 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
   $font_size['b'] = !empty($label->getText()['text_b']['size']) ? $label->getText()['text_b']['size'] : '10';
   $font_size['c'] = !empty($label->getText()['text_c']['size']) ? $label->getText()['text_c']['size'] : '10';
   $serial_number = '000001';
+  $long_tag = NULL;
+
   // Hanging tag variables.
   if ($hanging_tag = strpos($unique_layout, 'rearview') !== FALSE) {
     $long_tag = strpos($unique_layout, 'long') !== FALSE;

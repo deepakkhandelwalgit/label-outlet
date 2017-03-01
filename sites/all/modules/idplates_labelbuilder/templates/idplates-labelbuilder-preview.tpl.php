@@ -32,9 +32,11 @@ if (!empty($product)) {
 
 if ($fid = $label->getLogo()) {
   $file = file_load($fid);
-  $uri = $file->uri;
 
-  $url = file_create_url($uri);
+  if ($file) {
+    $uri = $file->uri;
+    $url = file_create_url($uri);
+  }
 }
 
 $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
