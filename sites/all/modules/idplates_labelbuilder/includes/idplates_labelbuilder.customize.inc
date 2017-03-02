@@ -263,6 +263,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form['column_left']['back'] = array(
     '#type' => 'button',
     '#value' => t('PREV: LAYOUT'),
+    '#limit_validation_errors' => array(),
   );
 
   $form['column_left']['submit'] = array(

@@ -392,7 +392,9 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
           break;
         case 'l':
           $tag = 'div';
-          $logo = file_load($label->getLogo());
+          if (!empty($label->getLogo())) {
+            $logo = file_load($label->getLogo());
+          }
           $content = '<div class="idplates-labelbuilder-empty-logo">LOGO<br>HERE</div>';
           if (empty($logo)) {
             $classes = 'idplates-labelbuilder-empty-logo-wrapper' . ($long_tag ? ' long-tag' : '');

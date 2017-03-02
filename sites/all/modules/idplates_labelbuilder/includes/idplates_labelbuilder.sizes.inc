@@ -73,6 +73,7 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   $form['column_left']['back'] = array(
     '#type' => 'button',
     '#value' => t('PREV: PRODUCTS'),
+    '#limit_validation_errors' => array(),
   );
   $form['column_left']['submit'] = array(
     '#type' => 'submit',

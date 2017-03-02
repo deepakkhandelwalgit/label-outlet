@@ -122,7 +122,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     '#value' => t('NEXT: DETAILS'),
   );
 
-  $selected_layout = !empty($form_state['values']['layouts']) ? $form_state['values']['layouts'] : key($options);
+  $selected_layout = !empty($form_state['values']['layouts']) ? $form_state['values']['layouts'] : $default_layout;
   $label->setLayoutTid($selected_layout);
   $form_state['label'] = $label;
   idplates_labelbuilder_get_label_preview($form, $form_state);
