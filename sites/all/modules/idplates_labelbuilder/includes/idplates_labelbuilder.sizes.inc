@@ -80,7 +80,9 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   );
 
   $label->setNid($node->nid);
-  $label->setSizeTid($form_state['values']['sizes']);
+  if (!empty($form_state['values']['sizes'])) {
+    $label->setSizeTid($form_state['values']['sizes']);
+  }
   $form_state['label'] = $label;
 
   idplates_labelbuilder_get_label_preview($form, $form_state);
@@ -95,7 +97,7 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
  * @param $form_state
  */
 function idplates_labelbuilder_size_form_validate($form, &$form_state) {
-  if (strpos($form_state['values']['op'], 'PREV') !== FALSE) {
+  if (!empty($form_state['values']['op']) && strpos($form_state['values']['op'], 'PREV') !== FALSE) {
     drupal_goto('labelbuilder');
   }
 }
