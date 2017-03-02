@@ -190,3 +190,16 @@ margin-bottom:0px;
 small {
 	font-size: 70%;
 }
+
+.view-id-product_durability{
+	border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.view-id-product_durability caption{
+	font-weight: bold;
+    color: #000;
+    font-size: 14px;
+    font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif;
+    padding-top: 0px;
+}
