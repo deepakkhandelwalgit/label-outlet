@@ -50,7 +50,6 @@
       });
 
       $('#edit-adhesive-option-221', context).once(function () {
-        console.log('hey');
         $('#edit-adhesive-option-221').prop("checked", false).trigger("click");
       });
     }
