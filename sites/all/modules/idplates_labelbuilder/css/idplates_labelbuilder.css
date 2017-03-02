@@ -6,6 +6,10 @@
   color: #000;
 }
 
+[id*=idplates-labelbuilder] input.form-text:disabled {
+  color: #aaa;
+}
+
 [id*=idplates-labelbuilder] .colorpicker {
   z-index: 999999;
 }

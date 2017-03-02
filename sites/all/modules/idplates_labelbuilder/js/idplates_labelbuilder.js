@@ -37,6 +37,7 @@
 
       $('.idplates-labelbuilder-inline-wrapper').each(function () {
         var $this = $(this);
+        $this.find('img.idplates-labelbuilder-logo').closest('.idplates-labelbuilder-preview-section-wrapper').css('display', 'block');
         if (!$this.find('.idplates-labelbuilder-wrapped-paragraphs').length) {
           $this.find('p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs" />');
         }
@@ -46,6 +47,11 @@
         $this.find('img.idplates-labelbuilder-logo').css('max-height', parentHeight);
         $this.find('img.idplates-labelbuilder-qr-code').css('height', (parentHeight * .7));
         $this.find('img.idplates-labelbuilder-qr-code').css('width', (parentHeight * .7));
+      });
+
+      $('#edit-adhesive-option-221', context).once(function () {
+        console.log('hey');
+        $('#edit-adhesive-option-221').prop("checked", false).trigger("click");
       });
     }
   }

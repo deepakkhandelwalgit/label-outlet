@@ -161,7 +161,7 @@ function idplates_labelbuilder_add_to_cart($product, $label, $uid = 0, $qty = 10
   try {
     foreach ($label->getExtras() as $item) {
       $line_item = commerce_product_line_item_new((commerce_product_load($item['product_id'])), $item['qty']);
-      commerce_cart_product_add($uid, $line_item);
+      commerce_cart_product_add($uid, $line_item, FALSE);
     }
     $line_item = commerce_product_line_item_new($product, $qty);
     $line_item = _idplates_labelbuilder_copy_label_to_line_item($label, $line_item);
@@ -175,6 +175,9 @@ function idplates_labelbuilder_add_to_cart($product, $label, $uid = 0, $qty = 10
 
 /**
  * Builds the label preview section of the label builder form.
+ *
+ * @param $form
+ * @param $form_state
  */
 function idplates_labelbuilder_get_label_preview(&$form, &$form_state) {
   $form['column_right']['label_proof'] = array(
@@ -241,6 +244,7 @@ function idplates_labelbuilder_get_label_preview(&$form, &$form_state) {
     '#submit' => array('idplates_labelbuilder_add_to_cart_submit'),
     '#validate' => array('idplates_labelbuilder_add_to_cart_validate'),
   );
+
 }
 
 /**
@@ -340,7 +344,7 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
 
     $maxheight = intdiv($height * $current_section_height, 100);
     $markup .= '<div class="idplates-labelbuilder-preview-section-wrapper"
-       style="height: ' . $maxheight . 'px;max-height: ' . $maxheight . 'px;color: #' . $text_color . '; background: ' . $background . ';background-size: contain">';
+       style="height: ' . $maxheight . 'px;max-height: ' . $maxheight . 'px;color: #' . $text_color . '; background: ' . $background . ';background-size: contain;">';
     $markup .= '<div class="idplates-labelbuilder-preview-section" style="height:100%">';
     $label_markup = '';
     foreach (str_split($preview_section) as $char) :
