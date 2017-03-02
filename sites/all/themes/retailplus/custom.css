@@ -187,3 +187,6 @@ margin-right: auto;
 margin-top:10px;
 margin-bottom:0px;
 }
+small {
+	font-size: smaller;
+}
