@@ -203,3 +203,7 @@ small {
     font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif;
     padding-top: 0px;
 }
+
+.view-id-product_durability table{
+	margin:0px;
+}
