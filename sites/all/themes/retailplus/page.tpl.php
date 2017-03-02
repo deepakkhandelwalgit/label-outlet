@@ -125,7 +125,19 @@
         </div>
     </header>
     <!-- EOF: #header -->
-
+ <?php if ($messages):?>
+        <!-- #messages-console -->
+        <div id="messages-console" class="clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                    <?php print $messages; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- EOF: #messages-console -->
+        <?php endif; ?>
     <?php if (($breadcrumb && theme_get_setting('breadcrumb_display')) || $page['banner'] || $messages || $page['highlighted']) :?>
     <!-- #page-intro -->
     <div id="page-intro">
@@ -153,20 +165,6 @@
             <?php print render($page['banner']); ?>
         </div>
         <!-- EOF: #banner -->
-        <?php endif; ?>
-
-        <?php if ($messages):?>
-        <!-- #messages-console -->
-        <div id="messages-console" class="clearfix">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                    <?php print $messages; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- EOF: #messages-console -->
         <?php endif; ?>
 
         <?php if ($page['highlighted']):?>

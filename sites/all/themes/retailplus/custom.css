@@ -25,13 +25,17 @@
     color: #fff;
 }
 
+h3#headline {
+margin:5px 0 5px 0;
+}
+
 #highlighted{
 	padding: 10px 0 20px 0;
 }
 
 .view-mt-latest-listings .property-container .views-field-title, .view-product-categories .views-field-title {
     clear: both;
-    padding: 15px 5px 0;
+    padding: 5px 5px 0;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.2;
@@ -39,6 +43,15 @@
 
 .custom-left, .custom-right{
   float:left;
+}
+
+.block-left, .block-right{
+  float:left;
+  width:50%;
+}
+
+.block-right p{
+padding-left:10px;
 }
 
 .file-icon {
@@ -53,6 +66,16 @@
 #block-views-header-block-block-1 .item-list ul li{
 	
 	margin:0 0 0 .75em;
+}
+
+#block-views-header-block-block-2 .item-list ul{
+	
+	list-style-type: none;
+}
+
+#block-views-header-block-block-2 .item-list ul li{
+	
+	margin:0 0 0 0em;
 }
 
 #header #block-menu-menu-industry ul.menu {
@@ -116,3 +139,71 @@ div#block-views-product-categories-block h3{
 	border-bottom: 0px;
 }
 
+#featured {
+    padding: 10px 0;
+    border-top: 1px solid #d7d7d7;
+}
+#block-views-header-block-block-1 {
+    padding: 0 0 5px 0;
+}
+
+#main.content {
+    padding: 10px 0;
+}
+
+.view-id-mt_testimonials.view-display-id-block_1 .views-field-nothing{
+	border-top: 1px solid #3f3f3f;
+}
+
+#bottom{
+	padding: 10px 0 15px 0;
+    -webkit-box-shadow: 0 1px 5px #FFFFFF;
+    box-shadow: 0;
+    position: relative;
+}
+
+#footer .col-sm-4{
+	width:32.66;
+}
+
+.service-image{
+	padding-top:20px;
+}
+.subfooter-area .block {
+    padding: 0px 20px 0px 0px;
+}
+
+.text-center{
+	text-align:center;
+	padding:20px 0px;
+}
+.center-image{
+width:900px;	
+margin-left: auto;
+margin-right: auto;
+}
+
+.title{
+margin-top:10px;
+margin-bottom:0px;
+}
+small {
+	font-size: 70%;
+}
+
+.view-id-product_durability{
+	border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.view-id-product_durability caption{
+	font-weight: bold;
+    color: #000;
+    font-size: 14px;
+    font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif;
+    padding-top: 0px;
+}
+
+.view-id-product_durability table{
+	margin:0px;
+}
