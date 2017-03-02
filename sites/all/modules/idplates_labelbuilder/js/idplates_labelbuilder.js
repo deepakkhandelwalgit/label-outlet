@@ -10,7 +10,7 @@
         // get keycode of current keypress event
         var code = (e.keyCode || e.which);
         // do nothing if it's home, end, arrow keys, shift, ctrl, alt
-        if(code == 35 || code == 36 || code == 37 || code == 38 || code == 39 || code == 40 || code == 16 || code == 17 || code == 18) {
+        if (code == 35 || code == 36 || code == 37 || code == 38 || code == 39 || code == 40 || code == 16 || code == 17 || code == 18) {
           return;
         }
 
@@ -33,20 +33,20 @@
 
       if ($('.idplates-labelbuilder-inline').length) {
         $('.idplates-labelbuilder-inline').parent().addClass('idplates-labelbuilder-inline-wrapper');
-        $('.idplates-labelbuilder-inline-wrapper p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>')
       }
 
       $('.idplates-labelbuilder-inline-wrapper').each(function () {
         var $this = $(this);
-        $this.find('p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs"/>');
+        if (!$this.find('.idplates-labelbuilder-wrapped-paragraphs').length) {
+          $this.find('p').wrapAll('<div class="idplates-labelbuilder-wrapped-paragraphs" />');
+        }
+        // todo jace this works for qr code
         var parentHeight = $this.parent().height();
         $this.height(parentHeight);
         $this.find('img.idplates-labelbuilder-logo').css('max-height', parentHeight);
         $this.find('img.idplates-labelbuilder-qr-code').css('height', (parentHeight * .7));
         $this.find('img.idplates-labelbuilder-qr-code').css('width', (parentHeight * .7));
       });
-
-
     }
   }
   Drupal.behaviors.idplatesLabelBuilderDisableInputEnter = {

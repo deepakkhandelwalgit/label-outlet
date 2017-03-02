@@ -19,6 +19,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $form_state['product'] = $product;
 
   $adhesives = array();
+  $intensifications = array();
   $add_ons = array();
 
   if (!empty($product_wrapper->field_adhesive_options)) {
@@ -104,10 +105,10 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#title' => t('Adhesives'),
   );
   reset($adhesive_options);
-  $first_adh = key($adhesive_options);
+//  $first_adh = key($adhesive_options);
   $form['column_left']['adhesives']['adhesive_option'] = array(
     '#type' => 'radios',
-    '#default_value' => $first_adh,
+    //    '#default_value' => $first_adh,
     '#options' => $adhesive_options,
     '#required' => TRUE,
     '#ajax' => $ajax,
@@ -165,19 +166,20 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#ajax' => $ajax,
   );
 
-  $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : $form['column_left']['adhesives']['adhesive_option']['#default_value'];
-  $selected_intensification = !empty($form_state['values']['intensification_option']) ? $form_state['values']['intensification_option'] : NULL;
-  $selected_add_ons = !empty($form_state['values']['add_on_options']) ? $form_state['values']['add_on_options'] : NULL;
+  $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : !empty($form['column_left']['adhesives']['adhesive_option']['#default_value']) ? $form['column_left']['adhesives']['adhesive_option']['#default_value'] : array();
+  $selected_intensification = !empty($form_state['values']['intensification_option']) ? $form_state['values']['intensification_option'] : array();
+  $selected_add_ons = !empty($form_state['values']['add_on_options']) ? $form_state['values']['add_on_options'] : array();
+  $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : 100;
   $extras = array();
   $extras[] = array(
     'product_id' => $selected_adhesive,
-    'qty' => $form_state['values']['qty'],
+    'qty' => $qty,
   );
   foreach ($selected_intensification as $intensification) {
     if (!empty($intensification)) {
       $extras[] = array(
         'product_id' => $intensification,
-        'qty' => $form_state['values']['qty'],
+        'qty' => $qty,
       );
     }
   }
@@ -212,7 +214,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
  * @param $form_state
  */
 function idplates_labelbuilder_options_form_validate($form, &$form_state) {
-  if (strpos($form_state['values']['op'], 'PREV') !== FALSE) {
+  if (!empty($form_state['values']['op']) && strpos($form_state['values']['op'], 'PREV') !== FALSE) {
     drupal_goto('labelbuilder/customize/' . $form_state['label']->getSizeTid());
   }
 

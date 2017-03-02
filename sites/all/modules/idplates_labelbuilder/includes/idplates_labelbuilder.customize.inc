@@ -276,7 +276,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     $label->setTagColor($tag_color);
   }
 
-  $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : $form['column_left']['color']['text_color']['#default_value'];
+  $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : !empty($form['column_left']['color']['text_color']['#default_value']) ? $form['column_left']['color']['text_color']['#default_value'] : NULL;
 
   if (!empty($text_color) && !empty($text_input)) {
     $label->setText($text_input + array(
@@ -288,7 +288,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     $label->setLogo($form_state['values']['custom_logo']);
   }
 
-  $label->numbering = idplates_labelbuilder_build_numbering_options($form, $form_state);
+  if (!empty($form_state['values']['numbering_options'])) {
+    $label->numbering = idplates_labelbuilder_build_numbering_options($form, $form_state);
+  }
 
   $form_state['label'] = $label;
 
@@ -383,7 +385,7 @@ function idplates_labelbuilder_managed_file_ajax() {
  * @param $form_state
  */
 function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
-  if (strpos($form_state['values']['op'], 'PREV') !== FALSE) {
+  if (!empty($form_state['values']['op']) && strpos($form_state['values']['op'], 'PREV') !== FALSE) {
     drupal_goto('labelbuilder/layout/' . $form_state['label']->getSizeTid());
   }
 }
@@ -403,7 +405,7 @@ function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
     $label->setLogo($form_state['values']['custom_logo']);
   }
 
-  if ($file = file_load($form_state['values']['custom_logo'])) {
+  if (!empty($form_state['values']['custom_logo']) && $file = file_load($form_state['values']['custom_logo'])) {
     // Change status to permanent.
     $file->status = FILE_STATUS_PERMANENT;
     file_save($file);

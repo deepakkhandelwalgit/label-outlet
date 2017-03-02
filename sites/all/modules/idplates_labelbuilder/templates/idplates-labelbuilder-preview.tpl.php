@@ -48,10 +48,11 @@ $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
     print _idplates_labelbuilder_render_label($label, $code, $no_numbering, $unique_layout);
   else:
     if (!empty($image)) :
-      print render(theme('image', array(
+      $rendered_image = theme('image', array(
         'path' => $image['uri'],
         'attributes' => array(),
-      )));
+      ));
+      print render($rendered_image);
     else:
       print t('Please select a size.');
     endif;

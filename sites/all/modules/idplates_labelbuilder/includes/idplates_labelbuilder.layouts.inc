@@ -137,7 +137,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
  * @param $form_state
  */
 function idplates_labelbuilder_layout_form_validate($form, &$form_state) {
-  if (strpos($form_state['values']['op'], 'PREV') !== FALSE) {
+  if (!empty($form_state['values']['op']) && strpos($form_state['values']['op'], 'PREV') !== FALSE) {
     drupal_goto('labelbuilder/size/' . $form_state['label']->getNid());
   }
 }
