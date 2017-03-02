@@ -277,7 +277,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
     $label->setTagColor($tag_color);
   }
 
-  $text_color = !empty($form_state['values']['text_color']) ? $form_state['values']['text_color'] : !empty($form['column_left']['color']['text_color']['#default_value']) ? $form['column_left']['color']['text_color']['#default_value'] : NULL;
+  $text_color = isset($form_state['values']['text_color']) ? $form_state['values']['text_color'] : NULL;
 
   if (!empty($text_color) && !empty($text_input)) {
     $label->setText($text_input + array(
