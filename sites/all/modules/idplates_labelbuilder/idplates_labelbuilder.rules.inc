@@ -53,7 +53,7 @@ function idplates_labelbuilder_set_price($line_item, $quantity, $price_table, $c
     }
 
     // Fetch the table based price for the current product quantity.
-    $table_price = idplates_labelbuilder_get_amount_qty($product, $quantity, $price_table, $line_item);
+    $table_price = _idplates_labelbuilder_get_amount_qty($product, $quantity, $price_table, $line_item);
 
     // If we got a valid table price...
     if (!empty($table_price)) {

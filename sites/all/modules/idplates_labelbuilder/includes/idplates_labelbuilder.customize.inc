@@ -107,8 +107,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
       );
 
       $text_input['text_' . $key] = array(
-        'text' => !empty($form_state['input']['text_' . $key]) ? $form_state['input']['text_' . $key] : $label->getText()['text_' . $key]['text'],
-        'size' => !empty($form_state['input']['size_' . $key]) ? $form_state['input']['size_' . $key] : $label->getText()['text_' . $key]['size'],
+        'text' => !empty($form_state['input']['text_' . $key]) ? $form_state['input']['text_' . $key] : !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : '',
+        'size' => !empty($form_state['input']['size_' . $key]) ? $form_state['input']['size_' . $key] : !empty($label->getText()['text_' . $key]['size']) ? $label->getText()['text_' . $key]['size'] : 12,
       );
     }
   }

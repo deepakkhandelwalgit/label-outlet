@@ -90,6 +90,33 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'attributes' => NULL,
       ),
     ),
+    'idplates_labelbuilder_adhesive' => array(
+      'template' => 'idplates-labelbuilder-adhesive',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'path' => NULL,
+        'adhesive' => NULL,
+        'attributes' => NULL,
+      ),
+    ),
+    'idplates_labelbuilder_intensification' => array(
+      'template' => 'idplates-labelbuilder-intensification',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'path' => NULL,
+        'intensification' => NULL,
+        'attributes' => NULL,
+      ),
+    ),
+    'idplates_labelbuilder_add_on' => array(
+      'template' => 'idplates-labelbuilder-add-on',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'path' => NULL,
+        'add_on' => NULL,
+        'attributes' => NULL,
+      ),
+    ),
     'idplates_labelbuilder_live_price' => array(
       'template' => 'idplates-labelbuilder-live-price',
       'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
@@ -589,7 +616,7 @@ function _idplates_labelbuilder_get_section_heights($code, $height, $unique_layo
  *
  * @return array
  */
-function idplates_labelbuilder_get_amount_qty($product, $quantity = 1, $items = array(), $line_item) {
+function _idplates_labelbuilder_get_amount_qty($product, $quantity = 1, $items = array(), $line_item) {
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
   if (empty($items)) {
     // Support legacy versions where rules doesn't send $items over.

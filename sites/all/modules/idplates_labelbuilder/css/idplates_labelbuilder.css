@@ -64,6 +64,11 @@ input[type="submit"].form-button-disabled:hover {
   font-style: italic;
   font-size: .75em;
 }
+[id*=idplates-labelbuilder] .idplates-labelbuilder-description:before {
+  clear: both;
+  content: '';
+  display: block;
+}
 
 [id*=idplates-labelbuilder] .form-item-numbering-options .description,
 [id*=idplates-labelbuilder] .form-item-custom-logo .description {
@@ -116,16 +121,24 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 [id*=idplates-labelbuilder-size-form] input[type='radio'],
-[id*=idplates-labelbuilder-layout-form] input[type='radio'] {
+[id*=idplates-labelbuilder-layout-form] input[type='radio'],
+[id*=idplates-labelbuilder-options-form] input[type='checkbox'],
+[id*=idplates-labelbuilder-options-form] #edit-adhesive-option input[type='radio'] {
   display: none;
 }
 
 [id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-wrapper,
-[id*=idplates-labelbuilder-layout-form] input[type='radio']:checked + label .idplates-labelbuilder-layout-wrapper {
+[id*=idplates-labelbuilder-layout-form] input[type='radio']:checked + label .idplates-labelbuilder-layout-wrapper,
+[id*=idplates-labelbuilder-layout-form] input[type='radio']:checked + label .idplates-labelbuilder-extras-wrapper,
+[id*=idplates-labelbuilder-options-form] input[type='checkbox']:checked + label .idplates-labelbuilder-extras-wrapper,
+[id*=idplates-labelbuilder-options-form] input[type='radio']:checked + label .idplates-labelbuilder-adhesive-wrapper {
   border: solid 1px #c0273c;
 }
 
-[id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-info:before {
+[id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-info:before,
+[id*=idplates-labelbuilder-options-form] input[type='checkbox']:checked + label .idplates-labelbuilder-extras-info:before,
+[id*=idplates-labelbuilder-options-form] input[type='radio']:checked + label .idplates-labelbuilder-intensification-info:before,
+[id*=idplates-labelbuilder-options-form] input[type='radio']:checked + label .idplates-labelbuilder-adhesive-info:before {
   color: #c0273c;
   content: '';
   background-image: url('../gfx/checkmark.png');
@@ -137,6 +150,8 @@ input[type="submit"].form-button-disabled:hover {
 
 [id*=idplates-labelbuilder-size-form] .idplates-labelbuilder-size-wrapper:hover,
 [id*=idplates-labelbuilder-layout-form] .idplates-labelbuilder-layout-wrapper:hover,
+[id*=idplates-labelbuilder-options-form] .idplates-labelbuilder-extras-wrapper:hover,
+[id*=idplates-labelbuilder-options-form] .idplates-labelbuilder-adhesive-wrapper:hover,
 [id*=idplates-labelbuilder-layout-form] .form-item-styles label:hover {
   cursor: pointer;
 }
@@ -168,7 +183,6 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 [id*=idplates-labelbuilder-customize-form] .form-item.form-type-checkbox:first-child,
-[id*=idplates-labelbuilder-options-form] .form-item.form-type-checkbox:first-child,
 [id*=idplates-labelbuilder-customize-form] .form-item.form-type-radio:first-child,
 [id*=idplates-labelbuilder-options-form] .form-item.form-type-radio:first-child {
   margin-top: 1em;
@@ -220,6 +234,7 @@ input[type="submit"].form-button-disabled:hover {
 
 [id*=idplates-labelbuilder-size-form] #edit-sizes.form-radios:after,
 [id*=idplates-labelbuilder-layout-form] .form-type-radios:after,
+[id*=idplates-labelbuilder-options-form] .form-type-radios:after,
 #idplates-labelbuilder-layout-ajax-wrapper:after {
   clear: both;
   content: '';
@@ -227,30 +242,49 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 [id*=idplates-labelbuilder-size-form] .form-type-radio.form-item-sizes,
-[id*=idplates-labelbuilder-layout-form] .form-type-radio.form-item-layouts {
+[id*=idplates-labelbuilder-layout-form] .form-type-radio.form-item-layouts,
+[id*=idplates-labelbuilder-options-form] .form-type-checkbox[class*=form-item-add-on-option],
+[id*=idplates-labelbuilder-options-form] .form-type-radio.form-item-intensification-option,
+[id*=idplates-labelbuilder-options-form] .form-type-radio.form-item-adhesive-option {
   float: left;
 }
 
 .idplates-labelbuilder-size-wrapper,
-.idplates-labelbuilder-layout-wrapper {
+.idplates-labelbuilder-layout-wrapper,
+.idplates-labelbuilder-extras-wrapper,
+.idplates-labelbuilder-adhesive-wrapper {
   border: solid 1px #ccc;
+  border-right: none;
   width: 195px;
   height: 190px;
   text-align: center;
   position: relative;
 }
 
-.idplates-labelbuilder-layout-wrapper {
+.idplates-labelbuilder-size-wrapper:last-child,
+.idplates-labelbuilder-layout-wrapper:last-child,
+.idplates-labelbuilder-extras-wrapper:last-child,
+.idplates-labelbuilder-adhesive-wrapper:last-child {
+  border: solid 1px #ccc;
+}
+
+.idplates-labelbuilder-layout-wrapper,
+.idplates-labelbuilder-extras-wrapper,
+.idplates-labelbuilder-adhesive-wrapper {
   height: 150px;
 }
 
 .idplates-labelbuilder-size-table,
-.idplates-labelbuilder-layout-table {
+.idplates-labelbuilder-layout-table,
+.idplates-labelbuilder-extras-wrapper,
+.idplates-labelbuilder-adhesive-wrapper {
   display: table;
 }
 
 .idplates-labelbuilder-size-img-wrapper,
-.idplates-labelbuilder-layout-img-wrapper {
+.idplates-labelbuilder-layout-img-wrapper,
+.idplates-labelbuilder-extras-img-wrapper,
+.idplates-labelbuilder-adhesive-img-wrapper {
   display: table-cell;
   width: 193px;
   height: 140px;
@@ -258,14 +292,24 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 .idplates-labelbuilder-size-img-wrapper img,
-.idplates-labelbuilder-layout-img-wrapper img {
+.idplates-labelbuilder-layout-img-wrapper img,
+.idplates-labelbuilder-extras-img-wrapper img,
+.idplates-labelbuilder-adhesive-img-wrapper img {
   margin: 0 auto;
   max-width: 95%;
   max-height: 92%;
 }
 
+.idplates-labelbuilder-extras-img-wrapper img,
+.idplates-labelbuilder-adhesive-img-wrapper img {
+  max-width: 75%;
+  max-height: 75%;
+}
+
 .idplates-labelbuilder-size-info-wrapper,
-.idplates-labelbuilder-layout-info-wrapper {
+.idplates-labelbuilder-layout-info-wrapper,
+.idplates-labelbuilder-extras-info-wrapper,
+.idplates-labelbuilder-adhesive-info-wrapper {
   width: 100%;
   color: #666;
   font-weight: bold;
@@ -273,6 +317,21 @@ input[type="submit"].form-button-disabled:hover {
   line-height: 48px;
   height: 48px;
   border-top: solid 1px #ccc;
+}
+
+.idplates-labelbuilder-extras-info span,
+.idplates-labelbuilder-adhesive-info span {
+  font-size: .9em;
+  font-style: italic;
+}
+
+.idplates-labelbuilder-extras-info,
+.idplates-labelbuilder-adhesive-info {
+  font-size: .7em;
+  line-height: 12px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 [id*=idplates-labelbuilder-size-form] .form-type-radios.form-item-sizes {
@@ -670,6 +729,23 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 
 [id*=idplates-labelbuilder-customize-form] #edit-color {
   margin-bottom: 57px;
+}
+
+[id*=idplates-labelbuilder-options-form] #edit-add-on-options,
+[id*=idplates-labelbuilder-options-form] #edit-intensification-option,
+[id*=idplates-labelbuilder-options-form] #edit-adhesive-option {
+  margin-top: 10px;
+}
+
+[id*=idplates-labelbuilder-options-form] #edit-add-on-options [class*=form-item-add-on-options],
+[id*=idplates-labelbuilder-options-form] #edit-adhesive-option .form-item-adhesive-option {
+  margin: 0;
+}
+
+[id*=idplates-labelbuilder-options-form] #edit-add-ons .fieldset-wrapper,
+[id*=idplates-labelbuilder-options-form] #edit-intensifications .fieldset-wrapper,
+[id*=idplates-labelbuilder-options-form] #edit-adhesives .fieldset-wrapper {
+  padding: 0;
 }
 
 /**

@@ -24,12 +24,12 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
 
   if (!empty($product_wrapper->field_adhesive_options)) {
     foreach ($product_wrapper->field_adhesive_options as $adhesive) {
-      $adhesives[] = $adhesive->value();
+      $adhesives[] = $adhesive;
     }
   }
   if (!empty($product_wrapper->field_intensification_options)) {
     foreach ($product_wrapper->field_intensification_options as $intensification) {
-      $intensifications[] = $intensification->value();
+      $intensifications[] = $intensification;
     }
   }
   if (!empty($product_wrapper->field_add_on_options)) {
@@ -70,34 +70,35 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $adhesive_options = array();
 
   foreach ($adhesives as $adhesive) {
-    //    $image = $adhesive->field_label_size->field_ls_image->value();
-    //    $size = $adhesive->field_label_size->name->value();
-    //    $options[$adhesive->product_id->value()] = theme('image', array(
-    //        'path' => $image['uri'],
-    //        'size' => $size,
-    //        'attributes' => array(),
-    //      )
-    //    );
-    $adhesive_options[$adhesive->product_id] = $adhesive->title;
+    $image = $adhesive->field_product_image->value();
+    $adhesive_options[$adhesive->product_id->value()] = theme('idplates_labelbuilder_adhesive', array(
+        'path' => $image[0]['uri'],
+        'adhesive' => $adhesive,
+        'attributes' => array(),
+      )
+    );
   }
   $intensification_options = array();
 
   foreach ($intensifications as $intensification) {
-    //    $image = $intensification->field_label_size->field_ls_image->value();
-    //    $size = $intensification->field_label_size->name->value();
-    //    $options[$intensification->product_id->value()] = theme('image', array(
-    //        'path' => $image['uri'],
-    //        'size' => $size,
-    //        'attributes' => array(),
-    //      )
-    //    );
-    $intsf_label = str_replace('_', ' ', $intensification->sku);
-    $intensification_options[$intensification->product_id] = ucwords($intsf_label);
+    $image = $intensification->field_product_image->value();
+    $intensification_options[$intensification->product_id->value()] = theme('idplates_labelbuilder_intensification', array(
+        'path' => $image[0]['uri'],
+        'intensification' => $intensification,
+        'attributes' => array(),
+      )
+    );
   }
 
   $add_on_options = array();
   foreach ($add_ons as $add_on) {
-    $add_on_options[$add_on->product_id->value()] = $add_on->title->value();
+    $image = $add_on->field_product_image->value();
+    $add_on_options[$add_on->product_id->value()] = theme('idplates_labelbuilder_add_on', array(
+        'path' => $image[0]['uri'],
+        'add_on' => $add_on,
+        'attributes' => array(),
+      )
+    );
   }
 
   $form['column_left']['adhesives'] = array(
@@ -113,6 +114,8 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#required' => TRUE,
     '#ajax' => $ajax,
   );
+  $form['column_left']['adhesives']['adhesive_option']['#ajax']['progress'] = array();
+
   if (!empty($intensification_options)) {
     $form['column_left']['intensifications'] = array(
       '#type' => 'fieldset',
@@ -125,6 +128,8 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
       '#ajax' => $ajax,
     );
   }
+  $form['column_left']['intensifications']['intensification_option']['#ajax']['progress'] = array();
+
 
   $form['column_left']['add_ons'] = array(
     '#type' => 'fieldset',
@@ -135,6 +140,8 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#options' => $add_on_options,
     '#ajax' => $ajax,
   );
+  $form['column_left']['add_ons']['add_on_options']['#ajax']['progress'] = array();
+
   $form['column_left']['add_ons']['description'] = array(
     '#type' => 'item',
     '#markup' => t('Note: You will receive 1 Surface Cleaner and 1 Application Roller for FREE with your order. For additional supplies, select the product needed from the above options.'),
