@@ -208,7 +208,7 @@ small {
 	margin:0px;
 }
 
-.view-id-label_builder h5.callout{
+.view-id-label_builder h5.callout a{
 	font-size:16px;
 	color:#A90018;
 }
