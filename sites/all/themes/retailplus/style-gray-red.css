@@ -102,7 +102,7 @@ a.button {
 	 color:#3F3F3f;
  }
 
- .view-label-builder .views-field-title {
+ .view-label-builder .views-field-title a{
     font-size: 22px;
 	color:#3F4E57;
 }
