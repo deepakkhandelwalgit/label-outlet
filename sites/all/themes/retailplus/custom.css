@@ -207,3 +207,7 @@ small {
 .view-id-product_durability table{
 	margin:0px;
 }
+
+.view-id-label_builder .callout{
+	font-size:16px;
+}
