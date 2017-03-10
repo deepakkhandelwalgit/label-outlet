@@ -214,8 +214,12 @@ small {
 }
 #block-block-10, #block-block-9{
 	border:3px solid #efefef;
+	margin-bottom:20px;
 }
 
 #block-block-10 img, #block-block-9 img{
+	margin:auto;
+}
+#block-block-10 p, #block-block-9 p{
 	margin:auto;
 }
