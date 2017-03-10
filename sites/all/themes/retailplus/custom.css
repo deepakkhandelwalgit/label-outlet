@@ -212,3 +212,10 @@ small {
 	font-size:16px;
 	color:#A90018;
 }
+#block-block-10, #block-block-9{
+	border:3px solid #efefef;
+}
+
+#block-block-10 img, #block-block-9 img{
+	margin:auto;
+}
