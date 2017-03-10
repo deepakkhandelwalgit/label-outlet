@@ -1779,13 +1779,13 @@ box-shadow: inset 0px 3px 4px rgba(0,0,0,0.1); }
 
 .footer-area .more-link a, .footer-area a.button, .footer-area .views-field-view-node a,
 .footer-top-area .more-link a, .footer-top-area a.button, .footer-top-area .views-field-view-node a,
-.subfooter-area .more-link a, .subfooter-area a.button, .subfooter-area .views-field-view-node a { border-color: #3F4E57555; }
+.subfooter-area .more-link a, .subfooter-area a.button, .subfooter-area .views-field-view-node a { border-color: #3F4E57; }
 
 .header-top-area .more-link a, .header-top-area a.button, .header-top-area .views-field-view-node a { border-color: #FFFFFF; color: #FFFFFF; }
 
 #main .webform-client-form .form-actions { text-align: right; }
 
-#main .webform-client-form .form-actions input { padding: 10px 80px; background-color: transparent; border: 1px solid #acacac; color: #3F4E57555;
+#main .webform-client-form .form-actions input { padding: 10px 80px; background-color: transparent; border: 1px solid #acacac; color: #3F4E57;
 font-size: 18px; text-transform: none; line-height: 1; }
 
 #main .webform-client-form .form-actions input:hover { background-color: #3f8edb; color: #ffffff; border-color: #3f8edb!important; }
