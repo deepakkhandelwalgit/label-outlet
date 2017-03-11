@@ -205,6 +205,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $form_state['label'] = $label;
 
   idplates_labelbuilder_get_label_preview($form, $form_state);
+  drupal_set_title(node_load($label->getNid())->title);
 
   $form['column_left']['back'] = array(
     '#type' => 'button',
