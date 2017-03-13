@@ -22,9 +22,8 @@ foreach (array('width', 'height', 'alt', 'title') as $key) {
   </div>
   <div class="idplates-labelbuilder-adhesive-info-wrapper">
     <div class="idplates-labelbuilder-adhesive-info">
-    <?php print $adhesive->title->value(); ?><br>
-<!--      --><?php //print $adhesive->body->value(); ?>
-      <span><?php print 'For textured metal surfaces'; ?></span>
+      <p><?php print $adhesive->title->value(); ?></p>
+      <p class="description"><?php print $adhesive->field_product_description->value(); ?></p>
     </div>
   </div>
 </div>

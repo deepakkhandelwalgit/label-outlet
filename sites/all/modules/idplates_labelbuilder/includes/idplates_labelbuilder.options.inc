@@ -70,7 +70,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $adhesive_options = array();
 
   foreach ($adhesives as $adhesive) {
-    $image = !empty($adhesive->field_product_image) ? $adhesive->field_product_image->value() : 0;
+    $image = $adhesive->field_product_image->value();
     $adhesive_options[$adhesive->product_id->value()] = theme('idplates_labelbuilder_adhesive', array(
         'path' => $image[0]['uri'],
         'adhesive' => $adhesive,
@@ -81,7 +81,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
   $intensification_options = array();
 
   foreach ($intensifications as $intensification) {
-    $image = !empty($intensification->field_product_image) ? $intensification->field_product_image->value() : 0;
+    $image = $intensification->field_product_image->value();
     $intensification_options[$intensification->product_id->value()] = theme('idplates_labelbuilder_intensification', array(
         'path' => $image[0]['uri'],
         'intensification' => $intensification,
@@ -92,7 +92,7 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
 
   $add_on_options = array();
   foreach ($add_ons as $add_on) {
-    $image = !empty($add_on->field_product_image) ? $add_on->field_product_image->value() : 0;
+    $image = $add_on->field_product_image->value();
     $add_on_options[$add_on->product_id->value()] = theme('idplates_labelbuilder_add_on', array(
         'path' => $image[0]['uri'],
         'add_on' => $add_on,

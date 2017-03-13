@@ -64,6 +64,7 @@ input[type="submit"].form-button-disabled:hover {
   font-style: italic;
   font-size: .75em;
 }
+
 [id*=idplates-labelbuilder] .idplates-labelbuilder-description:before {
   clear: both;
   content: '';
@@ -319,10 +320,17 @@ input[type="submit"].form-button-disabled:hover {
   border-top: solid 1px #ccc;
 }
 
-.idplates-labelbuilder-extras-info span,
-.idplates-labelbuilder-adhesive-info span {
+.idplates-labelbuilder-extras-info p,
+.idplates-labelbuilder-adhesive-info p {
+  display: inline-block;
+  padding: 0;
+}
+
+.idplates-labelbuilder-extras-info p.description,
+.idplates-labelbuilder-adhesive-info p.description {
   font-size: .9em;
   font-style: italic;
+  margin: 0 5%;
 }
 
 .idplates-labelbuilder-extras-info,
