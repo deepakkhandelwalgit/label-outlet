@@ -21,6 +21,10 @@ if (!empty($tid)) {
     $price_table_breakpoints = $product_wrapper->field_metal_color_price_table->value();
   }
   foreach ($price_table_breakpoints as $breakpoint) {
+    if ($breakpoint['max_qty'] < 0) {
+      $price_table = $breakpoint;
+      break;
+    }
     if ($breakpoint['min_qty'] <= $quantity && $breakpoint['max_qty'] >= $quantity) {
       $price_table = $breakpoint;
       break;
