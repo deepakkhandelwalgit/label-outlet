@@ -296,6 +296,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state) {
   $form_state['label'] = $label;
 
   idplates_labelbuilder_get_label_preview($form, $form_state);
+  drupal_set_title(node_load($label->getNid())->title);
 
   return $form;
 }

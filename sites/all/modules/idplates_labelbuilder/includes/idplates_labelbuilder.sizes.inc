@@ -87,6 +87,7 @@ function idplates_labelbuilder_size_form($form, &$form_state, $node) {
   $form_state['label'] = $label;
 
   idplates_labelbuilder_get_label_preview($form, $form_state);
+  drupal_set_title($node->title);
 
   return $form;
 }
