@@ -172,6 +172,14 @@ function idplates_labelbuilder_views_pre_build(&$view) {
     }
   }
 }
+/**
+ * Implements hook_commerce_shipping_service_info_alter().
+ */
+function idplates_labelbuilder_commerce_shipping_service_info_alter(&$shipping_services) {
+  if (isset($shipping_services['free_shipping'])) {
+    $shipping_services['free_shipping']['weight'] = -10;
+  }
+}
 
 /**
  * Adds the label to the user's cart along with any and all extra items
