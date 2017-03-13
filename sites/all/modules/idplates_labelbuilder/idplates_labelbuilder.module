@@ -631,16 +631,10 @@ function _idplates_labelbuilder_get_amount_qty($product, $quantity = 1, $items =
     }
   }
 
-
-  if (empty($line_item->data['idplates_labelbuilder']['label'])) {
-    // We fallback to the higher one if no match was found.
-    return end($items);
-  }
-
-  $label = $line_item->data['idplates_labelbuilder']['label'];
-
-  if (_idplates_labelbuilder_use_metal_price($label)) {
-    $items = $product_wrapper->field_metal_color_price_table->value();
+  if (!empty($line_item->data['idplates_labelbuilder']['label']) && $label = $line_item->data['idplates_labelbuilder']['label']) {
+    if (_idplates_labelbuilder_use_metal_price($label)) {
+      $items = $product_wrapper->field_metal_color_price_table->value();
+    }
   }
   // Sort the items by quantity and return the matching one.
   uasort($items, 'commerce_price_table_sort_by_qty');
