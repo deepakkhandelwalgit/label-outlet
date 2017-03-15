@@ -495,9 +495,10 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   max-width: none;
 }
 
-#edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-per-label {
+#edit-label-proof .idplates-labelbuilder-live-price-wrapper td p.idplates-labelbuilder-preview-price-per-label {
   font-size: .8em;
   text-transform: lowercase;
+  padding: 0;
 }
 
 #edit-label-proof .idplates-labelbuilder-live-price-wrapper td span.idplates-labelbuilder-preview-price-total {

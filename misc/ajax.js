@@ -230,16 +230,16 @@ Drupal.ajax = function (base, element, element_settings) {
  * will test to see if the key press is valid to trigger this event and
  * if it is, trigger it for us and prevent other keypresses from triggering.
  * In this case we're handling RETURN and SPACEBAR keypresses (event codes 13
- * and 32. RETURN is often used to submit a form when in a textfield, and 
- * SPACE is often used to activate an element without submitting. 
+ * and 32. RETURN is often used to submit a form when in a textfield, and
+ * SPACE is often used to activate an element without submitting.
  */
 Drupal.ajax.prototype.keypressResponse = function (element, event) {
   // Create a synonym for this to reduce code confusion.
   var ajax = this;
 
   // Detect enter key and space bar and allow the standard response for them,
-  // except for form elements of type 'text' and 'textarea', where the 
-  // spacebar activation causes inappropriate activation if #ajax['keypress'] is 
+  // except for form elements of type 'text' and 'textarea', where the
+  // spacebar activation causes inappropriate activation if #ajax['keypress'] is
   // TRUE. On a text-type widget a space should always be a space.
   if (event.which == 13 || (event.which == 32 && element.type != 'text' && element.type != 'textarea')) {
     $(ajax.element_settings.element).trigger(ajax.element_settings.event);
@@ -514,7 +514,7 @@ Drupal.ajax.prototype.commands = {
     // $(response.data) as new HTML rather than a CSS selector. Also, if
     // response.data contains top-level text nodes, they get lost with either
     // $(response.data) or $('<div></div>').replaceWith(response.data).
-    var new_content_wrapped = $('<div></div>').html(response.data);
+    var new_content_wrapped = $('<div></div>').html(response.data.trim());
     var new_content = new_content_wrapped.contents();
 
     // For legacy reasons, the effects processing code assumes that new_content

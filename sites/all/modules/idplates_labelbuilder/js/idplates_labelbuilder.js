@@ -48,10 +48,6 @@
         $this.find('img.idplates-labelbuilder-qr-code').css('height', (parentHeight * .7));
         $this.find('img.idplates-labelbuilder-qr-code').css('width', (parentHeight * .7));
       });
-
-      $('#edit-adhesive-option-221', context).once(function () {
-        $('#edit-adhesive-option-221').prop("checked", false).trigger("click");
-      });
     }
   }
   Drupal.behaviors.idplatesLabelBuilderDisableInputEnter = {

@@ -41,7 +41,7 @@ function idplates_labelbuilder_rules_action_info() {
 function idplates_labelbuilder_set_price($line_item, $quantity, $price_table, $component_name) {
   // If the line item contains a product...
   if (in_array($line_item->type, commerce_product_line_item_types())) {
-    // Load its referenced proiduct.
+    // Load its referenced product.
     $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
     $product = $line_item_wrapper->commerce_product->value();
 

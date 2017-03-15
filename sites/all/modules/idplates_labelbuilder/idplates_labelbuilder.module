@@ -172,6 +172,7 @@ function idplates_labelbuilder_views_pre_build(&$view) {
     }
   }
 }
+
 /**
  * Implements hook_commerce_shipping_service_info_alter().
  */
@@ -322,7 +323,25 @@ function idplates_labelbuilder_live_price_ajax_callback($form, $form_state) {
 }
 
 function idplates_labelbuilder_preview_ajax_callback($form, $form_state) {
-  return $form['column_right']['label_proof']['preview'];
+  $unique_layout = '';
+  if ($layout = taxonomy_term_load($form_state['label']->getLayoutTid())) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $unique_layout = $layout_wrapper->field_layout_form->value();
+  }
+  $markup = theme('idplates_labelbuilder_preview', array(
+    'label' => $form_state['label'],
+    'unique_layout' => $unique_layout,
+  ));
+  $commands[] = ajax_command_replace('.idplates-labelbuilder-preview', $markup);
+
+  $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : $form['column_right']['label_proof']['qty']['#default_value'];
+  $markup = theme('idplates_labelbuilder_live_price', array(
+    'label' => $form_state['label'],
+    'quantity' => $qty,
+  ));
+  $commands[] = ajax_command_replace('#idplates-labelbuilder-live-price-ajax-wrapper', $markup);
+
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
 
 /**
