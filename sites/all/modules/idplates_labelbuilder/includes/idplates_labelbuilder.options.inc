@@ -124,7 +124,6 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     $form['column_left']['intensifications']['intensification_option'] = array(
       '#type' => 'checkboxes',
       '#options' => $intensification_options,
-      '#required' => TRUE,
       '#ajax' => $ajax,
     );
   }
