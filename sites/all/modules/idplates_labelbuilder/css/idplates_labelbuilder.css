@@ -229,6 +229,12 @@ input[type="submit"].form-button-disabled:hover {
   padding: 10px 5px 10px 10px;
 }
 
+@-moz-document url-prefix() {
+  [id*=idplates-labelbuilder-customize-form] input.form-text[type="number"] {
+    height: 33px;
+  }
+}
+
 [id*=idplates-labelbuilder-size-form] .form-item-sizes > label:first-child .form-required {
   display: none;
 }
