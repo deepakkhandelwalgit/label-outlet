@@ -33,7 +33,7 @@ function idplates_labelbuilder_menu() {
   $items['labelbuilder/customize'] = array(
     'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_customize_form', 2),
+    'page arguments' => array('idplates_labelbuilder_customize_form', 2, 3, 4),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.customize.inc',
   );

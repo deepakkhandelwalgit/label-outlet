@@ -8,8 +8,16 @@
  *
  * @return mixed
  */
-function idplates_labelbuilder_customize_form($form, &$form_state) {
-  $label = $_SESSION['idplates']['label'];
+function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $layout_code) {
+  if (!empty($nid) && !empty($tid) && !empty($layout_code) && empty($_SESSION['idplates']['label'])) {
+    $label = new Label();
+    $label->setNid($nid);
+    $label->setSizeTid($tid);
+    $label->setLayoutTid($layout_code);
+  }
+  else {
+    $label = $_SESSION['idplates']['label'];
+  }
   $label->setSection('customize');
   $layout_code = _idplates_labelbuilder_get_layout_code($label);
 
