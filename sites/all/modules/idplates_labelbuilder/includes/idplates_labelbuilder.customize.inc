@@ -250,6 +250,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#states' => $hide_consecutive,
       '#maxlength' => $max_length,
       '#size' => 6,
+      '#ajax' => $ajax,
       '#default_value' => !empty($label->numbering['starting_digit']) ? substr($label->numbering['starting_digit'], -$max_length) : str_pad('1', $max_length, '0', STR_PAD_LEFT),
     );
 
@@ -258,13 +259,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#title' => t('Digits'),
       '#states' => $hide_consecutive,
       '#default_value' => !empty($label->numbering['number_of_digits']) ? $label->numbering['number_of_digits'] : 6,
-      '#maxlength' => 3,
+      '#maxlength' => 2,
       '#size' => 3,
-      '#ajax' => array(
-        'callback' => 'idplates_label_builder_numbering_ajax_callback',
-        'wrapper' => 'idplates-labelbuilder-numbering-ajax-wrapper',
-        'method' => 'replace',
-      ),
+      '#ajax' => $ajax,
     );
 
     $form['column_left']['numbering']['consecutive']['advanced']['fixes']['prefix'] = array(
@@ -274,6 +271,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#states' => $hide_consecutive,
       '#maxlength' => 3,
       '#size' => 3,
+      '#ajax' => $ajax,
     );
 
     $form['column_left']['numbering']['consecutive']['advanced']['fixes']['consecutive'] = array(
@@ -288,6 +286,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#states' => $hide_consecutive,
       '#maxlength' => 3,
       '#size' => 3,
+      '#ajax' => $ajax,
       '#default_value' => !empty($label->numbering['suffix']) ? $label->numbering['suffix'] : '',
     );
 
@@ -301,8 +300,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#type' => 'radios',
       '#title' => t('Padding'),
       '#states' => $hide_consecutive,
-      '#options' => array(t('Zeros'), t('None')),
-      '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 0,
+      '#options' => array('zeros' => t('Zeros'), 'none' => t('None')),
+      '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 'zeros',
       '#ajax' => $ajax,
     );
   }

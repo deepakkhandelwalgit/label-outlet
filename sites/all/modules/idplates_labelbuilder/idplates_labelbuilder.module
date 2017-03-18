@@ -374,7 +374,7 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
   $font_size['a'] = !empty($label->getText()['text_a']['size']) ? $label->getText()['text_a']['size'] : '12';
   $font_size['b'] = !empty($label->getText()['text_b']['size']) ? $label->getText()['text_b']['size'] : '12';
   $font_size['c'] = !empty($label->getText()['text_c']['size']) ? $label->getText()['text_c']['size'] : '12';
-  $serial_number = '000001';
+  $serial_number = _idplates_labelbuilder_generate_barcode_number($label);
   $long_tag = NULL;
 
   // Hanging tag variables.
@@ -793,4 +793,23 @@ function _idplates_labelbuilder_get_hanging_tag_color($label, $code) {
     return $bg;
   }
   return 'FFFFFF';
+}
+
+/**
+ * Generates the serial barcode number from the user input.
+ *
+ * @param Label $label - The label.
+ *
+ * @return string $barcode
+ */
+function _idplates_labelbuilder_generate_barcode_number($label) {
+  $numbering = $label->numbering;
+  $barcode = $numbering['starting_digit'];
+  $digits = $numbering['number_of_digits'];
+  $padding = $numbering['padding'];
+
+  if (strlen($barcode) != $digits && $padding === 'zeros') {
+    $barcode = str_pad($barcode, $digits, '0', STR_PAD_LEFT);
+  }
+  return $numbering['prefix'] . $barcode . $numbering['suffix'];
 }

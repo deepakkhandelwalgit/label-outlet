@@ -6,6 +6,10 @@
           '#idplates-labelbuilder-customize-form [id^="edit-text"], ' +
           '#idplates-labelbuilder-customize-form [id^="edit-tag-color-hex"], ' +
           '#idplates-labelbuilder-customize-form [id^="edit-text-color-hex"], ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-starting-digit"], ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-number-of-digit"], ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-prefix"], ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-suffix"], ' +
           '#idplates-labelbuilder-options-form [id^="edit-notes"]';
 
       $(selectors, context).on('keyup', function (e) {
