@@ -90,6 +90,14 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'attributes' => NULL,
       ),
     ),
+    'idplates_labelbuilder_color' => array(
+      'template' => 'idplates-labelbuilder-color',
+      'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',
+      'arguments' => array(
+        'color' => NULL,
+        'hexcode' => NULL,
+      ),
+    ),
     'idplates_labelbuilder_adhesive' => array(
       'template' => 'idplates-labelbuilder-adhesive',
       'path' => drupal_get_path('module', 'idplates_labelbuilder') . '/templates',

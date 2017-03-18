@@ -9,6 +9,7 @@
  * @return mixed
  */
 function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $layout_code) {
+  $triggering_element = !empty($form_state['triggering_element']) ? $form_state['triggering_element'] : NULL;
   if (!empty($nid) && !empty($tid) && !empty($layout_code) && empty($_SESSION['idplates']['label'])) {
     $label = new Label();
     $label->setNid($nid);
@@ -62,25 +63,63 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     );
   }
 
+  $color_options = array(
+    'FFF' => 'WHITE',
+    '000000' => 'BLACK',
+    'FAE042' => 'GOLD',
+    'FFFF00' => 'YELLOW',
+    '0085CA' => 'BLUE',
+    '00B052' => 'GREEN',
+    'EDA04F' => 'COPPER',
+    '781496' => 'PURPLE',
+    '3342B5' => 'DARK BLUE',
+    'D50032' => 'RED',
+  );
+
+  foreach ($color_options as $hexcode => $color) {
+    $options[$hexcode] =
+      theme('idplates_labelbuilder_color', array(
+          'color' => $color,
+          'hexcode' => $hexcode,
+        )
+      );
+  }
   if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
     $form['column_left']['color']['tag_color'] = array(
-      '#type' => 'jquery_colorpicker',
+      '#type' => 'radios',
       '#title' => t('Tag Color'),
-      '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'ED1C24',
+      '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'D50032',
+      '#options' => $options,
       '#ajax' => $ajax,
+    );
+    $form['column_left']['color']['tag_color_hex'] = array(
+      '#type' => 'textfield',
+      '#ajax' => $ajax,
+      '#description' => t('Or enter hexcode: '),
+      '#maxlength' => 6,
+      '#size' => 8,
     );
   }
   else {
     // Background is white, so make the default text colour red.
-    $default_text_color = 'ED1C24';
+    $default_text_color = 'D50032';
   }
 
   if (_idplates_labelbuilder_needs_text_options($layout_code)) {
     $form['column_left']['color']['text_color'] = array(
-      '#type' => 'jquery_colorpicker',
+      '#type' => 'radios',
       '#title' => t('Text Color'),
       '#default_value' => !empty($label->getText()['color']) ? $label->getText()['color'] : $default_text_color,
+      '#options' => $options,
       '#ajax' => $ajax,
+    );
+
+    $form['column_left']['color']['text_color_hex'] = array(
+      '#type' => 'textfield',
+      '#ajax' => $ajax,
+      '#description' => t('Or enter hexcode: '),
+      '#maxlength' => 6,
+      '#size' => 8,
     );
 
     $form['column_left']['text_container'] = array(
@@ -280,12 +319,22 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   );
 
   if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
-    $tag_color = isset($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
+    if (empty($form_state['input']['tag_color_hex']) || ($triggering_element['#type'] == 'radio' && in_array('text_color', $triggering_element['#parents']))) {
+      $tag_color = isset($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
+    }
+    else {
+      $tag_color = $form_state['input']['tag_color_hex'];
+    }
 
     $label->setTagColor($tag_color);
   }
 
-  $text_color = isset($form_state['values']['text_color']) ? $form_state['values']['text_color'] : NULL;
+  if (empty($form_state['input']['text_color_hex']) || ($triggering_element['#type'] == 'radio' && in_array('tag_color', $triggering_element['#parents']))) {
+    $text_color = isset($form_state['values']['text_color']) ? $form_state['values']['text_color'] : NULL;
+  }
+  else {
+    $text_color = $form_state['input']['text_color_hex'];
+  }
 
   if (!empty($text_color) && !empty($text_input)) {
     $label->setText($text_input + array(

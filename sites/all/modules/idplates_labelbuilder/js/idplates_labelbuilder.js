@@ -4,6 +4,8 @@
       var timer;
       var selectors = '.idplates-labelbuilder-qty-price-wrapper #edit-qty, ' +
           '#idplates-labelbuilder-customize-form [id^="edit-text"], ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-tag-color-hex"], ' +
+          '#idplates-labelbuilder-customize-form [id^="edit-text-color-hex"], ' +
           '#idplates-labelbuilder-options-form [id^="edit-notes"]';
 
       $(selectors, context).on('keyup', function (e) {
@@ -19,6 +21,15 @@
           $('#' + e.target.id).change();
           localStorage.inputToFocus = e.target.id;
         }, 800);
+      });
+
+      $('#edit-text-hex, #edit-tag-hex', context).on('keypress', function (e) {
+        var regex = new RegExp("^[a-fA-F0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
       });
 
       // Get the input just used, and refocus after ajax reloads the preview.

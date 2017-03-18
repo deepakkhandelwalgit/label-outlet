@@ -123,6 +123,8 @@ input[type="submit"].form-button-disabled:hover {
 
 [id*=idplates-labelbuilder-size-form] input[type='radio'],
 [id*=idplates-labelbuilder-layout-form] input[type='radio'],
+[id*=idplates-labelbuilder-customize-form] #edit-tag-color input[type='radio'],
+[id*=idplates-labelbuilder-customize-form] #edit-text-color input[type='radio'],
 [id*=idplates-labelbuilder-options-form] input[type='checkbox'],
 [id*=idplates-labelbuilder-options-form] #edit-adhesive-option input[type='radio'] {
   display: none;
@@ -621,13 +623,65 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   padding-top: 0;
 }
 
-[id*=idplates-labelbuilder-customize-form] .form-type-jquery-colorpicker {
-  margin-right: 95px;
+.WHITE {
+  background-color: black;
 }
 
-[id*=idplates-labelbuilder-customize-form] .form-type-jquery-colorpicker > label {
-  top: 17px;
-  position: relative;
+[id*=idplates-labelbuilder-customize-form] [class*=idplates-labelbuilder-color] {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  vertical-align: top;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-wrapper {
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  margin: 0 10px;
+  font-size: .6em;
+  text-align: center;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-black {
+  background-color: #000;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-white {
+  background-color: #fff;
+  border: 1px solid #000;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-gold {
+  background-color: #fae042;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-yellow {
+  background-color: #ff0;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-blue {
+  background-color: #0085CA;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-green {
+  background-color: #00B052;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-copper {
+  background-color: #EDA04F;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-purple {
+  background-color: #781496;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-dark-blue {
+  background-color: #3342B5;
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-red {
+  background-color: #D50032;
 }
 
 [id*=idplates-labelbuilder-customize-form] .consecutive-options > legend {
@@ -742,8 +796,33 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   display: inline;
 }
 
-[id*=idplates-labelbuilder-customize-form] #edit-color {
-  margin-bottom: 57px;
+[id*=idplates-labelbuilder-customize-form] #edit-color > legend {
+  margin-bottom: 13px;
+}
+
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios {
+  margin-top: 0;
+  margin-bottom: 15px;
+  display: block;
+  clear: both;
+}
+
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-item-tag-color-hex,
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-item-text-color-hex {
+  display: block;
+  float: left;
+  margin-top: 5px;
+}
+
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-item-tag-color-hex .description,
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-item-text-color-hex .description {
+  float: left;
+  margin-right: 12px;
+}
+
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios.form-item-tag-color > label,
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios.form-item-text-color > label {
+  display: block;
 }
 
 [id*=idplates-labelbuilder-options-form] #edit-add-on-options,
