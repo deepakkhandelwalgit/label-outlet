@@ -9,7 +9,6 @@
  * @return mixed
  */
 function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $layout_code) {
-  $triggering_element = !empty($form_state['triggering_element']) ? $form_state['triggering_element'] : NULL;
   if (!empty($nid) && !empty($tid) && !empty($layout_code) && empty($_SESSION['idplates']['label'])) {
     $label = new Label();
     $label->setNid($nid);
@@ -95,9 +94,15 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     $form['column_left']['color']['tag_color_hex'] = array(
       '#type' => 'textfield',
       '#ajax' => $ajax,
-      '#description' => t('Or enter hexcode: '),
+      '#description' => t('Custom hexcode: #'),
       '#maxlength' => 6,
       '#size' => 8,
+    );
+    $form['column_left']['color']['tag_color_desc'] = array(
+      '#type' => 'item',
+      '#prefix' => '<div class="idplates-labelbuilder-tag-color-description description">',
+      '#suffix' => '</div>',
+      '#markup' => t('* Custom hexcode will always override the color boxes.'),
     );
   }
   else {
@@ -117,9 +122,16 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     $form['column_left']['color']['text_color_hex'] = array(
       '#type' => 'textfield',
       '#ajax' => $ajax,
-      '#description' => t('Or enter hexcode: '),
+      '#description' => t('Custom hexcode: #'),
       '#maxlength' => 6,
       '#size' => 8,
+    );
+
+    $form['column_left']['color']['text_color_desc'] = array(
+      '#type' => 'item',
+      '#prefix' => '<div class="idplates-labelbuilder-text-color-description description">',
+      '#suffix' => '</div>',
+      '#markup' => t('* Custom hexcode will always override the color boxes.'),
     );
 
     $form['column_left']['text_container'] = array(
@@ -192,15 +204,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       );
       $form['column_left']['logo']['color']['logo_color_hex'] = array(
         '#type' => 'textfield',
-        '#description' => t('Or enter hexcode: '),
+        '#description' => t('Custom hexcode: #'),
         '#maxlength' => 6,
         '#size' => 8,
-      );
-      $form['column_left']['logo']['color']['description'] = array(
-        '#type' => 'item',
-        '#prefix' => '<div class="idplates-labelbuilder-logo-color-description description">',
-        '#suffix' => '</div>',
-        '#markup' => t('* Logos on metallic labels can only be one color.'),
       );
     }
   }
@@ -348,7 +354,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   );
 
   if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
-    if (empty($form_state['input']['tag_color_hex']) || ($triggering_element['#type'] == 'radio' && in_array('text_color', $triggering_element['#parents']))) {
+    if (empty($form_state['input']['tag_color_hex'])) {
       $tag_color = isset($form_state['values']['tag_color']) ? $form_state['values']['tag_color'] : $form['column_left']['color']['tag_color']['#default_value'];
     }
     else {
@@ -358,7 +364,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     $label->setTagColor($tag_color);
   }
 
-  if (empty($form_state['input']['text_color_hex']) || ($triggering_element['#type'] == 'radio' && in_array('tag_color', $triggering_element['#parents']))) {
+  if (empty($form_state['input']['text_color_hex'])) {
     $text_color = isset($form_state['values']['text_color']) ? $form_state['values']['text_color'] : NULL;
   }
   else {
@@ -508,6 +514,13 @@ function idplates_labelbuilder_customize_form_submit($form, &$form_state) {
 
   if (!empty($form_state['values']['custom_logo'])) {
     $label->setLogo($form_state['values']['custom_logo']);
+  }
+
+  if (!empty($form_state['values']['logo_color_hex'])) {
+    $label->logo_color = $form_state['values']['logo_color_hex'];
+  }
+  elseif (!empty($form_state['values']['logo_color'])) {
+    $label->logo_color = $form_state['values']['logo_color'];
   }
 
   if (!empty($form_state['values']['custom_logo']) && $file = file_load($form_state['values']['custom_logo'])) {

@@ -59,13 +59,19 @@
         var regex;
         if (code == 39) {
           // Code 39 Digits
-          regex = new RegExp("^[A-Z0-9\-\.\$\/\+\%]+$");
+          regex = new RegExp("^[A-0-9\-\.\$\/\+\%]+$");
         } else {
           regex = new RegExp("^[A-z0-9]+$");
         }
         if (!regex.test(key)) {
           event.preventDefault();
           return false;
+        }
+        regex = new RegExp("^[a-z]+$");
+        if (regex.test(key)) {
+          console.log(String.fromCharCode(event.which).toUpperCase()) ;
+          event.preventDefault();
+          return String.fromCharCode(event.which).toUpperCase();
         }
       });
 

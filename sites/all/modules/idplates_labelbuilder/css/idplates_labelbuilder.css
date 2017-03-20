@@ -65,11 +65,19 @@ input[type="submit"].form-button-disabled:hover {
 
 [id*=idplates-labelbuilder] .form-item-numbering-options .description,
 [id*=idplates-labelbuilder] .form-item-custom-logo .description,
+[id*=idplates-labelbuilder] .idplates-labelbuilder-tag-color-description.description .form-item,
+[id*=idplates-labelbuilder] .idplates-labelbuilder-text-color-description.description .form-item,
 [id*=idplates-labelbuilder] .idplates-labelbuilder-logo-color-description.description .form-item {
   font-size: .7em;
   margin-left: 1.4em;
   top: -5px;
   position: relative;
+}
+
+[id*=idplates-labelbuilder] .idplates-labelbuilder-tag-color-description.description .form-item,
+[id*=idplates-labelbuilder] .idplates-labelbuilder-text-color-description.description .form-item {
+  margin: 0;
+  top: -20px;
 }
 
 [id*=idplates-labelbuilder] .form-item-custom-logo .description,
@@ -817,6 +825,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-top: 5px;
 }
 
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-item-tag-color .description,
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-item-tag-color-hex .description,
 [id*=idplates-labelbuilder-customize-form] #edit-logo .form-item-logo-color-hex .description,
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-item-text-color-hex .description {
@@ -824,6 +833,8 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-right: 12px;
 }
 
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-tag-color-description:before,
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-text-color-description:before,
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-logo-color-description:before {
   clear: both;
   display: block;

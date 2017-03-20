@@ -373,6 +373,7 @@ function idplates_labelbuilder_label_proof_update_commands($form, $form_state) {
   ));
   $commands[] = ajax_command_replace('#idplates-labelbuilder-live-price-ajax-wrapper', $markup);
 
+  // Error messages
   $commands[] = ajax_command_remove('div.messages');
   $commands[] = ajax_command_before('#main-content', theme('status_messages'));
 
