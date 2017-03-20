@@ -178,6 +178,31 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         'idplates_labelbuilder_managed_file_ajax_submit',
       ),
     );
+    if (_idplates_labelbuilder_label_is_metallic($label)) {
+      $form['column_left']['logo']['color'] = array(
+        '#type' => 'container',
+        '#title' => t('Text'),
+        '#attributes' => array('class' => array('container-inline')),
+      );
+      $form['column_left']['logo']['color']['logo_color'] = array(
+        '#type' => 'radios',
+        '#title' => t('Logo Color'),
+        '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'D50032',
+        '#options' => $options,
+      );
+      $form['column_left']['logo']['color']['logo_color_hex'] = array(
+        '#type' => 'textfield',
+        '#description' => t('Or enter hexcode: '),
+        '#maxlength' => 6,
+        '#size' => 8,
+      );
+      $form['column_left']['logo']['color']['description'] = array(
+        '#type' => 'item',
+        '#prefix' => '<div class="idplates-labelbuilder-logo-color-description description">',
+        '#suffix' => '</div>',
+        '#markup' => t('* Logos on metallic labels can only be one color.'),
+      );
+    }
   }
 
   if (strpos(strtolower($layout_code), 's') !== FALSE) {
@@ -222,6 +247,11 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
           '128' => 'Code 128',
         ),
         '#states' => $hide_consecutive,
+        '#ajax' => array(
+          'callback' => 'idplates_labelbuilder_remove_digits',
+          'event' => 'change',
+          'progress' => array('type' => '', 'message' => ''),
+        ),
       );
     }
 
@@ -244,15 +274,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     );
 
     $max_length = !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 6;
-    $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Starting #'),
-      '#states' => $hide_consecutive,
-      '#maxlength' => $max_length,
-      '#size' => 6,
-      '#ajax' => $ajax,
-      '#default_value' => !empty($label->numbering['starting_digit']) ? substr($label->numbering['starting_digit'], -$max_length) : str_pad('1', $max_length, '0', STR_PAD_LEFT),
-    );
 
     $form['column_left']['numbering']['consecutive']['digits']['number_of_digits'] = array(
       '#type' => 'textfield',
@@ -262,6 +283,15 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#maxlength' => 2,
       '#size' => 3,
       '#ajax' => $ajax,
+    );
+
+    $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Starting #'),
+      '#states' => $hide_consecutive,
+      '#size' => 20,
+      '#ajax' => $ajax,
+      '#default_value' => !empty($label->numbering['starting_digit']) ? substr($label->numbering['starting_digit'], -$max_length) : str_pad('1', $max_length, '0', STR_PAD_LEFT),
     );
 
     $form['column_left']['numbering']['consecutive']['advanced']['fixes']['prefix'] = array(
@@ -446,6 +476,23 @@ function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
   if (!empty($form_state['values']['op']) && strpos($form_state['values']['op'], 'PREV') !== FALSE) {
     drupal_goto('labelbuilder/layout/' . $form_state['label']->getSizeTid());
   }
+  $label = $form_state['label'];
+  $code_type = $label->numbering['numbering_type'];
+  $barcode = $label->numbering['starting_digit'];
+  $output = $label->numbering['prefix'] . $barcode . $label->numbering['suffix'];
+  $length = (float) str_replace("'", '', explode('x', $label->size)[0]);
+  if ($code_type == '39') {
+    if (!idplates_labelbuilder_validate_code_39($label, $output)) {
+      form_set_error('starting_digit', t('The label size chosen is too small for the barcode entered. Please select a label width size larger than @length" to accommodate the length of your entered barcode.', array('@length' => $length)));
+    }
+  }
+
+  if ($code_type == '128') {
+    if (!idplates_labelbuilder_validate_code_128($label, $output)) {
+      form_set_error('starting_digit', t('The label size chosen is too small for the barcode entered. Please select a label width size larger than @length" to accommodate the length of your entered barcode.', array('@length' => $length)));
+    }
+  }
+
 }
 
 /**
@@ -509,10 +556,10 @@ function idplates_labelbuilder_build_numbering_options($form, $form_state) {
   return array(
     'numbering_option' => !empty($form_state['values']['numbering_options']) ? $form_state['values']['numbering_options'] : 'consecutive',
     'numbering_type' => !empty($form_state['values']['numbering_type']) ? $form_state['values']['numbering_type'] : 39,
-    'starting_digit' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : '000001',
+    'starting_digit' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : '0',
     'number_of_digits' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 6,
-    'prefix' => !empty($form_state['values']['prefix']) ? $form_state['values']['prefix'] : $label->numbering['prefix'],
-    'suffix' => !empty($form_state['values']['suffix']) ? $form_state['values']['suffix'] : $label->numbering['suffix'],
+    'prefix' => !empty($form_state['values']['prefix']) ? $form_state['values']['prefix'] : '',
+    'suffix' => !empty($form_state['values']['suffix']) ? $form_state['values']['suffix'] : '',
     'padding' => !empty($form_state['values']['padding']) ? $form_state['values']['padding'] : $label->numbering['padding'],
   );
 }

@@ -10,14 +10,6 @@
   color: #aaa;
 }
 
-[id*=idplates-labelbuilder] .colorpicker {
-  z-index: 999999;
-}
-
-[id*=idplates-labelbuilder] .jquery_colorpicker .color_picker {
-  top: 10px !important;
-}
-
 [id*=idplates-labelbuilder] .column-right input[disabled="disabled"],
 [id*=idplates-labelbuilder] #edit-submit:disabled {
   background-color: #dadada;
@@ -72,14 +64,16 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 [id*=idplates-labelbuilder] .form-item-numbering-options .description,
-[id*=idplates-labelbuilder] .form-item-custom-logo .description {
+[id*=idplates-labelbuilder] .form-item-custom-logo .description,
+[id*=idplates-labelbuilder] .idplates-labelbuilder-logo-color-description.description .form-item {
   font-size: .7em;
   margin-left: 1.4em;
   top: -5px;
   position: relative;
 }
 
-[id*=idplates-labelbuilder] .form-item-custom-logo .description {
+[id*=idplates-labelbuilder] .form-item-custom-logo .description,
+[id*=idplates-labelbuilder] .idplates-labelbuilder-logo-color-description.description .form-item {
   font-style: italic;
   margin-top: 5px;
   margin-left: 0;
@@ -125,6 +119,7 @@ input[type="submit"].form-button-disabled:hover {
 [id*=idplates-labelbuilder-layout-form] input[type='radio'],
 [id*=idplates-labelbuilder-customize-form] #edit-tag-color input[type='radio'],
 [id*=idplates-labelbuilder-customize-form] #edit-text-color input[type='radio'],
+[id*=idplates-labelbuilder-customize-form] #edit-logo-color input[type='radio'],
 [id*=idplates-labelbuilder-options-form] input[type='checkbox'],
 [id*=idplates-labelbuilder-options-form] #edit-adhesive-option input[type='radio'] {
   display: none;
@@ -136,6 +131,12 @@ input[type="submit"].form-button-disabled:hover {
 [id*=idplates-labelbuilder-options-form] input[type='checkbox']:checked + label .idplates-labelbuilder-extras-wrapper,
 [id*=idplates-labelbuilder-options-form] input[type='radio']:checked + label .idplates-labelbuilder-adhesive-wrapper {
   border: solid 1px #c0273c;
+}
+
+[id*=idplates-labelbuilder-customize-form] input[type='radio']:checked + label .idplates-labelbuilder-color-wrapper {
+  border: solid 3px #c0273c;
+  width: 36px;
+  height: 36px;
 }
 
 [id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-info:before,
@@ -709,7 +710,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   font-size: 1em;
   position: absolute;
   top: -27px;
-  left: 220px;
+  left: 320px;
 }
 
 [id*=idplates-labelbuilder-customize-form] .form-item-numbering-options {
@@ -800,7 +801,8 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
   margin-bottom: 13px;
 }
 
-[id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios {
+[id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios,
+[id*=idplates-labelbuilder-customize-form] #edit-logo .form-type-radios {
   margin-top: 0;
   margin-bottom: 15px;
   display: block;
@@ -808,6 +810,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-item-tag-color-hex,
+[id*=idplates-labelbuilder-customize-form] #edit-logo .form-item-logo-color-hex,
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-item-text-color-hex {
   display: block;
   float: left;
@@ -815,12 +818,24 @@ p.idplates-labelbuilder-preview-wrapper-barcode {
 }
 
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-item-tag-color-hex .description,
+[id*=idplates-labelbuilder-customize-form] #edit-logo .form-item-logo-color-hex .description,
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-item-text-color-hex .description {
   float: left;
   margin-right: 12px;
 }
 
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-logo-color-description:before {
+  clear: both;
+  display: block;
+  content: '';
+}
+
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-logo-color-description {
+  display: block;
+}
+
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios.form-item-tag-color > label,
+[id*=idplates-labelbuilder-customize-form] #edit-logo .form-type-radios.form-item-logo-color > label,
 [id*=idplates-labelbuilder-customize-form] #edit-color .form-type-radios.form-item-text-color > label {
   display: block;
 }

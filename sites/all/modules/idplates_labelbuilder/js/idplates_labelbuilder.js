@@ -1,4 +1,18 @@
 (function ($) {
+
+  Drupal.ajax.prototype.commands.idplates_labelbuilder_remove_code_chars = function (ajax, response, status) {
+    if (response.code == 128) {
+      var input = $('#edit-starting-digit').val();
+      input = input.replace(/[-.$/+%]/gi, '');
+      $('#edit-starting-digit').val(input);
+    }
+    if (response.code == 39) {
+      var input = $('#edit-starting-digit').val();
+      input = input.replace(/[a-z]/g, '');
+      $('#edit-starting-digit').val(input);
+    }
+  }
+
   Drupal.behaviors.idplatesLabelBuilder = {
     attach: function (context, settings) {
       var timer;
@@ -27,6 +41,7 @@
         }, 800);
       });
 
+      // Hex code digits
       $('#edit-text-hex, #edit-tag-hex', context).on('keypress', function (e) {
         var regex = new RegExp("^[a-fA-F0-9]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -35,6 +50,25 @@
           return false;
         }
       });
+
+
+      // Allowed characters: 0-9A-Z-.$/+%
+      $('#edit-starting-digit', context).on('keypress', function (event) {
+        var code = $('select#edit-numbering-type option:selected').val();
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        var regex;
+        if (code == 39) {
+          // Code 39 Digits
+          regex = new RegExp("^[A-Z0-9\-\.\$\/\+\%]+$");
+        } else {
+          regex = new RegExp("^[A-z0-9]+$");
+        }
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+      });
+
 
       // Get the input just used, and refocus after ajax reloads the preview.
       var $inputToFocus = $('#' + localStorage.inputToFocus);
@@ -65,6 +99,7 @@
       });
     }
   }
+
   Drupal.behaviors.idplatesLabelBuilderDisableInputEnter = {
     attach: function (context, settings) {
       $('input', context).once('disable-input-enter', function () {
