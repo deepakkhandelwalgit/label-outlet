@@ -489,9 +489,17 @@ input[type="submit"].form-button-disabled:hover {
 }
 
 p.idplates-labelbuilder-preview-wrapper-barcode {
-  background: url('../gfx/barcode.png') repeat;
+  background: url('../gfx/code39.png') repeat;
   margin: 0 auto;
   width: 85%;
+}
+
+p.idplates-labelbuilder-preview-wrapper-barcode.code39 {
+  background: url('../gfx/code39.png') repeat;
+}
+
+p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
+  background: url('../gfx/code128.png') repeat;
 }
 
 .idplates-labelbuilder-preview-table tbody,

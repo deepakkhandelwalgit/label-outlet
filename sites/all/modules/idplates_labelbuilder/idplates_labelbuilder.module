@@ -404,6 +404,7 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
   $font_size['c'] = !empty($label->getText()['text_c']['size']) ? $label->getText()['text_c']['size'] : '12';
   $serial_number = _idplates_labelbuilder_generate_barcode_number($label);
   $long_tag = NULL;
+  $barcode_style = $label->numbering['numbering_type'];
 
   // Hanging tag variables.
   if ($hanging_tag = strpos($unique_layout, 'rearview') !== FALSE) {
@@ -451,7 +452,7 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
           $content = !empty($label->getText()['text_' . $char]['text']) ? $label->getText()['text_' . $char]['text'] : t('Text ') . strtoupper($char);
           break;
         case 'x':
-          $classes = 'idplates-labelbuilder-preview-wrapper-barcode' . $no_numbering;
+          $classes = 'idplates-labelbuilder-preview-wrapper-barcode code' . $barcode_style . $no_numbering;
           $content = '*' . $serial_number . '*';
           $styles .= 'color: transparent;height:' . $section_height['barcode_height'] . 'px;margin-top:' . $section_height['barcode_margin'] . 'px;';
           break;
