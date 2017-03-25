@@ -19,6 +19,10 @@
   max-width: 100%;
 }
 
+[id*=idplates-labelbuilder] .grippie {
+  display: block;
+}
+
 [id*=idplates-labelbuilder] .column-left {
   float: left;
   width: 68.5%;
@@ -78,6 +82,11 @@ input[type="submit"].form-button-disabled:hover {
 [id*=idplates-labelbuilder] .idplates-labelbuilder-text-color-description.description .form-item {
   margin: 0;
   top: -20px;
+}
+
+[id*=idplates-labelbuilder] .idplates-labelbuilder-description.code39 .form-item {
+  position: relative;
+  top: -35px;
 }
 
 [id*=idplates-labelbuilder] .form-item-custom-logo .description,
@@ -456,7 +465,7 @@ input[type="submit"].form-button-disabled:hover {
 .idplates-labelbuilder-preview-wrapper p {
   margin: 0;
   padding: 0;
-  line-height: 1.1;
+  line-height: 1;
 }
 
 .idplates-labelbuilder-preview-section-wrapper > div:first-child {

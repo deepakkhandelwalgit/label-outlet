@@ -436,7 +436,7 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
     $maxheight = intdiv($height * $current_section_height, 100);
     $markup .= '<div class="idplates-labelbuilder-preview-section-wrapper"
        style="height: ' . $maxheight . 'px;max-height: ' . $maxheight . 'px;color: #' . $text_color . '; background: ' . $background . ';background-size: contain;">';
-    $markup .= '<div class="idplates-labelbuilder-preview-section" style="height:100%">';
+    $markup .= '<div class="idplates-labelbuilder-preview-section" style="height:' . $maxheight . 'px">';
     $label_markup = '';
     foreach (str_split($preview_section) as $char) :
       $char = strtolower($char);
@@ -457,7 +457,7 @@ function _idplates_labelbuilder_render_label($label, $code, $no_numbering, $uniq
           $styles .= 'color: transparent;height:' . $section_height['barcode_height'] . 'px;margin-top:' . $section_height['barcode_margin'] . 'px;';
           break;
         case 's':
-          $classes = $no_numbering;
+          $classes = $no_numbering . ' resize';
           if ($unique_layout == 'infodot') {
             $section_height['serial_height'] = 14;
             if (strpos(strtolower($code), 'm') !== FALSE) {

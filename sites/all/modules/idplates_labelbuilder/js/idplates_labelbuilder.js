@@ -53,13 +53,13 @@
 
 
       // Allowed characters: 0-9A-Z-.$/+%
-      $('#edit-starting-digit', context).on('keypress', function (event) {
+      $('#edit-starting-digit', context).not('textarea').on('keypress', function (event) {
         var code = $('select#edit-numbering-type option:selected').val();
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         var regex;
         if (code == 39) {
           // Code 39 Digits
-          regex = new RegExp("^[A-0-9\-\.\$\/\+\%]+$");
+          regex = new RegExp("^[A-Z0-9\-\.\$\/\+\%]+$");
         } else {
           regex = new RegExp("^[A-z0-9]+$");
         }
@@ -69,12 +69,11 @@
         }
         regex = new RegExp("^[a-z]+$");
         if (regex.test(key)) {
-          console.log(String.fromCharCode(event.which).toUpperCase()) ;
+          console.log(String.fromCharCode(event.which).toUpperCase());
           event.preventDefault();
           return String.fromCharCode(event.which).toUpperCase();
         }
       });
-
 
       // Get the input just used, and refocus after ajax reloads the preview.
       var $inputToFocus = $('#' + localStorage.inputToFocus);
@@ -103,6 +102,40 @@
         $this.find('img.idplates-labelbuilder-qr-code').css('height', (parentHeight * .7));
         $this.find('img.idplates-labelbuilder-qr-code').css('width', (parentHeight * .7));
       });
+
+      // Resize serial text
+      var autoSizeText;
+
+      autoSizeText = function () {
+        var el, elements, _i, _len, _results;
+        var labelWidth = $('.idplates-labelbuilder-preview-wrapper').width();
+        elements = $('.resize');
+        if (elements.length < 0) {
+          return;
+        }
+        _results = [];
+        for (_i = 0, _len = elements.length; _i < _len; _i++) {
+          el = elements[_i];
+
+          _results.push((function (el) {
+            var resizeText, _results1;
+            resizeText = function () {
+              var elNewFontSize;
+              elNewFontSize = (parseInt($(el).css('font-size').slice(0, -2)) - 1) + 'px';
+              return $(el).css('font-size', elNewFontSize);
+            };
+            _results1 = [];
+            while (labelWidth < el.offsetWidth || el.scrollHeight > el.offsetHeight) {
+              console.log(labelWidth + ' <? ' + el.offsetWidth);
+              _results1.push(resizeText());
+            }
+            return _results1;
+          })(el));
+        }
+        return _results;
+      };
+
+      autoSizeText();
     }
   }
 
