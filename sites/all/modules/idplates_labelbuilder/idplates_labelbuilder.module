@@ -646,8 +646,8 @@ function _idplates_labelbuilder_get_section_heights($code, $height, $unique_layo
             $section_height[0] = '37%';
             $section_height[1] = '42%';
             $section_height[2] = '21%';
-            $section_height['barcode_height'] = $height * .42 * .65;
-            $section_height['serial_height'] = $height * .42 * .25;
+            $section_height['barcode_height'] = $height * .42 * .55;
+            $section_height['serial_height'] = $height * .42 * .2;
             $section_height['barcode_margin'] = 3;
             break;
           default:

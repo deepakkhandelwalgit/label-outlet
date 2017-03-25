@@ -34,9 +34,11 @@ if (!empty($tid)) {
   // Get Extra price tables
   foreach ($label->getExtras() as $extra) {
     $extra_product = commerce_product_load($extra['product_id']);
-    $extra_product_wrapper = entity_metadata_wrapper('commerce_product', $extra_product);
-    if (!empty($extra_product_wrapper->field_price_table)) {
-      $extras_price_table_breakpoints[$extra_product->type] = $extra_product_wrapper->field_price_table->value();
+    if (!empty($extra_product)) {
+      $extra_product_wrapper = entity_metadata_wrapper('commerce_product', $extra_product);
+      if (!empty($extra_product_wrapper->field_price_table)) {
+        $extras_price_table_breakpoints[$extra_product->type] = $extra_product_wrapper->field_price_table->value();
+      }
     }
   }
   // Adhesive price table
