@@ -315,7 +315,7 @@ input[type="submit"].form-button-disabled:hover {
 .idplates-labelbuilder-adhesive-img-wrapper img {
   margin: 0 auto;
   max-width: 170px;
-  max-height: 170px;
+  max-height: 115px;
 }
 
 .idplates-labelbuilder-extras-img-wrapper img,
