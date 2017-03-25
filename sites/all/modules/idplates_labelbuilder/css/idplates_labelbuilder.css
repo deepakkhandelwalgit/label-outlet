@@ -267,6 +267,18 @@ input[type="submit"].form-button-disabled:hover {
   float: left;
 }
 
+[id*=idplates-labelbuilder-size-form] .form-type-radios label,
+[id*=idplates-labelbuilder-layout-form] .form-type-radios label,
+[id*=idplates-labelbuilder-options-form] .form-type-radios label {
+  display: inline-block;
+}
+
+[id*=idplates-labelbuilder-size-form] .form-type-radios label img,
+[id*=idplates-labelbuilder-layout-form] .form-type-radios label img,
+[id*=idplates-labelbuilder-options-form] .form-type-radios label img {
+  pointer-events: none;
+}
+
 .idplates-labelbuilder-size-wrapper,
 .idplates-labelbuilder-layout-wrapper,
 .idplates-labelbuilder-extras-wrapper,
