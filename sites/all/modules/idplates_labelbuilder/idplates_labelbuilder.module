@@ -33,7 +33,7 @@ function idplates_labelbuilder_menu() {
   $items['labelbuilder/customize'] = array(
     'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_customize_form', 2, 3, 4),
+    'page arguments' => array('idplates_labelbuilder_customize_form', 2, 3, 4, 5, 6, 7),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.customize.inc',
   );
@@ -70,6 +70,7 @@ function idplates_labelbuilder_theme($existing, $type, $theme, $path) {
         'label' => NULL,
         'backend' => NULL,
         'unique_layout' => NULL,
+        'cart' => NULL,
       ),
     ),
     'idplates_labelbuilder_size' => array(

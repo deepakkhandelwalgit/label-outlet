@@ -897,6 +897,61 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
   padding: 0;
 }
 
+.commerce-line-item-views-form td {
+  position: relative;
+}
+
+.idplates-labelbuilder-cart-info {
+  background: #fff;
+  border: 1px solid black;
+  padding: 25px 15px 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000000;
+  width: 260px;
+}
+
+.idplates-labelbuilder-cart-info-header {
+  background-color: #d7d7d7;
+  margin: -25px -15px 10px;
+  padding: 5px 0 5px 15px;
+  text-transform: uppercase;
+}
+
+.idplates-labelbuilder-cart-info table {
+  margin: 0;
+}
+
+.idplates-labelbuilder-cart-info table.idplates-labelbuilder-preview-table th,
+.idplates-labelbuilder-cart-info table.idplates-labelbuilder-preview-table td {
+  font-size: 1.2em;
+}
+
+.idplates-labelbuilder-cart-info table.idplates-labelbuilder-preview-table td {
+  font-weight: normal;
+}
+
+.idplates-labelbuilder-cart-info .idplates-labelbuilder-preview-table {
+  font-size: .7em !important;
+}
+
+.idplates-labelbuilder-cart-links {
+  cursor: pointer;
+}
+
+.idplates-labelbuilder-cart-info-close {
+  position: absolute;
+  top: 3px;
+  right: 15px;
+  cursor: pointer;
+  color: #a90018;
+}
+
+.idplates-labelbuilder-cart-info-close:hover {
+  color: #da3148;
+}
+
 /**
  * Responsive
  */

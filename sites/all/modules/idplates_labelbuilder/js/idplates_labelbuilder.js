@@ -1,18 +1,5 @@
 (function ($) {
 
-  Drupal.ajax.prototype.commands.idplates_labelbuilder_remove_code_chars = function (ajax, response, status) {
-    if (response.code == 128) {
-      var input = $('#edit-starting-digit').val();
-      input = input.replace(/[-.$/+%]/gi, '');
-      $('#edit-starting-digit').val(input);
-    }
-    if (response.code == 39) {
-      var input = $('#edit-starting-digit').val();
-      input = input.replace(/[a-z]/g, '');
-      $('#edit-starting-digit').val(input);
-    }
-  }
-
   Drupal.behaviors.idplatesLabelBuilder = {
     attach: function (context, settings) {
       var timer;
@@ -148,6 +135,27 @@
           }
         });
       });
+    }
+  }
+
+  Drupal.behaviors.idplatesLabelBuilderCartLinks = {
+    attach: function (context, settings) {
+      $('.idplates-labelbuilder-cart-item-info').click(function () {
+        $('.idplates-labelbuilder-cart-info').addClass('hidden');
+        var $this = $(this);
+        $this.siblings('.idplates-labelbuilder-cart-info').removeClass('hidden');
+      });
+      $('.idplates-labelbuilder-cart-info-close').click(function () {
+        var $this = $(this);
+        $this.parents('.idplates-labelbuilder-cart-info').addClass('hidden');
+      });
+
+      $(document).click(function (e) {
+        if (!$(e.target).hasClass('idplates-labelbuilder-cart-item-info')) {
+          $('.idplates-labelbuilder-cart-info').addClass('hidden');
+        }
+      });
+
     }
   }
 

@@ -21,13 +21,31 @@
  * regardless of any changes in the aliasing that might happen if
  * the view is modified.
  */
-
 $line_item_id = $row->commerce_line_item_field_data_commerce_line_items_line_item_;
 $line_item = commerce_line_item_load($line_item_id);
 if (!empty($line_item->data['idplates_labelbuilder']['label'])) {
+  $popup = '<div class="idplates-labelbuilder-cart-info hidden" id="idplates-labelbuilder-cart-label-' . $line_item_id . '"><div class="idplates-labelbuilder-cart-info-header">' . t('Label Info') . '</div>';
+
   /** @var Label $label */
   $label = $line_item->data['idplates_labelbuilder']['label'];
-  $output = l($output, '/labelbuilder/customize/' . $label->getNid() . '/' . $label->getSizeTid() . '/' . $label->getLayoutTid(), array('html' => TRUE));
+  if ($layout = taxonomy_term_load($label->getLayoutTid())) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $unique_layout = $layout_wrapper->field_layout_form->value();
+  }
+
+  $popup .= theme('idplates_labelbuilder_preview', array(
+    'label' => $label,
+    'cart' => 'true',
+  ));
+
+  $popup .= '<div class="idplates-labelbuilder-cart-info-close">x</div></div>';
+  $text_a = !empty($label->getText()['text_a']['text']) ? $label->getText()['text_a']['text'] : '';
+  $text_b = !empty($label->getText()['text_b']['text']) ? $label->getText()['text_b']['text'] : '';
+  $text_c = !empty($label->getText()['text_c']['text']) ? $label->getText()['text_c']['text'] : '';
+
+  $info = ' <a class="idplates-labelbuilder-cart-links idplates-labelbuilder-cart-item-info">info</a> - ';
+  $duplicate = l('duplicate', '/labelbuilder/customize/' . $label->getNid() . '/' . $label->getSizeTid() . '/' . $label->getLayoutTid() . '/' . $text_a . '/' . $text_b . '/' . $text_c, array('html' => TRUE));
+  $output .= $info . $duplicate . $popup;
 }
 
 ?>

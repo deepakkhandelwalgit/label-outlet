@@ -8,7 +8,7 @@
  *
  * @return mixed
  */
-function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $layout_code) {
+function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $layout_code, $text_a, $text_b, $text_c) {
   if (!empty($nid) && !empty($tid) && !empty($layout_code) && empty($_SESSION['idplates']['label'])) {
     $label = new Label();
     $label->setNid($nid);
@@ -153,7 +153,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         '#attributes' => array('placeholder' => $text_field['title']),
         '#size' => 32,
         '#required' => TRUE,
-        '#default_value' => !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : '',
+        '#default_value' => !empty($label->getText()['text_' . $key]['text']) ? $label->getText()['text_' . $key]['text'] : ${'text_' . $key},
       );
 
       $form['column_left']['text_container']['text_container_' . $key]['size_' . $key] = array(
@@ -245,6 +245,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     );
 
     if (strpos(strtolower($layout_code), 'm') === FALSE) {
+      $form['#attached']['js'] = array(
+        drupal_get_path('module', 'idplates_labelbuilder') . '/js/idplates_labelbuilder_digits.js',
+      );
       $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
         '#type' => 'select',
         '#title' => t('Numbering Type'),
@@ -266,7 +269,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#attributes' => array('class' => array('container-inline')),
     );
 
-    if (strpos(strtolower($layout_code), 'm') === FALSE) {
+//    if (strpos(strtolower($layout_code), 'm') === FALSE) {
       $form['column_left']['numbering']['consecutive']['advanced'] = array(
         '#type' => 'fieldset',
         '#title' => 'Advanced',
@@ -310,6 +313,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         '#states' => array(
           'visible' => array(
             'select[name="numbering_type"]' => array('value' => '39'),
+            ':input[name="numbering_options"]' => array('value' => 'consecutive'),
           ),
         ),
       );
@@ -354,23 +358,23 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         '#default_value' => !empty($label->numbering['padding']) ? $label->numbering['padding'] : 'zeros',
         '#ajax' => $ajax,
       );
-    }
-    else {
-      $label->numbering['numbering_type'] = '';
-      $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
-        '#type' => 'textarea',
-        '#title' => t('Data Matrix'),
-        '#attributes' => array('maxlength' => 200),
-        '#ajax' => array(
-          'callback' => 'idplates_labelbuilder_preview_ajax_callback',
-          'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
-          'method' => 'replace',
-          'event' => 'change',
-          'progress' => array('type' => 'throbber', 'message' => ''),
-        ),
-        '#default_value' => !empty($label->numbering['starting_digit']) ? $label->numbering['starting_digit'] : '',
-      );
-    }
+//    }
+//    else {
+//      $label->numbering['numbering_type'] = '';
+//      $form['column_left']['numbering']['consecutive']['digits']['starting_digit'] = array(
+//        '#type' => 'textarea',
+//        '#title' => t('Data Matrix'),
+//        '#attributes' => array('maxlength' => 200),
+//        '#ajax' => array(
+//          'callback' => 'idplates_labelbuilder_preview_ajax_callback',
+//          'wrapper' => 'idplates-labelbuilder-preview-ajax-wrapper',
+//          'method' => 'replace',
+//          'event' => 'change',
+//          'progress' => array('type' => 'throbber', 'message' => ''),
+//        ),
+//        '#default_value' => !empty($label->numbering['starting_digit']) ? $label->numbering['starting_digit'] : '',
+//      );
+//    }
   }
 
   $form['column_left']['back'] = array(
@@ -608,22 +612,22 @@ function idplates_labelbuilder_build_numbering_options($form, $form_state) {
   );
 }
 
-function _idplates_labelbuilder_create_text_fields($label) {
+function _idplates_labelbuilder_create_text_fields($label, $text_a = 'Company Name', $text_b = '1-888-555-5555', $text_c = 'Additional Text') {
   $code = _idplates_labelbuilder_get_layout_code($label);
 
   $text_lines = !empty($code) ? _idplates_labelbuilder_get_textline_count($code) : 3;
 
   $text_field_defaults = array(
     'a' => array(
-      'title' => t('Company Name'),
+      'title' => t($text_a),
       'size' => 12,
     ),
     'b' => array(
-      'title' => t('1-888-555-5555'),
+      'title' => t($text_b),
       'size' => 8,
     ),
     'c' => array(
-      'title' => t('Additional Text'),
+      'title' => t($text_c),
       'size' => 10,
     ),
   );
