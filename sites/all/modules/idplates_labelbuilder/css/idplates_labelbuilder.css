@@ -86,7 +86,7 @@ input[type="submit"].form-button-disabled:hover {
 
 [id*=idplates-labelbuilder] .idplates-labelbuilder-description.code39 .form-item {
   position: relative;
-  top: -35px;
+  /*top: -35px;*/
 }
 
 [id*=idplates-labelbuilder] .form-item-custom-logo .description,
@@ -777,6 +777,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 [id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] .form-item {
   display: inline-block;
   vertical-align: text-bottom;
+  margin-bottom: 0;
 }
 
 [id*=idplates-labelbuilder-customize-form] [id^=edit-digits] label,
@@ -787,7 +788,7 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 [id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] [id^=edit-description] {
   font-style: italic;
   font-size: 12px;
-  margin: -18px 0 0;
+  margin: 0;
   width: 66%;
   display: block;
 }
@@ -863,7 +864,9 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 }
 
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-tag-color-description:before,
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-tag-color-description:after,
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-text-color-description:before,
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-text-color-description:after,
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-logo-color-description:before {
   clear: both;
   display: block;

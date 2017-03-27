@@ -40,7 +40,7 @@
 
 
       // Allowed characters: 0-9A-Z-.$/+%
-      $('#edit-starting-digit', context).not('textarea').on('keypress', function (event) {
+      $('#edit-starting-digit, #edit-prefix, #edit-suffix', context).not('textarea').on('keypress', function (event) {
         var code = $('select#edit-numbering-type option:selected').val();
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         var regex;
@@ -112,8 +112,7 @@
               return $(el).css('font-size', elNewFontSize);
             };
             _results1 = [];
-            while (labelWidth < el.offsetWidth || el.scrollHeight > el.offsetHeight) {
-              console.log(labelWidth + ' <? ' + el.offsetWidth);
+            while (labelWidth < el.offsetWidth) {
               _results1.push(resizeText());
             }
             return _results1;
