@@ -237,6 +237,10 @@ small {
 }
 
 
+#header-top-right ul.menu li a:hover {
+	text-decoration: underline;
+}
+
 div#block-system-user-menu {
     float: right;
 }
