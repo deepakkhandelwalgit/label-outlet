@@ -14,6 +14,12 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     $label->setNid($nid);
     $label->setSizeTid($tid);
     $label->setLayoutTid($layout_code);
+    $text = array(
+      'text_a' => array('text' => $text_a),
+      'text_b' => array('text' => $text_b),
+      'text_c' => array('text' => $text_c),
+    );
+    $label->setText($text);
   }
   else {
     $label = $_SESSION['idplates']['label'];
