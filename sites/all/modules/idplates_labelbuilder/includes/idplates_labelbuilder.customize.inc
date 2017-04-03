@@ -20,7 +20,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   }
   $label->setSection('customize');
   $layout_code = _idplates_labelbuilder_get_layout_code($label);
-
   $text_fields = _idplates_labelbuilder_create_text_fields($label);
   $default_text_color = 'FFFFFF';
 
@@ -63,8 +62,8 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   }
 
   $color_options = array(
-    'FFF' => 'WHITE',
     '000000' => 'BLACK',
+    'FFFFFF' => 'WHITE',
     'FAE042' => 'GOLD',
     'FFFF00' => 'YELLOW',
     '0085CA' => 'BLUE',
@@ -251,25 +250,24 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       ),
     );
 
-    if (strpos(strtolower($layout_code), 'm') === FALSE) {
-      $form['#attached']['js'] = array(
-        drupal_get_path('module', 'idplates_labelbuilder') . '/js/idplates_labelbuilder_digits.js',
-      );
-      $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
-        '#type' => 'select',
-        '#title' => t('Numbering Type'),
-        '#options' => array(
-          '39' => 'Code 39',
-          '128' => 'Code 128',
-        ),
-        '#states' => $hide_consecutive,
-        '#ajax' => array(
-          'callback' => 'idplates_labelbuilder_remove_digits',
-          'event' => 'change',
-          'progress' => array('type' => '', 'message' => ''),
-        ),
-      );
-    }
+    $form['#attached']['js'] = array(
+      drupal_get_path('module', 'idplates_labelbuilder') . '/js/idplates_labelbuilder_digits.js',
+    );
+
+    $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
+      '#type' => 'select',
+      '#title' => t('Numbering Type'),
+      '#options' => array(
+        '39' => 'Code 39',
+        '128' => 'Code 128',
+      ),
+      '#states' => $hide_consecutive,
+      '#ajax' => array(
+        'callback' => 'idplates_labelbuilder_remove_digits',
+        'event' => 'change',
+        'progress' => array('type' => '', 'message' => ''),
+      ),
+    );
 
     $form['column_left']['numbering']['consecutive']['digits'] = array(
       '#type' => 'container',
@@ -385,7 +383,13 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   }
 
   if (empty($form_state['input']['text_color_hex'])) {
-    $text_color = isset($form_state['values']['text_color']) ? $form_state['values']['text_color'] : NULL;
+    if (isset($form_state['values']['text_color'])) {
+      $text_color = $form_state['values']['text_color'];
+    }
+    else {
+      $text_color = $default_text_color;
+    }
+
   }
   else {
     $text_color = $form_state['input']['text_color_hex'];
@@ -428,6 +432,7 @@ function idplates_labelbuilder_managed_file_ajax() {
     drupal_set_message(t('An unrecoverable error occurred. The uploaded file likely exceeded the maximum file size (@size) that this server supports.', array('@size' => format_size(file_upload_max_size()))), 'error');
     $commands = array();
     $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+
     return array('#type' => 'ajax', '#commands' => $commands);
   }
 
@@ -438,6 +443,7 @@ function idplates_labelbuilder_managed_file_ajax() {
     drupal_set_message(t('An unrecoverable error occurred. Use of this form has expired. Try reloading the page and submitting again.'), 'error');
     $commands = array();
     $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+
     return array('#type' => 'ajax', '#commands' => $commands);
   }
 
@@ -489,6 +495,7 @@ function idplates_labelbuilder_managed_file_ajax() {
 
   $commands[] = ajax_command_replace('.idplates-labelbuilder-preview', $label_preview);
   $commands[] = ajax_command_replace(NULL, $output, $settings);
+
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
@@ -586,6 +593,7 @@ function idplates_label_builder_numbering_ajax_callback($form, &$form_state) {
 
 function idplates_labelbuilder_build_numbering_options($form, $form_state) {
   $label = $form_state['label'];
+
   return array(
     'numbering_option' => !empty($form_state['values']['numbering_options']) ? $form_state['values']['numbering_options'] : 'consecutive',
     'numbering_type' => !empty($form_state['values']['numbering_type']) ? $form_state['values']['numbering_type'] : '',

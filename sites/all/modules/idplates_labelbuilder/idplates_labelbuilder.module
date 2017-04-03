@@ -834,7 +834,7 @@ function _idplates_labelbuilder_get_hanging_tag_color($label, $code) {
  */
 function _idplates_labelbuilder_generate_barcode_number($label) {
   $numbering = $label->numbering;
-  if ($numbering['numbering_option'] == 'custom') {
+  if (empty($numbering) || $numbering['numbering_option'] == 'custom') {
     return '000001';
   }
 

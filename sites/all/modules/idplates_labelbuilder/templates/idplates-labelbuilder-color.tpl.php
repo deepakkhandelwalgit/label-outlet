@@ -8,8 +8,4 @@
   <div
       class="idplates-labelbuilder-color-<?php print str_replace(' ', '-', strtolower($color)); ?>">
   </div>
-  <div>
-    <?php print $color; ?>
-
-  </div>
 </div>

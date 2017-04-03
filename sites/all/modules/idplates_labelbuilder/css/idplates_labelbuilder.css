@@ -667,9 +667,10 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 
 [id*=idplates-labelbuilder-customize-form] [class*=idplates-labelbuilder-color] {
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   vertical-align: top;
+  padding: 1px;
 }
 
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-wrapper {
