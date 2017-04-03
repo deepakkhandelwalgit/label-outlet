@@ -6,6 +6,6 @@
 ?>
 <div class="idplates-labelbuilder-color-wrapper">
   <div
-      class="idplates-labelbuilder-color-<?php print str_replace(' ', '-', strtolower($color)); ?>">
+      class="idplates-labelbuilder-color-block idplates-labelbuilder-color-<?php print str_replace(' ', '-', strtolower($color)); ?>">
   </div>
 </div>

@@ -10,6 +10,14 @@
   color: #aaa;
 }
 
+[id*=idplates-labelbuilder] img {
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 [id*=idplates-labelbuilder] .column-right input[disabled="disabled"],
 [id*=idplates-labelbuilder] #edit-submit:disabled {
   background-color: #dadada;
@@ -154,6 +162,8 @@ input[type="submit"].form-button-disabled:hover {
   border: solid 3px #c0273c;
   width: 36px;
   height: 36px;
+  top: -3px;
+  position: relative;
 }
 
 [id*=idplates-labelbuilder-size-form] input[type='radio']:checked + label .idplates-labelbuilder-size-info:before,
@@ -682,13 +692,16 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
   text-align: center;
 }
 
+[id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-block {
+  border: 1px solid #000;
+}
+
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-black {
   background-color: #000;
 }
 
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-white {
   background-color: #fff;
-  border: 1px solid #000;
 }
 
 [id*=idplates-labelbuilder-customize-form] .idplates-labelbuilder-color-gold {
@@ -1000,4 +1013,3 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
     font-size: 2vw;
   }
 }
-
