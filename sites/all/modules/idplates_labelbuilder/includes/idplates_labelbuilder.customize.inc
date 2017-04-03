@@ -251,7 +251,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       ),
     );
 
-    if (strpos(strtolower($layout_code), 'm') === FALSE) {
+//    if (strpos(strtolower($layout_code), 'm') === FALSE) {
       $form['#attached']['js'] = array(
         drupal_get_path('module', 'idplates_labelbuilder') . '/js/idplates_labelbuilder_digits.js',
       );
@@ -269,7 +269,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
           'progress' => array('type' => '', 'message' => ''),
         ),
       );
-    }
+//    }
 
     $form['column_left']['numbering']['consecutive']['digits'] = array(
       '#type' => 'container',
