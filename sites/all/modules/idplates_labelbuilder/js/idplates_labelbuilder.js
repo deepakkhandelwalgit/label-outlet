@@ -38,11 +38,21 @@
         }
       });
 
-
       // Allowed characters: 0-9A-Z-.$/+%
       $('#edit-starting-digit, #edit-prefix, #edit-suffix', context).not('textarea').on('keypress', function (event) {
         var code = $('select#edit-numbering-type option:selected').val();
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+
+        // Firefox had a bug where hitting backspace did nothing.
+        var keypressed = event.which || event.keyCode;
+        if (keypressed === 8 // backspace
+            || keypressed === 46 // delete
+            || (keypressed >= 35 && keypressed <= 40) // end, home, arrows
+        ) {
+          console.log(keypressed)
+          return;
+        }
+
         var regex;
         if (code == 39) {
           // Code 39 Digits
@@ -53,12 +63,6 @@
         if (!regex.test(key)) {
           event.preventDefault();
           return false;
-        }
-        regex = new RegExp("^[a-z]+$");
-        if (regex.test(key)) {
-          console.log(String.fromCharCode(event.which).toUpperCase());
-          event.preventDefault();
-          return String.fromCharCode(event.which).toUpperCase();
         }
       });
 
