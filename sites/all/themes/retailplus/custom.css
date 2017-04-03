@@ -227,3 +227,20 @@ small {
 	margin-top:50px;
 	margin-bottom:50px;
 }
+
+#header-top-right ul.menu li a {
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 0px 5px;
+    font-family: Helvetica Neue, Arial, Sans-serif;
+	font-weight:bold;
+}
+
+
+#header-top-right ul.menu li a:hover {
+	text-decoration: underline;
+}
+
+div#block-system-user-menu {
+    float: right;
+}
