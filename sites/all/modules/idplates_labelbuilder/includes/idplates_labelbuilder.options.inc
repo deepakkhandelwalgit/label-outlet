@@ -101,20 +101,23 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     );
   }
 
-  $form['column_left']['adhesives'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Adhesives'),
-  );
-  reset($adhesive_options);
-  $first_adh = key($adhesive_options);
-  $form['column_left']['adhesives']['adhesive_option'] = array(
-    '#type' => 'radios',
-    '#default_value' => $first_adh,
-    '#options' => $adhesive_options,
-    '#required' => TRUE,
-    '#ajax' => $ajax,
-  );
-  $form['column_left']['adhesives']['adhesive_option']['#ajax']['progress'] = array();
+  if (!empty($adhesive_options)) {
+    $form['column_left']['adhesives'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Adhesives'),
+    );
+    reset($adhesive_options);
+    $first_adh = key($adhesive_options);
+
+    $form['column_left']['adhesives']['adhesive_option'] = array(
+      '#type' => 'radios',
+      '#default_value' => $first_adh,
+      '#options' => $adhesive_options,
+      '#required' => TRUE,
+      '#ajax' => $ajax,
+    );
+    $form['column_left']['adhesives']['adhesive_option']['#ajax']['progress'] = array();
+  }
 
   if (!empty($intensification_options)) {
     $form['column_left']['intensifications'] = array(
@@ -172,15 +175,18 @@ function idplates_labelbuilder_options_form($form, &$form_state) {
     '#ajax' => $ajax,
   );
 
-  $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : $first_adh;
+  $selected_adhesive = !empty($form_state['values']['adhesive_option']) ? $form_state['values']['adhesive_option'] : array();
   $selected_intensification = !empty($form_state['values']['intensification_option']) ? $form_state['values']['intensification_option'] : array();
   $selected_add_ons = !empty($form_state['values']['add_on_options']) ? $form_state['values']['add_on_options'] : array();
   $qty = !empty($form_state['values']['qty']) ? $form_state['values']['qty'] : 100;
   $extras = array();
-  $extras[] = array(
-    'product_id' => $selected_adhesive,
-    'qty' => $qty,
-  );
+
+  if (!empty($selected_adhesive)) {
+    $extras[] = array(
+      'product_id' => $selected_adhesive,
+      'qty' => $qty,
+    );
+  }
   foreach ($selected_intensification as $intensification) {
     if (!empty($intensification)) {
       $extras[] = array(
