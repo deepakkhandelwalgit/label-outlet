@@ -201,6 +201,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         'filefield_sources_field_process',
         'idplates_labelbuilder_managed_file_ajax_submit',
       ),
+      '#upload_validators' => array(
+        'file_validate_extensions' => array('gif png jpg jpeg'),
+      ),
     );
     if (_idplates_labelbuilder_label_is_metallic($label)) {
       $form['column_left']['logo']['color'] = array(
