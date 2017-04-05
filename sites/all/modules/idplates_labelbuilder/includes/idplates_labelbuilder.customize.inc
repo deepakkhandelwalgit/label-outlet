@@ -227,7 +227,9 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
     }
   }
 
-  if (strpos(strtolower($layout_code), 's') !== FALSE) {
+  $style = substr($label->getLayout(), 0, 3);
+
+  if (strpos(strtolower($layout_code), 's') !== FALSE && $style === 'BAR') {
     $form['column_left']['numbering'] = array(
       '#type' => 'fieldset',
       '#title' => t('Numbering'),
