@@ -29,6 +29,8 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
 
   $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
   $layouts = $product_wrapper->field_layout_options->value();
+  drupal_set_title(node_load($label->getNid())->title);
+
   $style = 'BAR';
   if (!empty($form_state['input']['styles'])) {
     $style = $form_state['input']['styles'];
@@ -126,7 +128,6 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
   $label->setLayoutTid($selected_layout);
   $form_state['label'] = $label;
   idplates_labelbuilder_get_label_preview($form, $form_state);
-  drupal_set_title(node_load($label->getNid())->title);
 
   return $form;
 }

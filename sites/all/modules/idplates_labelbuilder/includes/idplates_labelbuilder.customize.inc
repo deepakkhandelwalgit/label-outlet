@@ -24,6 +24,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   else {
     $label = $_SESSION['idplates']['label'];
   }
+  drupal_set_title(node_load($label->getNid())->title);
   $label->setSection('customize');
   $layout_code = _idplates_labelbuilder_get_layout_code($label);
   $text_fields = _idplates_labelbuilder_create_text_fields($label);
@@ -421,7 +422,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   $form_state['label'] = $label;
 
   idplates_labelbuilder_get_label_preview($form, $form_state);
-  drupal_set_title(node_load($label->getNid())->title);
 
   return $form;
 }
@@ -515,6 +515,8 @@ function idplates_labelbuilder_managed_file_ajax() {
  * @param $form_state
  */
 function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
+
+  drupal_set_title(node_load($_SESSION['idplates']['label']->getNid())->title);
   if (!empty($form_state['values']['op']) && strpos($form_state['values']['op'], 'PREV') !== FALSE) {
     drupal_goto('labelbuilder/layout/' . $form_state['label']->getSizeTid());
   }
