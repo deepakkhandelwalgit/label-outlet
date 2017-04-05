@@ -31,35 +31,19 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
   $layouts = $product_wrapper->field_layout_options->value();
   drupal_set_title(node_load($label->getNid())->title);
 
-  $style = 'BAR';
-  if (!empty($form_state['input']['styles'])) {
-    $style = $form_state['input']['styles'];
-  }
-  elseif ($layout_id = $label->getLayout()) {
-    $style = substr($layout_id, 0, 3);
-  }
-
   $options = array();
   foreach ($layouts as $layout) {
     $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
     if (!empty($layout_wrapper->field_ll_image)) {
       $image = $layout_wrapper->field_ll_image->value();
     }
-    if (strpos($layout->name, $style) !== FALSE) {
-      $options[$layout->tid] = theme('idplates_labelbuilder_layout', array(
-          'path' => $image['uri'],
-          'layout' => $layout->name,
-          'attributes' => array(),
-        )
-      );
-    }
-    $styles_with_layouts[] = substr($layout->name, 0, 3);
-  }
-
-  $default_layout = key($options);
-  $layout_tid = $label->getLayoutTid();
-  if (array_key_exists($layout_tid, $options)) {
-    $default_layout = $layout_tid;
+    $style_layout = substr($layout->name, 0, 3);
+    $options[$style_layout][$layout->tid] = theme('idplates_labelbuilder_layout', array(
+        'path' => $image['uri'],
+        'layout' => $layout->name,
+        'attributes' => array(),
+      )
+    );
   }
 
   // Creates array of styles with available layouts.
@@ -68,8 +52,21 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
     'NUM' => 'Numbering Only',
     'TXT' => 'Text Only',
   );
-  $styles_with_layouts = array_flip(array_unique($styles_with_layouts));
-  $style_options = array_intersect_key($style_options, $styles_with_layouts);
+  $style_options = array_intersect_key($style_options, $options);
+
+  if (!empty($form_state['input']['styles'])) {
+    $style = $form_state['input']['styles'];
+  }
+  else {
+    reset($options);
+    $style = key($options);
+  }
+
+  $default_layout = key($options[$style]);
+  $layout_tid = $label->getLayoutTid();
+  if (array_key_exists($layout_tid, $options)) {
+    $default_layout = $layout_tid;
+  }
 
   $form['breadcrumb'] = array(
     '#type' => 'item',
@@ -107,7 +104,7 @@ function idplates_labelbuilder_layout_form($form, &$form_state, $product) {
   $form['column_left']['layouts'] = array(
     '#type' => 'radios',
     '#title' => t('Layouts'),
-    '#options' => $options,
+    '#options' => $options[$style],
     '#default_value' => $default_layout,
     '#required' => TRUE,
     '#prefix' => '<div id="idplates-labelbuilder-layout-ajax-wrapper">',
