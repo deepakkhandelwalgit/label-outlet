@@ -861,6 +861,7 @@ function idplates_labelbuilder_validate_code($label, $output) {
       if (empty($_SESSION['messages']['error'])) {
         drupal_set_message(t('The label size chosen is too small for the barcode entered. Please select a label width size larger than @length" to accommodate the length of your entered barcode.', array('@length' => (float) str_replace("'", '', explode('x', $label->size)[0]))), 'error');
       }
+      return '000001';
     }
   }
 
@@ -872,6 +873,7 @@ function idplates_labelbuilder_validate_code($label, $output) {
       if (empty($_SESSION['messages']['error'])) {
         drupal_set_message(t('The label size chosen is too small for the barcode entered. Please select a label width size larger than @length to accommodate the length of your entered barcode.', array('@length' => (float) str_replace("'", '', explode('x', $label->size)[0]))), 'error');
       }
+      return '000001';
     }
   }
 }
