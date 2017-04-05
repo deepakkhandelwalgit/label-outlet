@@ -237,6 +237,20 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#suffix' => '</div>',
     );
 
+    $form['column_left']['numbering']['numbering_type'] = array(
+      '#type' => 'select',
+      '#title' => t('Numbering Type'),
+      '#options' => array(
+        '39' => 'Code 39',
+        '128' => 'Code 128',
+      ),
+      '#ajax' => array(
+        'callback' => 'idplates_labelbuilder_remove_digits',
+        'event' => 'change',
+        'progress' => array('type' => '', 'message' => ''),
+      ),
+    );
+
     $form['column_left']['numbering']['numbering_options'] = array(
       '#type' => 'radios',
       '#options' => array(
@@ -264,21 +278,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
 
     $form['#attached']['js'] = array(
       drupal_get_path('module', 'idplates_labelbuilder') . '/js/idplates_labelbuilder_digits.js',
-    );
-
-    $form['column_left']['numbering']['consecutive']['numbering_type'] = array(
-      '#type' => 'select',
-      '#title' => t('Numbering Type'),
-      '#options' => array(
-        '39' => 'Code 39',
-        '128' => 'Code 128',
-      ),
-      '#states' => $hide_consecutive,
-      '#ajax' => array(
-        'callback' => 'idplates_labelbuilder_remove_digits',
-        'event' => 'change',
-        'progress' => array('type' => '', 'message' => ''),
-      ),
     );
 
     $form['column_left']['numbering']['consecutive']['digits'] = array(
@@ -526,15 +525,14 @@ function idplates_labelbuilder_customize_form_validate($form, &$form_state) {
   $code_type = $label->numbering['numbering_type'];
   $barcode = $label->numbering['starting_digit'];
   $output = $label->numbering['prefix'] . $barcode . $label->numbering['suffix'];
+  $numbering_option = $form_state['values']['numbering_options'];
   $length = (float) str_replace("'", '', explode('x', $label->size)[0]);
-  if ($code_type == '39') {
-    if (!idplates_labelbuilder_validate_code_39($label, $output)) {
+  if ($numbering_option === 'consecutive') {
+    if ($code_type == '39' && !idplates_labelbuilder_validate_code_39($label, $output)) {
       form_set_error('starting_digit', t('The label size chosen is too small for the barcode entered. Please select a label width size larger than @length" to accommodate the length of your entered barcode.', array('@length' => $length)));
     }
-  }
 
-  if ($code_type == '128') {
-    if (!idplates_labelbuilder_validate_code_128($label, $output)) {
+    if ($code_type == '128' && !idplates_labelbuilder_validate_code_128($label, $output)) {
       form_set_error('starting_digit', t('The label size chosen is too small for the barcode entered. Please select a label width size larger than @length" to accommodate the length of your entered barcode.', array('@length' => $length)));
     }
   }

@@ -769,7 +769,6 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 }
 
 [id*=idplates-labelbuilder-customize-form] [id^=edit-digits],
-[id*=idplates-labelbuilder-customize-form] .form-item-numbering-type,
 [id*=idplates-labelbuilder-customize-form] [id^=edit-fixes] {
   margin: 0;
 }
