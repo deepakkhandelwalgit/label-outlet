@@ -33,7 +33,15 @@ function idplates_labelbuilder_menu() {
   $items['labelbuilder/customize'] = array(
     'title' => 'ID Advantage',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('idplates_labelbuilder_customize_form', 2, 3, 4, 5, 6, 7),
+    'page arguments' => array(
+      'idplates_labelbuilder_customize_form',
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+    ),
     'access arguments' => array('access content'),
     'file' => 'includes/idplates_labelbuilder.customize.inc',
   );
@@ -853,6 +861,18 @@ function _idplates_labelbuilder_generate_barcode_number($label) {
 
 function idplates_labelbuilder_validate_code($label, $output) {
   $code_type = $label->numbering['numbering_type'];
+  if ($layout = taxonomy_term_load($label->getLayoutTid())) {
+    $layout_wrapper = entity_metadata_wrapper('taxonomy_term', $layout);
+    $unique_layout = $layout_wrapper->field_layout_form->value();
+    if ($unique_layout === 'infodot' && strlen($output) > 10) {
+      drupal_set_message(t('Infodot serial numbers must be 10 characters or less'), 'error');
+      return '000001';
+    }
+    else {
+      return $output;
+    }
+  }
+
   if ($code_type == '39') {
     if (idplates_labelbuilder_validate_code_39($label, $output)) {
       return $output;

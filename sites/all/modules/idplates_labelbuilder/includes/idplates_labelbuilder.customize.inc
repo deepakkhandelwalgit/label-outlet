@@ -236,20 +236,22 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#prefix' => '<div id="idplates-labelbuilder-numbering-ajax-wrapper">',
       '#suffix' => '</div>',
     );
+    if ((strpos(strtolower($layout_code), 'm') === FALSE)) {
 
-    $form['column_left']['numbering']['numbering_type'] = array(
-      '#type' => 'select',
-      '#title' => t('Numbering Type'),
-      '#options' => array(
-        '39' => 'Code 39',
-        '128' => 'Code 128',
-      ),
-      '#ajax' => array(
-        'callback' => 'idplates_labelbuilder_remove_digits',
-        'event' => 'change',
-        'progress' => array('type' => '', 'message' => ''),
-      ),
-    );
+      $form['column_left']['numbering']['numbering_type'] = array(
+        '#type' => 'select',
+        '#title' => t('Numbering Type'),
+        '#options' => array(
+          '39' => 'Code 39',
+          '128' => 'Code 128',
+        ),
+        '#ajax' => array(
+          'callback' => 'idplates_labelbuilder_remove_digits',
+          'event' => 'change',
+          'progress' => array('type' => '', 'message' => ''),
+        ),
+      );
+    }
 
     $form['column_left']['numbering']['numbering_options'] = array(
       '#type' => 'radios',
