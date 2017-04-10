@@ -1,3 +1,4 @@
+<?php
 // Set arguments for our custom token !order-shipping
 function shipping_provider_message_presave($message) {
   if (!empty($message->mid)) {
@@ -36,3 +37,5 @@ function commerce_message_order_shipping(Message $message) {
   }
 
   return $shipping_service;
+  
+  ?>
