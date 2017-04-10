@@ -277,7 +277,7 @@ function commerce_billy_pdf_prepare_dompdf($html, $filename) {
       $dompdf = new DOMPDF();
     }
 
-    $dompdf->set_paper('a4', 'portrait');
+    $dompdf->set_paper('a4', 'landscape');
 
     $html = htmlspecialchars_decode(htmlentities($html, ENT_NOQUOTES, 'UTF-8'), ENT_NOQUOTES);
     $dompdf->load_html($html);
