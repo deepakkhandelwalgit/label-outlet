@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 12px;
 }
 .header {
   width: 100%;
@@ -43,11 +43,11 @@ body {
 
 .invoice-number {
   position: absolute;
-  top: 350px;
+  top: 320px;
 }
 .order-id {
   position: absolute;
-  top: 370px;
+  top: 340px;
 }
 .invoice-header-date {
   margin-top: 25px;
@@ -62,7 +62,7 @@ body {
   bottom: 0;
 }
 .view-commerce-line-item-table table {
-  width: 70%;
+  width: 100%;
   line-height: 1.2em;
   border-collapse: collapse;
 }
