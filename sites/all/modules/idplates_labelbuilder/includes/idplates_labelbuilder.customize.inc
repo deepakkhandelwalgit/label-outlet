@@ -217,7 +217,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         '#title' => t('Logo Color'),
         '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'D50032',
         '#options' => $options,
-		'#description' => 'Image dimensions less than 200px wide and 80px high will have best results.',
+		'#markup' => t('<br/>Logos on metal and foil are printed in monochrome and limited to one color.'),
       );
       $form['column_left']['logo']['color']['logo_color_hex'] = array(
         '#type' => 'textfield',
