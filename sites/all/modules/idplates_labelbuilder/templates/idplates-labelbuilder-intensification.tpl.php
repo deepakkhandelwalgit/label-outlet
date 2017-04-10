@@ -27,7 +27,7 @@ foreach (array('width', 'height', 'alt', 'title') as $key) {
       <!--      $intsf_label = str_replace('_', ' ', $intensification->sku);-->
       <!--      $intensification_options[$intensification->product_id] = ucwords($intsf_label);-->
       <!--      --><?php //print $extras->body->value(); ?> <br>
-      <span><?php print 'For textured metal surfaces'; ?></span>
+      <span><?php print 'For better outdoor UV durability'; ?></span>
     </div>
   </div>
 </div>
