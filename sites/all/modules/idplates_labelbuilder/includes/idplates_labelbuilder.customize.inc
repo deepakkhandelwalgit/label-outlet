@@ -92,7 +92,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
   if (_idplates_labelbuilder_needs_tag_color($layout_code)) {
     $form['column_left']['color']['tag_color'] = array(
       '#type' => 'radios',
-      '#title' => t('Tag Color'),
+      '#title' => t('Background Color'),
       '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'D50032',
       '#options' => $options,
       '#ajax' => $ajax,
@@ -194,7 +194,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#type' => 'managed_file',
       '#upload_location' => 'public://logos/',
       '#required' => TRUE,
-      '#description' => 'Allowed file types: <strong>png gif jpg jpeg.</strong>',
+      '#description' => 'Allowed file types: <strong>png gif jpg jpeg. Image dimensions less than 200px wide and 80px high will have best results.</strong>',
       '#title' => t('Logo Image File'),
       '#default_value' => !empty($label->getLogo()) ? $label->getLogo() : NULL,
       '#process' => array(
@@ -217,6 +217,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         '#title' => t('Logo Color'),
         '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'D50032',
         '#options' => $options,
+		'#markup' => t('* Logos on metal and foil are printed in monochrome and limited to one color.'),
       );
       $form['column_left']['logo']['color']['logo_color_hex'] = array(
         '#type' => 'textfield',
@@ -345,7 +346,7 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
       '#type' => 'item',
       '#prefix' => '<div class="idplates-labelbuilder-description code39">',
       '#suffix' => '</div>',
-      '#markup' => t('Valid Code 3 of 9 characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.$/+%'),
+      '#markup' => t('Valid Code 3 of 9 characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.$/+%  Only uppercase letters will be accepted.'),
       '#states' => array(
         'visible' => array(
           'select[name="numbering_type"]' => array('value' => '39'),
