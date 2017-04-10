@@ -217,9 +217,6 @@ function idplates_labelbuilder_customize_form($form, &$form_state, $nid, $tid, $
         '#title' => t('Logo Color'),
         '#default_value' => !empty($label->getTagColor()) ? $label->getTagColor() : 'D50032',
         '#options' => $options,
-		'#prefix' => '<div class="idplates-labelbuilder-text-color-description description">',
-        '#suffix' => '</div>',
-        '#markup' => t('Logos on metal and foil are printed in monochrome and limited to one color.'),
       );
       $form['column_left']['logo']['color']['logo_color_hex'] = array(
         '#type' => 'textfield',
