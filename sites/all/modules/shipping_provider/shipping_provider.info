@@ -1,4 +1,0 @@
-name = Shipping Provider
-description = Token to provide shipping provider information for commerce orders.
-core = 7.x
-package = Commerce (contrib)
