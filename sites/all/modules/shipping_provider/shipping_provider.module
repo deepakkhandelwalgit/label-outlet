@@ -37,5 +37,3 @@ function commerce_message_order_shipping(Message $message) {
   }
 
   return $shipping_service;
-  
-  ?>
