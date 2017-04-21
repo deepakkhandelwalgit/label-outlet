@@ -611,7 +611,6 @@ function idplates_labelbuilder_build_numbering_options($form, $form_state) {
     'numbering_option' => !empty($form_state['values']['numbering_options']) ? $form_state['values']['numbering_options'] : 'consecutive',
     'numbering_type' => !empty($form_state['values']['numbering_type']) ? $form_state['values']['numbering_type'] : '',
     'starting_digit' => !empty($form_state['values']['starting_digit']) ? $form_state['values']['starting_digit'] : '0',
-    'number_of_digits' => !empty($form_state['values']['number_of_digits']) ? $form_state['values']['number_of_digits'] : 6,
     'prefix' => !empty($form_state['values']['prefix']) ? $form_state['values']['prefix'] : '',
     'suffix' => !empty($form_state['values']['suffix']) ? $form_state['values']['suffix'] : '',
     'padding' => !empty($form_state['values']['padding']) ? $form_state['values']['padding'] : $label->numbering['padding'],

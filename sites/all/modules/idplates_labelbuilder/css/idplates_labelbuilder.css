@@ -919,13 +919,16 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 
 .idplates-labelbuilder-cart-info {
   background: #fff;
-  border: 1px solid black;
+  border: 1px solid #666;
   padding: 25px 15px 10px;
   position: absolute;
   top: 0;
   right: 0;
   z-index: 1000000;
   width: 260px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px #999;
 }
 
 .idplates-labelbuilder-cart-info-header {
