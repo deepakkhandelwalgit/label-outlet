@@ -52,6 +52,10 @@
   float: right;
 }
 
+.hidden {
+  display: none !important;
+}
+
 input[type="submit"].form-button-disabled,
 [id*=idplates-labelbuilder] #edit-submit:disabled {
   background-color: #dadada;
@@ -572,6 +576,9 @@ p.idplates-labelbuilder-preview-wrapper-barcode.code128 {
 }
 
 .idplates-labelbuilder-preview .idplates-labelbuilder-inline-wrapper img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 .idplates-labelbuilder-preview .idplates-labelbuilder-inline-wrapper {
