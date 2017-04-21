@@ -113,7 +113,7 @@ $no_numbering = $label->numbering === 'no' ? ' hidden' : '';
       <?php if ($label->numbering['numbering_option'] === 'consecutive'):
         foreach ($label->numbering as $key => $item):
           // Skip numbering option if in backend as it's already displayed above.
-          if ($backend && $key == 'numbering_option'):
+          if (!empty($backend) && $key == 'numbering_option'):
             continue;
           endif;
           if (!empty($item)):?>

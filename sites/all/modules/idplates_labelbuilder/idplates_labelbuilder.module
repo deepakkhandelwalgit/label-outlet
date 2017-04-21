@@ -846,15 +846,7 @@ function _idplates_labelbuilder_generate_barcode_number($label) {
     return '000001';
   }
 
-  $barcode = $numbering['starting_digit'];
-  $digits = $numbering['number_of_digits'];
-  $padding = $numbering['padding'];
-
-  if (strlen($barcode) != $digits && $padding === 'zeros') {
-    $barcode = str_pad($barcode, $digits, '0', STR_PAD_LEFT);
-  }
-
-  $output = $numbering['prefix'] . $barcode . $numbering['suffix'];
+  $output = $numbering['prefix'] . $numbering['starting_digit'] . $numbering['suffix'];
   $output = idplates_labelbuilder_validate_code($label, $output);
   return $output;
 }
