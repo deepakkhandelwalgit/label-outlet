@@ -1,6 +1,10 @@
 <!-- #page-container -->
 <div id="page-container">
 
+<?php if (drupal_is_front_page()): ?>
+<?php print render($page['content']['metatags']); ?>
+<?php endif; ?>
+
     <?php if (theme_get_setting('scrolltop_display')): ?>
     <div id="toTop"><i class="fa fa-angle-up"></i></div>
     <?php endif; ?>
